@@ -49,6 +49,17 @@ class NormalDistribution
     }
 
 
+    public function variance()
+    {
+        $float_variance = pow($this->float_sigma, 2);
+        
+        if($this->int_precision)
+        {
+            return round($float_variance, $this->int_precision);
+        }
+
+        return $float_variance;
+    }
 
     public function precision($n)
     {
