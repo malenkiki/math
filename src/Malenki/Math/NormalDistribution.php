@@ -32,7 +32,7 @@ class NormalDistribution
     protected $int_precision = 0;
 
 
-    public function __construct($sigma, $mu)
+    public function __construct($mu = 0, $sigma = 1)
     {
         if(!is_numeric($sigma) || !is_numeric($mu))
         {
@@ -131,6 +131,29 @@ class NormalDistribution
             $item->x = $x;
             $item->fx = $this->f($x);
             $arr[] = $item;
+        }
+
+        return $arr;
+    }
+
+
+    public function samples($amount)
+    {
+        $arr = array();
+
+        for($i = 1; $i <= $amount; $i++)
+        {
+            $float_u = rand() / getrandmax();
+            $float_v = rand() / getrandmax();
+
+            $double_x = $this->float_sigma * sqrt(-2 * log($float_u)) * cos(2 * pi() * $float_v) + $this->float_mu;
+
+            if($this->int_precision)
+            {
+                return round($double_x, $this->int_precision);
+            }
+
+            $arr[] = $double_x;
         }
 
         return $arr;
