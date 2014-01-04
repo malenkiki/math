@@ -60,6 +60,20 @@ class NormalDistribution
         $this->int_precision = (integer) $n;
     }
 
+    
+    public function max()
+    {
+        $float_max = 1 / ($this->float_sigma * sqrt(2 * pi()));
+
+        if($this->int_precision)
+        {
+            return round($float_max, $this->int_precision);
+        }
+
+        return $float_max;
+    }
+
+
 
     public function f($x)
     {
