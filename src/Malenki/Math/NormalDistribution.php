@@ -74,6 +74,23 @@ class NormalDistribution
     }
 
 
+    /**
+     * Gets the full with at half maximum. 
+     * 
+     * @access public
+     * @return float
+     */
+    public function fwhm()
+    {
+        $float_fwhm = 2 * sqrt(2 * log(2)) * $this->float_sigma;
+
+        if($this->int_precision)
+        {
+            return round($float_fwhm, $this->int_precision);
+        }
+
+        return $float_fwhm;
+    }
 
     public function f($x)
     {
