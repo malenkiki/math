@@ -88,6 +88,32 @@ class Complex
         return new self(-1 * $this->float_r, -1 * $this->float_i);
     }
 
+    public function add($z)
+    {
+        return new self($this->float_r + $z->re, $this->float_i, $z->im);
+    }
+
+    public function substract($z)
+    {
+        return $this->add($z->negative());
+    }
+    
+    public function multiplicate($z)
+    {
+        return new self(
+            ($this->float_r * $z->re) - ($this->float_i * $z->im),
+            ($this->float_r * $z->im) + ($z->re * $this->float_i)
+        );
+    }
+    
+    public function divide($z)
+    {
+    }
+   
+    public function equal(Complex $z)
+    {
+        return ($z->real == $this->float_r) && ($z->imaginary == $this->float_i);
+    }
 
 
     public function __toString()
