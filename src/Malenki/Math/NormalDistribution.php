@@ -86,7 +86,7 @@ class NormalDistribution
 
 
     /**
-     * Gets the full with at half maximum. 
+     * Gets the full width at half maximum. 
      * 
      * @access public
      * @return float
