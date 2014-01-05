@@ -25,6 +25,24 @@
 
 namespace Malenki\Math;
 
+/**
+ * Complex number
+ *
+ * Complex numbers are defined by default using real part `a` and imaginary 
+ * part `bi` like that: `a+bi`.
+ *
+ * But this class allows you to use polar form too, using `rho` and `theta` 
+ * values (length and angle).
+ * 
+ * @property-read float $real The real part
+ * @property-read float $re 2nd way to get real part
+ * @property-read float $r 3rd way to get real part
+ * @property-read float $imaginary The imaginary part
+ * @property-read float $im 2nd way to get imaginary part
+ * @property-read float $i 3rd way to get imaginary part
+ * @author Michel Petit <petit.michel@gmail.com> 
+ * @license MIT
+ */
 class Complex
 {
     protected $float_r = 0;
@@ -34,6 +52,16 @@ class Complex
     {
     }
 
+    /**
+     * Creates complex number using `rho` and `theta` values instead using real 
+     * and imaginary part. 
+     * 
+     * @param mixed $rho 
+     * @param mixed $theta 
+     * @static
+     * @access public
+     * @return Complex
+     */
     public static function fromPolar($rho, $theta)
     {
         return new self($rho * cos($theta), $rho * sin($theta));
@@ -53,6 +81,14 @@ class Complex
         }
     }
 
+    /**
+     * Creates new Complex number object giving its real and imaginary parts.
+     * 
+     * @param mixed $float_r Number for the real part
+     * @param mixed $float_i Number for the imaginary part
+     * @access public
+     * @return Complex
+     */
     public function __construct($float_r, $float_i)
     {
         if(!is_numeric($float_r) || !is_numeric($float_i))
@@ -65,17 +101,35 @@ class Complex
     }
 
 
+    /**
+     * Computes and returns the norm. 
+     * 
+     * @access public
+     * @return float
+     */
     public function norm()
     {
         return sqrt(pow($this->float_r, 2) + pow($this->float_i, 2));
     }
 
+    /**
+     * Computes and returns the argument. 
+     * 
+     * @access public
+     * @return float
+     */
     public function argument()
     {
         return atan2($this->float_i, $this->float_r);
     }
 
 
+    /**
+     * Return conjugate complex number for the current one.
+     * 
+     * @access public
+     * @return Complex
+     */
     public function conjugate()
     {
         return new self($this->float_r, -1 * $this->float_i);
@@ -88,11 +142,27 @@ class Complex
         return new self(-1 * $this->float_r, -1 * $this->float_i);
     }
 
+    /**
+     * Add value to the current complex number, creating new complex number.
+     *
+     * @todo Allow non complex number too 
+     * @param mixed $z 
+     * @access public
+     * @return Complex
+     */
     public function add($z)
     {
         return new self($this->float_r + $z->re, $this->float_i, $z->im);
     }
 
+    /**
+     * Substracts complex number `z` from the current one.
+     * 
+     * @todo Allow non complex number too 
+     * @param mixed $z 
+     * @access public
+     * @return Complex
+     */
     public function substract($z)
     {
         return $this->add($z->negative());
@@ -110,12 +180,27 @@ class Complex
     {
     }
    
+    /**
+     * Tests whether given `z` complex number is equal to the current complex 
+     * number.
+     * 
+     * @todo Allow non complex number too 
+     * @param Complex $z 
+     * @access public
+     * @return boolean
+     */
     public function equal(Complex $z)
     {
         return ($z->real == $this->float_r) && ($z->imaginary == $this->float_i);
     }
 
 
+    /**
+     * In string context, display complex number into the form `a+ib`. 
+     * 
+     * @access public
+     * @return string
+     */
     public function __toString()
     {
         $str = '%d%di';
