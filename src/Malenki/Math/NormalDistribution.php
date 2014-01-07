@@ -28,20 +28,62 @@ namespace Malenki\Math;
 /**
  * Normal Distribution.
  *
- * Normal distribution is statistical mathematical function defined by mean (µ) 
- * and standard deviation (𝛔).
+ * Normal distribution is statistical mathematical function 
+ * defined by mean (µ) and standard deviation (𝛔).
  *
  * This class used curve created with given mean and sigma, can return value 
  * for given x, but can also create fictive samples too.
  * 
+ * @property-read $mean Gets the mean
+ * @property-read $mu Gets the mean too
+ * @property-read $µ Last attribute to get mean
+ * @property-read $sigma Gets standard deviation
+ * @property-read $std This gets standard deviation too
+ * @property-read $𝛔 Last way to get standard deviation
  * @author Michel Petit <petit.michel@gmail.com> 
  * @license MIT
  */
 class NormalDistribution
 {
+    /**
+     * Stores sigma value, the standard deviation. 
+     * 
+     * @var float
+     * @access protected
+     */
     protected $float_sigma = 0;
+    
+    /**
+     * Stores mu value, the mean. 
+     * 
+     * @var float
+     * @access protected
+     */
     protected $float_mu = 0;
+
+    /**
+     * Precision for number of digits into the mantis. 
+     * 
+     * @var float
+     * @access protected
+     */
     protected $int_precision = 0;
+
+
+
+    public function __get($name)
+    {
+        if(in_array($name, array('mean', 'mu', 'µ')))
+        {
+            return $this->float_mu;
+        }
+        
+        if(in_array($name, array('sigma', 'std', '𝛔')))
+        {
+            return $this->float_sigma;
+        }
+    }
+
 
 
     /**
@@ -187,6 +229,7 @@ class NormalDistribution
     /**
      * Do same things like NormalDistribution::f() but for several values at once. 
      * 
+     * @see NormalDistribution::precision()
      * @param array $arr_x Several x values
      * @access public
      * @return array Each items is small object having x and fx attributes.
@@ -210,6 +253,7 @@ class NormalDistribution
     /**
      * Simulates samples following normal distribution
      * 
+     * @see NormalDistribution::precision()
      * @throw \InvalidArgumentException If amount is not greater than zero
      * @param integer $amount 
      * @access public
