@@ -210,12 +210,19 @@ class NormalDistribution
     /**
      * Simulates samples following normal distribution
      * 
+     * @throw \InvalidArgumentException If amount is not greater than zero
      * @param integer $amount 
      * @access public
      * @return array
      */
     public function samples($amount)
     {
+
+        if(!is_numeric($amount) || $amount < 1)
+        {
+            throw new \InvalidArgumentException('Amount of samples must be greater or equal to one');
+        }
+
         $arr = array();
 
         for($i = 1; $i <= $amount; $i++)
