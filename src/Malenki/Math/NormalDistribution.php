@@ -25,6 +25,18 @@
 
 namespace Malenki\Math;
 
+/**
+ * Normal Distribution.
+ *
+ * Normal distribution is statistical mathematical function defined by mean (µ) 
+ * and standard deviation (𝛔).
+ *
+ * This class used curve created with given mean and sigma, can return value 
+ * for given x, but can also create fictive samples too.
+ * 
+ * @author Michel Petit <petit.michel@gmail.com> 
+ * @license MIT
+ */
 class NormalDistribution
 {
     protected $float_sigma = 0;
@@ -32,6 +44,19 @@ class NormalDistribution
     protected $int_precision = 0;
 
 
+    /**
+     * Create normal distribution object with given mean and sigma.
+     *
+     * To create fictive samples or just study curve, only mean and sigma are 
+     * necessary for the first step.
+     * 
+     * @throw \InvalidArgumentException If sigma or mu are not number
+     * @throw \InvalidArgumentException If mu is not a positive number
+     * @param float $mu Mean 
+     * @param float $sigma Standard deviation
+     * @access public
+     * @return void
+     */
     public function __construct($mu = 0, $sigma = 1)
     {
         if(!is_numeric($sigma) || !is_numeric($mu))
@@ -49,6 +74,14 @@ class NormalDistribution
     }
 
 
+
+    /**
+     * Compute the variance and return the result.
+     * 
+     * @see NormalDistribution::precision()
+     * @access public
+     * @return float
+     */
     public function variance()
     {
         $float_variance = pow($this->float_sigma, 2);
@@ -61,6 +94,15 @@ class NormalDistribution
         return $float_variance;
     }
 
+
+
+    /**
+     * Set precision for all returned results.
+     * 
+     * @param integer $n Give number of digits for the mantis
+     * @access public
+     * @return void
+     */
     public function precision($n)
     {
         if(!is_numeric($n) || $n < 0)
@@ -71,7 +113,15 @@ class NormalDistribution
         $this->int_precision = (integer) $n;
     }
 
-    
+
+
+    /**
+     * Give the maximal value of the curve for the current sigma and mu. 
+     * 
+     * @see NormalDistribution::precision()
+     * @access public
+     * @return float
+     */
     public function max()
     {
         $float_max = 1 / ($this->float_sigma * sqrt(2 * pi()));
@@ -85,9 +135,11 @@ class NormalDistribution
     }
 
 
+
     /**
      * Gets the full width at half maximum. 
      * 
+     * @see NormalDistribution::precision()
      * @access public
      * @return float
      */
@@ -103,6 +155,17 @@ class NormalDistribution
         return $float_fwhm;
     }
 
+
+
+    /**
+     * Function that returns normal distribution value for given x. 
+     * 
+     * @see NormalDistribution::precision()
+     * @throw \InvalidArgumentException If x is not numerical value.
+     * @param float $x 
+     * @access public
+     * @return float
+     */
     public function f($x)
     {
         if(!is_numeric($x))
@@ -121,6 +184,13 @@ class NormalDistribution
     }
 
 
+    /**
+     * Do same things like NormalDistribution::f() but for several values at once. 
+     * 
+     * @param array $arr_x Several x values
+     * @access public
+     * @return array Each items is small object having x and fx attributes.
+     */
     public function fn(array &$arr_x)
     {
         $arr = array();
@@ -137,6 +207,13 @@ class NormalDistribution
     }
 
 
+    /**
+     * Simulates samples following normal distribution
+     * 
+     * @param integer $amount 
+     * @access public
+     * @return array
+     */
     public function samples($amount)
     {
         $arr = array();
