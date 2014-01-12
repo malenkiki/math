@@ -32,6 +32,17 @@ class Matrix
     protected $size = null;
 
 
+
+    public function __get($name)
+    {
+        if(in_array($name, array('cols', 'rows')))
+        {
+            return $this->size->$name;
+        }
+    }
+
+
+
     public function __construct($int_cols, $int_rows)
     {
         if(!is_numeric($int_cols) || !is_numeric($int_rows))
@@ -52,13 +63,63 @@ class Matrix
         $this->size->rows = $int_rows;
     }
 
+
+
     public function addRow($arr_row)
     {
+        return $this;
     }
 
 
 
     public function addColunm($arr_col)
+    {
+        return $this;
+    }
+
+
+
+    public function isSquare()
+    {
+        return $this->size->cols == $this->size->rows;
+    }
+
+
+
+    public function isVector()
+    {
+        return $this->size->cols == 1;
+    }
+
+
+    public function multiplyAllow($matrix)
+    {
+        if(is_numeric($matrix))
+        {
+            return true;
+        }
+        
+        if($matrix instanceof \Malenki\Math\Complex)
+        {
+            return true;
+        }
+
+        if($matrix instanceof \Malenki\Math\Matrix)
+        {
+            return $this->size->cols == $matrix->rows;
+        }
+
+        return false;
+    }
+
+
+
+    public function add()
+    {
+    }
+
+
+    public function multiply($mix)
     {
     }
 }
