@@ -26,6 +26,16 @@
 namespace Malenki\Math;
 
 
+/**
+ * Matrix basis implementation.
+ * 
+ * @todo as a reminder: http://www.latp.univ-mrs.fr/~torresan/CalcMat/cours/node2.html
+ *
+ * @property-read $cols Amount of columns
+ * @property-read $rows Amount of rows
+ * @author Michel Petit <petit.michel@gmail.com> 
+ * @license MIT
+ */
 class Matrix
 {
     protected $arr = array();
@@ -178,6 +188,8 @@ class Matrix
         {
             throw new \InvalidArgumentException('Invalid number or matrix has not right number of rows.');
         }
+
+
     }
 
 
