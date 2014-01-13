@@ -72,15 +72,15 @@ class Matrix
             throw new \InvalidArgumentException('New row must have same amout of columns than previous rows.');
         }
 
-        $this->arr[] $arr_row;
+        $this->arr[] = $arr_row;
 
-        $this->size->rows++;
+        $this->size->rows = count($this->arr);
         return $this;
     }
 
 
 
-    public function addColunm($arr_col)
+    public function addCol($arr_col)
     {
         if(count($arr_col) != $this->size->rows)
         {
@@ -94,7 +94,8 @@ class Matrix
             $this->arr[$k][] = $arr_col[$k];
         }
 
-        $this->size->cols++;
+        $this->size->cols = count($this->arr[0]);
+
         return $this;
     }
 
@@ -177,5 +178,12 @@ class Matrix
         {
             throw new \InvalidArgumentException('Invalid number or matrix has not right number of rows.');
         }
+    }
+
+
+
+    public function getAll()
+    {
+        return $this->arr;
     }
 }
