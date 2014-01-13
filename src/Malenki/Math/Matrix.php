@@ -75,6 +75,13 @@ class Matrix
 
 
 
+    public function populate($arrAll)
+    {
+        $this->arr = array_chunk($arrAll, $this->size->cols);
+    }
+
+
+
     public function addRow(array $arr_row)
     {
         if(count($this->arr) == $this->size->rows)
@@ -163,6 +170,18 @@ class Matrix
     }
 
 
+
+    public function sameSize($matrix)
+    {
+        return (
+            $this->size->cols == $matrix->cols
+            &&
+            $this->size->rows == $matrix->rows
+        );
+    }
+
+
+
     public function multiplyAllow($matrix)
     {
         if(is_numeric($matrix))
@@ -185,9 +204,50 @@ class Matrix
 
 
 
-    public function add()
+    public function transpose()
     {
+        $out = new self($this->size->rows, $this->size->cols);
+
+        foreach($this->arr as $row)
+        {
+            $out->addCol($row);
+        }
+
+        return $out;
     }
+
+
+
+    public function add($matrix)
+    {
+        if(!($matrix instanceof \Malenki\Math\Matrix))
+        {
+            throw new \InvalidArgumentException('Given argument must be an instance of \Malenki\Math\Matrix');
+        }
+
+        if(!$this->sameSize($matrix))
+        {
+            throw new \RuntimeException('Cannot adding given matrix: it has wrong size.');
+        }
+
+        $out = new self($this->size->cols, $this->size->rows);
+
+        foreach($this->arr as $k => $v)
+        {
+            $arrOther = $matrix->getRow($k);
+            $arrNew = array();
+
+            foreach($v as $kk => $vv)
+            {
+                $arrNew[] = $arrOther[$kk] + $vv;
+            }
+
+            $out->addRow($arrNew);
+        }
+
+        return $out;
+    }
+
 
 
     public function multiply($mix)
@@ -195,7 +255,7 @@ class Matrix
         //TODO use complex numbers too
         if(!$this->multiplyAllow($mix))
         {
-            throw new \InvalidArgumentException('Invalid number or matrix has not right number of rows.');
+            throw new \RuntimeException('Invalid number or matrix has not right number of rows.');
         }
 
 
