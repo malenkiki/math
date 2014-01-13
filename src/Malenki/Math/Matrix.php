@@ -65,8 +65,16 @@ class Matrix
 
 
 
-    public function addRow($arr_row)
+    public function addRow(array $arr_row)
     {
+        if(count($arr_row) != $this->size->cols)
+        {
+            throw new \InvalidArgumentException('New row must have same amout of columns than previous rows.');
+        }
+
+        $this->arr[] $arr_row;
+
+        $this->size->rows++;
         return $this;
     }
 
@@ -74,7 +82,51 @@ class Matrix
 
     public function addColunm($arr_col)
     {
+        if(count($arr_col) != $this->size->rows)
+        {
+            throw new \InvalidArgumentException('New column must have same amout of rows than previous columns.');
+        }
+
+        $arr_col = array_values($arr_col); //to be sure to have index 0, 1, 2…
+
+        foreach($this->arr as $k => $v)
+        {
+            $this->arr[$k][] = $arr_col[$k];
+        }
+
+        $this->size->cols++;
         return $this;
+    }
+
+
+
+    public function getRow($int)
+    {
+        if(!isset($this->arr[$int]))
+        {
+            throw new \OutOfRangeException('There is no line having this index.');
+        }
+
+        return $this->arr[$int];
+    }
+
+
+
+    public function getCol($int)
+    {
+        if($int >= $this->size->cols)
+        {
+            throw new \OutOfRangeException('There is not column having this index.');
+        }
+
+        $arr_out = array();
+
+        foreach($this->arr as $row)
+        {
+            $arr_out[] = $row[$int];
+        }
+
+        return $arr_out;
     }
 
 
@@ -121,5 +173,9 @@ class Matrix
 
     public function multiply($mix)
     {
+        if(!$this->multiplyAllow($mix))
+        {
+            throw new \InvalidArgumentException('Invalid number or matrix has not right number of rows.');
+        }
     }
 }
