@@ -77,6 +77,11 @@ class Matrix
 
     public function addRow(array $arr_row)
     {
+        if(count($this->arr) == $this->size->rows)
+        {
+            throw new \OutOfRangeException(sprintf('You cannot add another row! Max number of rows is %d', $this->size->rows));
+        }
+
         if(count($arr_row) != $this->size->cols)
         {
             throw new \InvalidArgumentException('New row must have same amout of columns than previous rows.');
@@ -84,7 +89,6 @@ class Matrix
 
         $this->arr[] = $arr_row;
 
-        $this->size->rows = count($this->arr);
         return $this;
     }
 
@@ -92,6 +96,11 @@ class Matrix
 
     public function addCol($arr_col)
     {
+        if(isset($this->arr[0]) && (count($this->arr[0]) == $this->size->cols))
+        {
+            throw new \OutOfRangeException(sprintf('You cannot add another column! Max number of columns is %d', $this->size->cols));
+        }
+
         if(count($arr_col) != $this->size->rows)
         {
             throw new \InvalidArgumentException('New column must have same amout of rows than previous columns.');
@@ -99,12 +108,11 @@ class Matrix
 
         $arr_col = array_values($arr_col); //to be sure to have index 0, 1, 2…
 
-        foreach($this->arr as $k => $v)
+        foreach($arr_col as $k => $v)
         {
             $this->arr[$k][] = $arr_col[$k];
         }
 
-        $this->size->cols = count($this->arr[0]);
 
         return $this;
     }
@@ -184,12 +192,60 @@ class Matrix
 
     public function multiply($mix)
     {
+        //TODO use complex numbers too
         if(!$this->multiplyAllow($mix))
         {
             throw new \InvalidArgumentException('Invalid number or matrix has not right number of rows.');
         }
 
 
+        if($mix instanceof \Malenki\Math\Matrix)
+        {
+            $out = new self($mix->cols, $this->size->rows);
+
+            for($r = 0; $r < $this->size->rows; $r++)
+            {
+                $arrOutRow = array();
+
+                for($c = 0; $c < $mix->cols; $c++)
+                {
+                    $arrCol = $mix->getCol($c);
+                    $arrRow = $this->getRow($r);
+
+                    $arrItem = array();
+
+                    foreach($arrCol as $k => $v)
+                    {
+                        $arrItem[] = $arrRow[$k] * $v;
+                    }
+
+                    $arrOutRow[] = array_sum($arrItem);
+                }
+
+                $out->addRow($arrOutRow);
+            }
+
+            return $out;
+        }
+
+        if(is_numeric($mix))
+        {
+            $out = new self($this->size->cols, $this->size->rows);
+
+            for($r = 0; $r < $this->size->rows; $r++)
+            {
+                $arrRow = $this->getRow($r);
+
+                foreach($arrRow as $k => $v)
+                {
+                    $arrRow[$k] = $mix * $v;
+                }
+
+                $out->addRow($arrRow);
+            }
+
+            return $out;
+        }
     }
 
 
