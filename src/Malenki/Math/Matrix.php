@@ -25,8 +25,6 @@
 
 namespace Malenki\Math;
 
-include('vendor/autoload.php');
-
 /**
  * Matrix basic implementation.
  * 

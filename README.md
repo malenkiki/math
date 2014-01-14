@@ -10,7 +10,7 @@ Creating matrix is simple, first step, you instanciate it with column numbers an
 
 ```php
 //instanciate
-$m = new \Malenki\Math\Matrix(2, 3);
+$m = new \Malenki\Math\Matrix(3, 2);
 //then populate
 $m->populate(array(1,2,3,4,5,6));
 //or
@@ -40,9 +40,51 @@ var_dump($m->getAll()); // Gets all data as array
 print($m);
 ```
 
-OK, you can get, you can set… but you can do more complicated things:
+Getting matrix transpose is as simple as that:
 
-TODO
+```php
+echo $m->transpose();
+```
+
+OK, you can get, you can set… but you can do more complicated things.
+
+You can multiply matrix with another one, but beware of compatibility!
+
+```php
+$n = new \Malenki\Matrix(2, 3);
+$n->populate(array(7, 8, 9, 10, 11, 12));
+
+if($m->multiplyAllow($n))
+{
+    print($m->multiply($n));
+}
+```
+
+Addition is possible too, you must test before if size of each matrix is the same, or catch exception.
+
+```php
+try {
+    echo $m->add($n);
+}
+catch(\Exception $e)
+{
+    echo $e->getMessage();
+}
+
+//or
+
+if($m->sameSize($n))
+{
+    echo $m->add($n);
+}
+else
+{
+    echo "Cannot add M to N: not the same size!";
+}
+```
+
+Into near futur, determinant and inverse will be available!
+
 
 
 ## Complex
