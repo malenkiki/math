@@ -25,6 +25,7 @@
 
 namespace Malenki\Math;
 
+include('vendor/autoload.php');
 
 /**
  * Matrix basic implementation.
@@ -403,5 +404,57 @@ class Matrix
     public function getAll()
     {
         return $this->arr;
+    }
+
+
+
+    /**
+     * Returns human readable matrix string like a pseudo table.
+     * 
+     * @access public
+     * @return string
+     */
+    public function __toString()
+    {
+        $arr_out = array();
+        $arr_col_width = array();
+
+        foreach($this->arr as $row)
+        {
+            $arr_row = array();
+
+            foreach($row as $k => $item)
+            {
+                $arr_row[] = (string) $item;
+
+                $int_length = strlen($arr_row[count($arr_row) - 1]);
+
+                if(
+                    (isset($arr_col_width[$k]) && $arr_col_width[$k] < $int_length)
+                    ||
+                    !isset($arr_col_width[$k])
+                )
+                {
+                    $arr_col_width[$k] = $int_length;
+                }
+            }
+
+            $arr_out[] = $arr_row;
+        }
+
+        foreach($arr_out as $idx => $row)
+        {
+            $arr_row = array();
+
+            foreach($row as $k => $item)
+            {
+                $arr_row[] = str_pad($item, $arr_col_width[$k], ' ' ,STR_PAD_LEFT);
+            }
+
+            $arr_out[$idx] = implode('  ', $arr_row);
+        }
+
+
+        return implode(PHP_EOL, $arr_out);
     }
 }
