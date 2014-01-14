@@ -27,7 +27,7 @@ namespace Malenki\Math;
 
 
 /**
- * Matrix basis implementation.
+ * Matrix basic implementation.
  * 
  * @todo as a reminder: http://www.latp.univ-mrs.fr/~torresan/CalcMat/cours/node2.html
  *
@@ -53,6 +53,14 @@ class Matrix
 
 
 
+    /**
+     * Constructs new matrix giving its size.
+     * 
+     * @param integer $int_cols 
+     * @param integer $int_rows 
+     * @access public
+     * @return Matrix
+     */
     public function __construct($int_cols, $int_rows)
     {
         if(!is_numeric($int_cols) || !is_numeric($int_rows))
@@ -75,13 +83,35 @@ class Matrix
 
 
 
+    /**
+     * Puts all values into the matrix. 
+     * 
+     * Argument is a simple array of one dimension. If the matrix has 3 columns 
+     * and 2 rows, the the argument must have 6 elements. Under the hood, the 
+     * given array is split to fit the matrix.
+     *
+     * By the way, you can use rows and colunms in place of this method.
+     *
+     * @param array $arrAll 
+     * @access public
+     * @return Matrix
+     */
     public function populate($arrAll)
     {
         $this->arr = array_chunk($arrAll, $this->size->cols);
+
+        return $this;
     }
 
 
 
+    /**
+     * Adds a row to populate step by step the matrix
+     * 
+     * @param array $arr_row Data to add
+     * @access public
+     * @return Matrix
+     */
     public function addRow(array $arr_row)
     {
         if(count($this->arr) == $this->size->rows)
@@ -101,6 +131,13 @@ class Matrix
 
 
 
+    /**
+     * Adds a column to populate step by step the matrix
+     * 
+     * @param array $arr_col Data to add
+     * @access public
+     * @return Matrix
+     */
     public function addCol($arr_col)
     {
         if(isset($this->arr[0]) && (count($this->arr[0]) == $this->size->cols))
@@ -126,7 +163,14 @@ class Matrix
 
 
 
-    public function getRow($int)
+    /**
+     * Gets the row having the given index.
+     * 
+     * @param integer $int Row's index
+     * @access public
+     * @return mixed
+     */
+    public function getRow($int = 0)
     {
         if(!isset($this->arr[$int]))
         {
@@ -138,7 +182,14 @@ class Matrix
 
 
 
-    public function getCol($int)
+    /**
+     * Gets the column having the given index.
+     * 
+     * @param integer $int column's index 
+     * @access public
+     * @return mixed
+     */
+    public function getCol($int = 0)
     {
         if($int >= $this->size->cols)
         {
@@ -157,6 +208,12 @@ class Matrix
 
 
 
+    /**
+     * Tells whether the current matrix is square or not. 
+     * 
+     * @access public
+     * @return boolean
+     */
     public function isSquare()
     {
         return $this->size->cols == $this->size->rows;
@@ -164,13 +221,13 @@ class Matrix
 
 
 
-    public function isVector()
-    {
-        return $this->size->cols == 1;
-    }
-
-
-
+    /**
+     * Tests whether the current matrix is the same as the given one.
+     * 
+     * @param Matrix $matrix 
+     * @access public
+     * @return boolean
+     */
     public function sameSize($matrix)
     {
         return (
@@ -182,6 +239,13 @@ class Matrix
 
 
 
+    /**
+     * Tests whether the current matrix can be multiply with the given one.
+     *
+     * @param mixed $matrix Scalar, complex or matrix
+     * @access public
+     * @return boolean
+     */
     public function multiplyAllow($matrix)
     {
         if(is_numeric($matrix))
@@ -204,6 +268,12 @@ class Matrix
 
 
 
+    /**
+     * Returns the transpose of the current matrix.
+     * 
+     * @access public
+     * @return Matrix
+     */
     public function transpose()
     {
         $out = new self($this->size->rows, $this->size->cols);
@@ -218,6 +288,13 @@ class Matrix
 
 
 
+    /**
+     * Adds the given matrix with the current one to give another new matrix. 
+     * 
+     * @param Matrix $matrix Matrix to add
+     * @access public
+     * @return Matrix
+     */
     public function add($matrix)
     {
         if(!($matrix instanceof \Malenki\Math\Matrix))
@@ -250,9 +327,16 @@ class Matrix
 
 
 
+    /**
+     * Multiplies current matrix to another one or to a scalar. 
+     * 
+     * @todo use Complex numbers too
+     * @param mixed $mix Number or Matrix
+     * @access public
+     * @return Matrix
+     */
     public function multiply($mix)
     {
-        //TODO use complex numbers too
         if(!$this->multiplyAllow($mix))
         {
             throw new \RuntimeException('Invalid number or matrix has not right number of rows.');
@@ -310,6 +394,12 @@ class Matrix
 
 
 
+    /**
+     * Gets all data of the current matrix as 2 dimensions array
+     * 
+     * @access public
+     * @return array
+     */
     public function getAll()
     {
         return $this->arr;
