@@ -124,6 +124,7 @@ class Complex
     }
 
 
+
     /**
      * Return conjugate complex number for the current one.
      * 
@@ -137,10 +138,18 @@ class Complex
 
 
 
+    /**
+     * Gives the negative Complex number of the current one.
+     * 
+     * @access public
+     * @return Complex
+     */
     public function negative()
     {
         return new self(-1 * $this->float_r, -1 * $this->float_i);
     }
+
+
 
     /**
      * Add value to the current complex number, creating new complex number.
@@ -167,7 +176,17 @@ class Complex
     {
         return $this->add($z->negative());
     }
+
+
     
+    /**
+     * Multiplicates current complex number with another one.
+     * 
+     * @todo Allow real numbers too
+     * @param mixed $z 
+     * @access public
+     * @return Complex
+     */
     public function multiplicate($z)
     {
         return new self(
@@ -175,10 +194,14 @@ class Complex
             ($this->float_r * $z->im) + ($z->re * $this->float_i)
         );
     }
-    
+
+
+
     public function divide($z)
     {
     }
+
+
    
     /**
      * Tests whether given `z` complex number is equal to the current complex 
