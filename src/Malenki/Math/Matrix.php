@@ -104,6 +104,30 @@ class Matrix
 
 
 
+    public function get($int_i, $int_j)
+    {
+        if(!is_integer($int_i) || !is_integer($int_j))
+        {
+            throw new \InvalidArgumentException('Indices must be integers.');
+        }
+
+        if(
+            $int_i >= $this->size->rows
+            ||
+            $int_j >= $this->size->cols
+            ||
+            $int_i < 0
+            ||
+            $int_j < 0
+        )
+        {
+            throw new \InvalidArgumentException('Row’s index or column’s index does not exist!');
+        }
+        return $this->arr[$int_i][$int_j];
+    }
+
+
+
     /**
      * Adds a row to populate step by step the matrix
      * 
