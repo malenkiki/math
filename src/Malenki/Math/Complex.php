@@ -228,9 +228,14 @@ class Complex
     {
         $str = '%d%di';
 
-        if($this->float_i < 0)
+        if($this->float_i > 0)
         {
-            $str = '%d-%di';
+            $str = '%d+%di';
+        }
+        
+        if($this->float_i == 0)
+        {
+            return (string) $this->float_r;
         }
 
         return sprintf($str, $this->float_r, $this->float_i);
