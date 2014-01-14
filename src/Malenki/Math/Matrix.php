@@ -57,12 +57,12 @@ class Matrix
     /**
      * Constructs new matrix giving its size.
      * 
-     * @param integer $int_cols 
      * @param integer $int_rows 
+     * @param integer $int_cols 
      * @access public
      * @return Matrix
      */
-    public function __construct($int_cols, $int_rows)
+    public function __construct($int_rows, $int_cols)
     {
         if(!is_numeric($int_cols) || !is_numeric($int_rows))
         {
@@ -277,7 +277,7 @@ class Matrix
      */
     public function transpose()
     {
-        $out = new self($this->size->rows, $this->size->cols);
+        $out = new self($this->size->cols, $this->size->rows);
 
         foreach($this->arr as $row)
         {
@@ -308,7 +308,7 @@ class Matrix
             throw new \RuntimeException('Cannot adding given matrix: it has wrong size.');
         }
 
-        $out = new self($this->size->cols, $this->size->rows);
+        $out = new self($this->size->rows, $this->size->cols);
 
         foreach($this->arr as $k => $v)
         {
@@ -346,7 +346,7 @@ class Matrix
 
         if($mix instanceof \Malenki\Math\Matrix)
         {
-            $out = new self($mix->cols, $this->size->rows);
+            $out = new self($mix->rows, $this->size->cols);
 
             for($r = 0; $r < $this->size->rows; $r++)
             {
@@ -375,7 +375,7 @@ class Matrix
 
         if(is_numeric($mix))
         {
-            $out = new self($this->size->cols, $this->size->rows);
+            $out = new self($this->size->rows, $this->size->cols);
 
             for($r = 0; $r < $this->size->rows; $r++)
             {
