@@ -353,8 +353,7 @@ class Matrix
     /**
      * Multiplies current matrix to another one or to a scalar. 
      * 
-     * @todo use Complex numbers too
-     * @param mixed $mix Number or Matrix
+     * @param mixed $mix Number (Real or Complex) or Matrix
      * @access public
      * @return Matrix
      */
@@ -380,13 +379,46 @@ class Matrix
                     $arrRow = $this->getRow($r);
 
                     $arrItem = array();
+                    $hasComplex = false;
 
                     foreach($arrCol as $k => $v)
                     {
-                        $arrItem[] = $arrRow[$k] * $v;
+                        if($arrRow[$k] instanceof Complex)
+                        {
+                            $arrItem[] = $arrRow[$k]->multiply($v);
+                            $hasComplex = true;
+                        }
+                        elseif($v instanceof Complex)
+                        {
+                            $arrItem[] = $v->multiply($arrRow[$k]);
+                            $hasComplex = true;
+                        }
+                        else
+                        {
+                            $arrItem[] = $arrRow[$k] * $v;
+                        }
                     }
 
-                    $arrOutRow[] = array_sum($arrItem);
+                    if($hasComplex)
+                    {
+                        $sum = new Complex(0, 0);
+
+                        foreach($arrItem as $item)
+                        {
+                            if(is_numeric($item))
+                            {
+                                $item = new Complex($item, 0);
+                            }
+
+                            $sum = $item->add($sum);
+                        }
+
+                        $arrOutRow[] = $sum;
+                    }
+                    else
+                    {
+                        $arrOutRow[] = array_sum($arrItem);
+                    }
                 }
 
                 $out->addRow($arrOutRow);
@@ -395,7 +427,7 @@ class Matrix
             return $out;
         }
 
-        if(is_numeric($mix))
+        if(is_numeric($mix) || $mix instanceof Complex)
         {
             $out = new self($this->size->rows, $this->size->cols);
 
@@ -405,7 +437,21 @@ class Matrix
 
                 foreach($arrRow as $k => $v)
                 {
-                    $arrRow[$k] = $mix * $v;
+                    if(is_numeric($mix))
+                    {
+                        if($v instanceof Complex)
+                        {
+                            $arrRow[$k] = $v->multiply($mix);
+                        }
+                        else
+                        {
+                            $arrRow[$k] = $mix * $v;
+                        }
+                    }
+                    else
+                    {
+                        $arrRow[$k] = $mix->multiply($v);
+                    }
                 }
 
                 $out->addRow($arrRow);
@@ -506,6 +552,7 @@ class Matrix
     /**
      * Computes the determinant. 
      * 
+     * @todo What about complex number?
      * @throw \RuntimeException If matrix is not square.
      * @access public
      * @return float

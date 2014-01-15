@@ -51,6 +51,54 @@ class MatrixTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(array(3, 6), $m->getCol(2));
     }
 
+    public function testMultiplyMatrixWithScalarOrComplexNumber()
+    {
+        $m = new Malenki\Math\Matrix(2, 2);
+        $m->populate(array(1, 2, 3, 4));
+
+        $mr = new Malenki\Math\Matrix(2, 2);
+        $mr->populate(array(2, 4, 6, 8));
+        
+        $this->assertEquals($mr, $m->multiply(2));
+
+        $z = new Malenki\Math\Complex(1, 2);
+
+        $mr = new Malenki\Math\Matrix(2, 2);
+        $mr->populate(
+            array($z->multiply(1), $z->multiply(2), $z->multiply(3), $z->multiply(4))
+        );
+        
+        $this->assertEquals($mr, $m->multiply($z));
+
+    }
+
+
+    public function testMultiplyRealMatrixWithComplexMatrix()
+    {
+        $m = new Malenki\Math\Matrix(2, 2);
+        $m->populate(array(1, 3, 2, 4));
+
+
+        $z = new Malenki\Math\Complex(1, 2);
+        
+        $mr = new Malenki\Math\Matrix(2, 2);
+        $mr->populate(
+            array($z->multiply(1), $z->multiply(3), $z->multiply(2), $z->multiply(4))
+        );
+        
+        $mf = new Malenki\Math\Matrix(2, 2);
+        $mf->populate(
+            array(
+                new Malenki\Math\Complex(7,14),
+                new Malenki\Math\Complex(15,30),
+                new Malenki\Math\Complex(10,20),
+                new Malenki\Math\Complex(22,44)
+            )
+        );
+
+        $this->assertEquals($mf, $m->multiply($mr));
+    }
+
 
     public function testDetOK()
     {
