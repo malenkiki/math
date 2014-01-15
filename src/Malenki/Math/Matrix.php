@@ -416,6 +416,66 @@ class Matrix
     }
 
 
+    public function cofactor()
+    {
+        $c = new self($this->size->rows, $this->size->cols);
+
+
+        for($m = 0; $m < $this->size->rows; $m++)
+        {
+            $arr_row = array();
+
+            for($n = 0; $n < $this->size->cols; $n++)
+            {
+                if($this->size->cols == 2)
+                {
+                    $arr_row[] = pow(-1, $m + $n) * $this->subMatrix($m, $n)->get(0,0);
+                }
+                else
+                {
+                    $arr_row[] = pow(-1, $m + $n) * $this->subMatrix($m, $n)->det();
+                }
+            }
+
+            $c->addRow($arr_row);
+        }
+
+        return $c;
+    }
+
+
+
+    public function adjugate()
+    {
+        return $this->cofactor()->transpose();
+    }
+
+
+
+    public function inverse()
+    {
+        $det = $this->det();
+
+        if($det == 0)
+        {
+            throw new \RuntimeException('Cannot get inverse matrix: determinant is nul!');
+        }
+
+        return $this->adjugate()->multiply(1 / $det);
+    }
+
+
+
+    /**
+     * Gets sub matrix from current. 
+     * 
+     * This is usefull for determinant calculus, inverse, etc.
+     *
+     * @param integer $int_m Index of rows to ignore
+     * @param integer $int_n Index of column to ignore
+     * @access public
+     * @return Matrix
+     */
     public function subMatrix($int_m, $int_n)
     {
         $sm = new self($this->size->rows - 1, $this->size->cols - 1);
@@ -443,6 +503,13 @@ class Matrix
 
 
 
+    /**
+     * Computes the determinant. 
+     * 
+     * @throw \RuntimeException If matrix is not square.
+     * @access public
+     * @return float
+     */
     public function det()
     {
         if(!$this->isSquare())
@@ -467,8 +534,8 @@ class Matrix
 
             return $int_out;
         }
-        
     }
+        
 
 
     /**
