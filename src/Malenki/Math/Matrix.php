@@ -416,6 +416,60 @@ class Matrix
     }
 
 
+    public function subMatrix($int_m, $int_n)
+    {
+        $sm = new self($this->size->rows - 1, $this->size->cols - 1);
+
+        foreach($this->arr as $m => $row)
+        {
+            if($m != $int_m)
+            {
+                $arr_row = array();
+
+                foreach($row as $n => $v)
+                {
+                    if($n != $int_n)
+                    {
+                        $arr_row[] = $v;
+                    }
+                }
+
+                $sm->addRow($arr_row);
+            }
+        }
+
+        return $sm;
+    }
+
+
+
+    public function det()
+    {
+        if(!$this->isSquare())
+        {
+            throw new \RuntimeException('Cannot compute determinant of non square matrix!');
+        }
+
+        if($this->size->rows == 2)
+        {
+            return $this->get(0,0) * $this->get(1,1) - $this->get(0,1) * $this->get(1,0);
+        }
+        else
+        {
+            $int_out = 0;
+
+            $arr_row = $this->arr[0];
+
+            foreach($arr_row as $n => $v)
+            {
+                $int_out += pow(-1, $n + 2) * $v * $this->subMatrix(0, $n)->det();
+            }
+
+            return $int_out;
+        }
+        
+    }
+
 
     /**
      * Gets all data of the current matrix as 2 dimensions array
