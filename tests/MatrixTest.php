@@ -26,13 +26,33 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 class MatrixTest extends PHPUnit_Framework_TestCase
 {
-    public function testInstanciateOK()
+    public function testPopulateOK()
     {
         $m = new Malenki\Math\Matrix(2, 3);
         $m->populate(array(1, 2, 3, 4, 5, 6));
 
         $this->assertEquals(array(1, 2, 3), $m->getRow(0));
         $this->assertEquals(array(4, 5, 6), $m->getRow(1));
+        
+        $m = new Malenki\Math\Matrix(2, 3);
+        $m->addRow(array(1, 2, 3));
+        $m->addRow(array(4, 5, 6));
+
+        $this->assertEquals(array(1, 2, 3), $m->getRow(0));
+        $this->assertEquals(array(4, 5, 6), $m->getRow(1));
     }
 
+
+    public function testDetOK()
+    {
+        $m = new Malenki\Math\Matrix(2, 2);
+        $m->populate(array(1, 2, 3, 4));
+
+        $this->assertEquals(-2, $m->det());
+        
+        $m = new Malenki\Math\Matrix(3, 3);
+        $m->populate(array(0,2,3,4,5,6,0,8,9));
+
+        $this->assertEquals(24, $m->det());
+    }
 }
