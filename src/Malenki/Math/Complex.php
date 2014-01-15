@@ -62,9 +62,9 @@ class Complex
      * @access public
      * @return Complex
      */
-    public static function fromPolar($rho, $theta)
+    public static function fromPolar($rho, $theta, $precision = 5)
     {
-        return new self($rho * cos($theta), $rho * sin($theta));
+        return new self(round($rho * cos($theta), $precision), round($rho * sin($theta), $precision));
     }
 
 
@@ -180,14 +180,14 @@ class Complex
 
     
     /**
-     * Multiplicates current complex number with another one.
+     * Multiplies current complex number with another.
      * 
      * @todo Allow real numbers too
      * @param mixed $z 
      * @access public
      * @return Complex
      */
-    public function multiplicate($z)
+    public function multiply($z)
     {
         return new self(
             ($this->float_r * $z->re) - ($this->float_i * $z->im),
@@ -236,6 +236,11 @@ class Complex
         if($this->float_i == 0)
         {
             return (string) $this->float_r;
+        }
+        
+        if($this->float_r == 0)
+        {
+            return (string) $this->float_i . 'i';
         }
 
         return sprintf($str, $this->float_r, $this->float_i);
