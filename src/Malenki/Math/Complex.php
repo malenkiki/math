@@ -48,10 +48,6 @@ class Complex
     protected $float_r = 0;
     protected $float_i = 0;
 
-    public static function fromExp()
-    {
-    }
-
     /**
      * Creates complex number using `rho` and `theta` values instead using real 
      * and imaginary part. 
@@ -154,26 +150,32 @@ class Complex
     /**
      * Add value to the current complex number, creating new complex number.
      *
-     * @todo Allow non complex number too 
-     * @param mixed $z 
+     * @param mixed $z Complex or real number 
      * @access public
      * @return Complex
      */
     public function add($z)
     {
-        return new self($this->float_r + $z->re, $this->float_i, $z->im);
+        if(is_numeric($z))
+        {
+            $z = new self($z, 0);
+        }
+        return new self($this->float_r + $z->re, $this->float_i + $z->im);
     }
 
     /**
      * Substracts complex number `z` from the current one.
      * 
-     * @todo Allow non complex number too 
-     * @param mixed $z 
+     * @param mixed $z  Complex or real number
      * @access public
      * @return Complex
      */
     public function substract($z)
     {
+        if(is_numeric($z))
+        {
+            $z = new self($z, 0);
+        }
         return $this->add($z->negative());
     }
 
@@ -182,13 +184,16 @@ class Complex
     /**
      * Multiplies current complex number with another.
      * 
-     * @todo Allow real numbers too
-     * @param mixed $z 
+     * @param mixed $z  Complex or real number
      * @access public
      * @return Complex
      */
     public function multiply($z)
     {
+        if(is_numeric($z))
+        {
+            $z = new self($z, 0);
+        }
         return new self(
             ($this->float_r * $z->re) - ($this->float_i * $z->im),
             ($this->float_r * $z->im) + ($z->re * $this->float_i)
@@ -207,13 +212,16 @@ class Complex
      * Tests whether given `z` complex number is equal to the current complex 
      * number.
      * 
-     * @todo Allow non complex number too 
-     * @param Complex $z 
+     * @param mixed $z Complex or real number
      * @access public
      * @return boolean
      */
-    public function equal(Complex $z)
+    public function equal($z)
     {
+        if(is_numeric($z))
+        {
+            $z = new self($z, 0);
+        }
         return ($z->real == $this->float_r) && ($z->imaginary == $this->float_i);
     }
 

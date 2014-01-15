@@ -110,4 +110,49 @@ class ComplexTest extends PHPUnit_Framework_TestCase
 
         $this->assertTrue($zz->equal($z));
     }
+
+
+    public function testArgument()
+    {
+        $z = new Malenki\Math\Complex(1, 1);
+        $this->assertEquals(pi()/4, $z->argument());
+        
+        $z = new Malenki\Math\Complex(1, 0);
+        $this->assertEquals(0, $z->argument());
+        
+        $z = new Malenki\Math\Complex(0, 1);
+        $this->assertEquals(pi() / 2, $z->argument());
+        
+        $z = new Malenki\Math\Complex(-1, -1);
+        $this->assertEquals(-3 * pi() / 4, $z->argument());
+        
+        $z = new Malenki\Math\Complex(-1, 0);
+        $this->assertEquals(pi(), $z->argument());
+        
+        $z = new Malenki\Math\Complex(0, -1);
+        $this->assertEquals(pi() / -2, $z->argument());
+    }
+
+    public function testConjugate()
+    {
+        $z = new Malenki\Math\Complex(1, 1);
+        $zc = new Malenki\Math\Complex(1, -1);
+        $this->assertTrue($zc->equal($z->conjugate()));
+        
+        $z = new Malenki\Math\Complex(1, -1);
+        $zc = new Malenki\Math\Complex(1, 1);
+        $this->assertTrue($zc->equal($z->conjugate()));
+    }
+
+    public function testAdditionUsingComplexAndRealNumber()
+    {
+        $r = -5;
+        $z = new Malenki\Math\Complex(1, 1);
+        $za = new Malenki\Math\Complex(3, -2);
+        $zs = new Malenki\Math\Complex(4, -1);
+        $this->assertTrue($zs->equal($z->add($za)));
+
+        $zs = new Malenki\Math\Complex(-4, 1);
+        $this->assertTrue($zs->equal($z->add($r)));
+    }
 }

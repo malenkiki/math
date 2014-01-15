@@ -40,6 +40,15 @@ class MatrixTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals(array(1, 2, 3), $m->getRow(0));
         $this->assertEquals(array(4, 5, 6), $m->getRow(1));
+        
+        $m = new Malenki\Math\Matrix(2, 3);
+        $m->addCol(array(1, 4));
+        $m->addCol(array(2, 5));
+        $m->addCol(array(3, 6));
+
+        $this->assertEquals(array(1, 4), $m->getCol(0));
+        $this->assertEquals(array(2, 5), $m->getCol(1));
+        $this->assertEquals(array(3, 6), $m->getCol(2));
     }
 
 
@@ -60,7 +69,8 @@ class MatrixTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals(621, $m->det());
     }
-    
+
+
     /**
      * @expectedException RuntimeException
      */
