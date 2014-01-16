@@ -72,6 +72,34 @@ class MatrixTest extends PHPUnit_Framework_TestCase
 
     }
 
+    public function testMultiplyRealMatrixWithRealMatrix()
+    {
+        $m = new Malenki\Math\Matrix(2, 2);
+        $m->populate(array(1, 2, 3, 4));
+        
+        $n = new Malenki\Math\Matrix(2, 2);
+        $n->populate(array(5, 6, 7, 8));
+
+        $r = new Malenki\Math\Matrix(2, 2);
+        $r->populate(array(19, 22, 43, 50));
+
+        $this->assertEquals($r, $m->multiply($n));
+
+        $r = new Malenki\Math\Matrix(2, 2);
+        $r->populate(array(23, 34, 31, 46));
+
+        $this->assertEquals($r, $n->multiply($m));
+
+        /*
+        $n = new Malenki\Math\Matrix(2, 1);
+        $n->populate(array(5, 6));
+
+        $r = new Malenki\Math\Matrix(2, 1);
+        $r->populate(array(17, 39));
+
+        $this->assertEquals($r, $m->multiply($n));
+         */
+    }
 
     public function testMultiplyRealMatrixWithComplexMatrix()
     {
