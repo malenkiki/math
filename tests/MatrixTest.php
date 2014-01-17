@@ -203,4 +203,21 @@ class MatrixTest extends PHPUnit_Framework_TestCase
 
         $i = $m->inverse();
     }
+    
+    
+    public function testAddRealMatrixWithPartlyComplexMatrix()
+    {
+        $m = new Malenki\Math\Matrix(2, 2);
+        $m->populate(array(1, 2, 3, 4));
+        
+        $z = new Malenki\Math\Matrix(2, 2);
+        $z->populate(array(1, new Malenki\Math\Complex(2, 1), 3, 4));
+        
+        $r = new Malenki\Math\Matrix(2, 2);
+        $r->populate(array(2, new Malenki\Math\Complex(4, 1), 6, 8));
+
+        $this->assertEquals($r, $m->add($z));
+        $this->assertEquals($r, $z->add($m));
+    }
+
 }

@@ -339,7 +339,18 @@ class Matrix
 
             foreach($v as $kk => $vv)
             {
-                $arrNew[] = $arrOther[$kk] + $vv;
+                if($arrOther[$kk] instanceof Complex)
+                {
+                    $arrNew[] = $arrOther[$kk]->add($vv);
+                }
+                elseif($vv instanceof Complex)
+                {
+                    $arrNew[] = $vv->add($arrOther[$kk]);
+                }
+                else
+                {
+                    $arrNew[] = $arrOther[$kk] + $vv;
+                }
             }
 
             $out->addRow($arrNew);
