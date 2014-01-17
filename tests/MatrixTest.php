@@ -90,7 +90,14 @@ class MatrixTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals($r, $n->multiply($m));
 
-        /*
+        $n = new Malenki\Math\Matrix(2, 3);
+        $n->populate(array(5, 6, 7, 8, 9, 10));
+
+        $r = new Malenki\Math\Matrix(2, 3);
+        $r->populate(array(21,24,27,47,54,61));
+
+        $this->assertEquals($r, $m->multiply($n));
+
         $n = new Malenki\Math\Matrix(2, 1);
         $n->populate(array(5, 6));
 
@@ -98,7 +105,6 @@ class MatrixTest extends PHPUnit_Framework_TestCase
         $r->populate(array(17, 39));
 
         $this->assertEquals($r, $m->multiply($n));
-         */
     }
 
     public function testMultiplyRealMatrixWithComplexMatrix()

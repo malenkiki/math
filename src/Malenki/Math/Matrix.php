@@ -144,7 +144,7 @@ class Matrix
 
         if(count($arr_row) != $this->size->cols)
         {
-            throw new \InvalidArgumentException('New row must have same amout of columns than previous rows.');
+            throw new \InvalidArgumentException('New row must have same amout of columns than defined into the size matrix');
         }
 
         $this->arr[] = $arr_row;
@@ -367,7 +367,7 @@ class Matrix
 
         if($mix instanceof \Malenki\Math\Matrix)
         {
-            $out = new self($mix->rows, $this->size->cols);
+            $out = new self($this->size->rows, $mix->cols);
 
             for($r = 0; $r < $this->size->rows; $r++)
             {
