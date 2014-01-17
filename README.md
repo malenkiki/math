@@ -40,7 +40,7 @@ var_dump($m->getAll()); // Gets all data as array
 print($m);
 ```
 
-Getting matrix transpose is as simple as that:
+Getting matrix __transpose__ is as simple as that:
 
 ```php
 echo $m->transpose();
@@ -48,10 +48,10 @@ echo $m->transpose();
 
 OK, you can get, you can set… but you can do more complicated things.
 
-You can multiply matrix with another one, but beware of compatibility!
+You can __multiply__ matrix with another one, __but beware of compatibility!__
 
 ```php
-$n = new \Malenki\Matrix(2, 3);
+$n = new \Malenki\Math\Matrix(2, 3);
 $n->populate(array(7, 8, 9, 10, 11, 12));
 
 if($m->multiplyAllow($n))
@@ -60,7 +60,15 @@ if($m->multiplyAllow($n))
 }
 ```
 
-Addition is possible too, you must test before if size of each matrix is the same, or catch exception.
+You can multiply matrix with a scalar too, or a complex number:
+
+```php
+$z = new \Malenki\Math\Complex(2, -3);
+$n->multiply(2);
+$n->multiply($z);
+```
+
+__Addition__ is possible too, you must test before if size of each matrix is the same, or catch exception.
 
 ```php
 try {
@@ -83,8 +91,35 @@ else
 }
 ```
 
-Into near futur, determinant and inverse will be available!
+Getting __determinant__ of a square matrix is easy, just do the following:
 
+```php
+$m = new \Malenki\Math\Matrix(2,2);
+$m->populate(array(1,2,3,4));
+var_dump($m->det()); // should be -2
+```
+
+If you try to get determinant for a non square matrix, you get an Exception.
+
+__Inverse__ of square matrix is simple too, and like you can imagine, it is like that:
+
+```php
+$m = new \Malenki\Math\Matrix(2,2);
+$m->populate(array(1,2,3,4));
+$i = $m->inverse();
+echo $i;
+// should be:
+// -2   1
+// 1.5  -0.5
+```
+The __cofactor matrix__, used be previous method, is compute with that:
+
+```php
+$m = new \Malenki\Math\Matrix(2,2);
+$m->populate(array(1,2,3,4));
+$c = $m->cofactor();
+echo $c;
+```
 
 
 ## Complex
