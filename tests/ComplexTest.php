@@ -174,4 +174,86 @@ class ComplexTest extends PHPUnit_Framework_TestCase
         $zs = new Malenki\Math\Complex(-4, 1);
         $this->assertTrue($zs->equal($z->add($r)));
     }
+
+
+    public function testMultiplicationOfComplexWithComplex()
+    {
+        $z = new Malenki\Math\Complex(1, 2);
+        $za = new Malenki\Math\Complex(3, 4);
+        $r = new Malenki\Math\Complex(-5, 10);
+        $this->assertEquals($r, $z->multiply($za));
+        $this->assertEquals($r, $za->multiply($z));
+        $this->assertTrue($r->equal($z->multiply($za)));
+        $this->assertTrue($r->equal($za->multiply($z)));
+        
+        $za = new Malenki\Math\Complex(3, -4);
+        $r = new Malenki\Math\Complex(11, 2);
+        $this->assertEquals($r, $z->multiply($za));
+        $this->assertEquals($r, $za->multiply($z));
+        $this->assertTrue($r->equal($z->multiply($za)));
+        $this->assertTrue($r->equal($za->multiply($z)));
+        
+        $za = new Malenki\Math\Complex(-3, -4);
+        $r = new Malenki\Math\Complex(5, -10);
+        $this->assertEquals($r, $z->multiply($za));
+        $this->assertEquals($r, $za->multiply($z));
+        $this->assertTrue($r->equal($z->multiply($za)));
+        $this->assertTrue($r->equal($za->multiply($z)));
+        
+        $za = new Malenki\Math\Complex(-3, 4);
+        $r = new Malenki\Math\Complex(-11, -2);
+        $this->assertEquals($r, $z->multiply($za));
+        $this->assertEquals($r, $za->multiply($z));
+        $this->assertTrue($r->equal($z->multiply($za)));
+        $this->assertTrue($r->equal($za->multiply($z)));
+    }
+    
+    
+    public function testMultiplicationOfComplexWithRealNumber()
+    {
+        $z = new Malenki\Math\Complex(1, 2);
+        $real = 4;
+        $r = new Malenki\Math\Complex(4, 8);
+        $this->assertEquals($r, $z->multiply($real));
+        $this->assertTrue($r->equal($z->multiply($real)));
+        
+        $real = -4;
+        $r = new Malenki\Math\Complex(-4, -8);
+        $this->assertEquals($r, $z->multiply($real));
+        $this->assertTrue($r->equal($z->multiply($real)));
+        
+        $z = new Malenki\Math\Complex(1, -2);
+        $real = 4;
+        $r = new Malenki\Math\Complex(4, -8);
+        $this->assertEquals($r, $z->multiply($real));
+        $this->assertTrue($r->equal($z->multiply($real)));
+        
+        $real = -4;
+        $r = new Malenki\Math\Complex(-4, 8);
+        $this->assertEquals($r, $z->multiply($real));
+        $this->assertTrue($r->equal($z->multiply($real)));
+        
+        
+        $z = new Malenki\Math\Complex(-1, 2);
+        $real = 4;
+        $r = new Malenki\Math\Complex(-4, 8);
+        $this->assertEquals($r, $z->multiply($real));
+        $this->assertTrue($r->equal($z->multiply($real)));
+        
+        $real = -4;
+        $r = new Malenki\Math\Complex(4, -8);
+        $this->assertEquals($r, $z->multiply($real));
+        $this->assertTrue($r->equal($z->multiply($real)));
+        
+        $z = new Malenki\Math\Complex(-1, -2);
+        $real = 4;
+        $r = new Malenki\Math\Complex(-4, -8);
+        $this->assertEquals($r, $z->multiply($real));
+        $this->assertTrue($r->equal($z->multiply($real)));
+        
+        $real = -4;
+        $r = new Malenki\Math\Complex(4, 8);
+        $this->assertEquals($r, $z->multiply($real));
+        $this->assertTrue($r->equal($z->multiply($real)));
+    }    
 }
