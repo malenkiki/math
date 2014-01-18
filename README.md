@@ -158,7 +158,7 @@ var_dump($z->rho); // modulus aka norm
 var_dump($z->theta); // argument (angle)
 ```
 
-You can do addion, multiplication:
+You can do addition, multiplication:
 
 ```php
 $z = new \Malenki\Math\Complex(1,2);
@@ -180,4 +180,13 @@ echo $z->negative();
 
 You can play with graph for given mean and standard deviation, or you can generate fake samples.
 
-TODO
+Some examples to understand:
+
+```php
+// Normal Distribution with mean equals to 2 and has standard deviation of 0.3
+$nd = new \Malenki\Math\NormalDistribution(2, 0.3);
+// you can get value of function:
+$nd->f(3);
+// you can generate fake sample following the current normal distribution:
+$md->samples(100); // 100 elements into an array
+```
