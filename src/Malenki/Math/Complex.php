@@ -75,6 +75,16 @@ class Complex
         {
             return $this->float_i;
         }
+
+        if($name == 'rho')
+        {
+            return $this->modulus();
+        }
+
+        if($name == 'theta')
+        {
+            return $this->argument();
+        }
     }
 
     /**
@@ -106,6 +116,11 @@ class Complex
     public function norm()
     {
         return sqrt(pow($this->float_r, 2) + pow($this->float_i, 2));
+    }
+
+    public function modulus()
+    {
+        return $this->norm();
     }
 
     /**

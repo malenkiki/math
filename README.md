@@ -127,7 +127,15 @@ echo $c;
 Using complex is like a child game: instanciate it with real part and imaginary part. That’s all!
 
 ```php
-$z = new \Malenki\MAth\Complex(2, -3);
+$z = new \Malenki\Math\Complex(2, -3);
+```
+
+But you can create complex number using __rho__ and __theta__ values:
+
+```php
+$z = \Malenki\Math\Complex::fromPolar(1, pi());
+//is the same as:
+$z = new \Malenki\Math\Complex(-1, 0)
 ```
 
 Complex number object acts like string too:
@@ -136,7 +144,37 @@ Complex number object acts like string too:
 echo $z; // print 2-3i
 ```
 
-TODO
+You have some magic getters:
+
+```php
+$z = new \Malenki\Math\Complex(1,2);
+var_dump($z->real); // real part
+var_dump($z->re); // real part
+var_dump($z->r); // real part
+var_dump($z->imaginary); // imaginary part
+var_dump($z->im); //imaginary part 
+var_dump($z->i); // imaginary part
+var_dump($z->rho); // modulus aka norm
+var_dump($z->theta); // argument (angle)
+```
+
+You can do addion, multiplication:
+
+```php
+$z = new \Malenki\Math\Complex(1,2);
+$zz = new \Malenki\Math\Complex(2,3);
+echo $z->add($zz); // give new complex nulber
+echo $z->multiply($zz); // give another complex number
+```
+
+Get negative and conjugate is simple too:
+
+```php
+$z = new \Malenki\Math\Complex(1,2);
+echo $z->conjugate();
+echo $z->negative();
+```
+
 
 ## Normal distribution
 
