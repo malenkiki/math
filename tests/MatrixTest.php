@@ -51,6 +51,54 @@ class MatrixTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(array(3, 6), $m->getCol(2));
     }
 
+
+
+    public function testGettingSubMatrix()
+    {
+        $m = new Malenki\Math\Matrix(2, 2);
+        $m->populate(array(1, 2, 3, 4));
+
+
+        $r = new Malenki\Math\Matrix(1, 1);
+        $r->populate(array(4));
+
+        $this->assertEquals($r, $m->subMatrix(0, 0));
+
+        $r = new Malenki\Math\Matrix(1, 1);
+        $r->populate(array(3));
+
+        $this->assertEquals($r, $m->subMatrix(0, 1));
+
+        $r = new Malenki\Math\Matrix(1, 1);
+        $r->populate(array(2));
+
+        $this->assertEquals($r, $m->subMatrix(1, 0));
+
+        $r = new Malenki\Math\Matrix(1, 1);
+        $r->populate(array(1));
+
+        $this->assertEquals($r, $m->subMatrix(1, 1));
+        
+        
+        $m = new Malenki\Math\Matrix(3, 3);
+        $m->populate(array(1, 2, 3, 4, 5, 6, 7, 8, 9));
+        
+        $r = new Malenki\Math\Matrix(2, 2);
+        $r->populate(array(1, 3, 7, 9));
+
+        $this->assertEquals($r, $m->subMatrix(1, 1));
+        
+        $r = new Malenki\Math\Matrix(2, 2);
+        $r->populate(array(5, 6, 8, 9));
+
+        $this->assertEquals($r, $m->subMatrix(0, 0));
+        
+        $r = new Malenki\Math\Matrix(2, 2);
+        $r->populate(array(1, 2, 4, 5));
+
+        $this->assertEquals($r, $m->subMatrix(2, 2));
+    }
+
     public function testMultiplyMatrixWithScalarOrComplexNumber()
     {
         $m = new Malenki\Math\Matrix(2, 2);
@@ -134,7 +182,7 @@ class MatrixTest extends PHPUnit_Framework_TestCase
     }
 
 
-    public function testDetOK()
+    public function testComputeDeterminantOfSquareMatrix()
     {
         $m = new Malenki\Math\Matrix(2, 2);
         $m->populate(array(1, 2, 3, 4));
@@ -156,17 +204,16 @@ class MatrixTest extends PHPUnit_Framework_TestCase
     /**
      * @expectedException RuntimeException
      */
-    public function testDetKO()
+    public function testComputingDeterminantForNonSquareMatrixMustRaiseRuntimeException()
     {
         $m = new Malenki\Math\Matrix(2, 3);
         $m->populate(array(1, 2, 3, 4, 5, 6));
 
         $m->det();
-        
     }
 
 
-    public function testInverseOK()
+    public function testGettingInverseMatrixFromInversibleMatrixWillSuccess()
     {
         $m = new Malenki\Math\Matrix(2, 2);
         $m->populate(array(2,3,4,5));
@@ -196,7 +243,7 @@ class MatrixTest extends PHPUnit_Framework_TestCase
     /**
      * @expectedException RuntimeException
      */
-    public function testInverseKO()
+    public function testGettingInverseMatrixFromNonInversibleMatrixWillRaiseRuntimeException()
     {
         $m = new Malenki\Math\Matrix(2, 2);
         $m->populate(array(2,0,4,0));
