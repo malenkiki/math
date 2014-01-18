@@ -77,6 +77,25 @@ class ComplexTest extends PHPUnit_Framework_TestCase
         
         $z = new Malenki\Math\Complex(0, -2);
         $this->assertEquals('-2i', sprintf('%s', $z));
+        
+        $z = new Malenki\Math\Complex(0, 1);
+        $this->assertEquals('i', sprintf('%s', $z));
+        
+        $z = new Malenki\Math\Complex(0, -1);
+        $this->assertEquals('-i', sprintf('%s', $z));
+        
+        $z = new Malenki\Math\Complex(2, 1);
+        $this->assertEquals('2+i', sprintf('%s', $z));
+        
+        $z = new Malenki\Math\Complex(2, -1);
+        $this->assertEquals('2-i', sprintf('%s', $z));
+        
+        $z = new Malenki\Math\Complex(-2, 1);
+        $this->assertEquals('-2+i', sprintf('%s', $z));
+        
+        $z = new Malenki\Math\Complex(-2, -1);
+        $this->assertEquals('-2-i', sprintf('%s', $z));
+        
     }
     
     

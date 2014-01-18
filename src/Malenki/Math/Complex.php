@@ -234,12 +234,20 @@ class Complex
      */
     public function __toString()
     {
-        $str = '%d%di';
+        $str_sign = '-';
+        $str_re = '';
+        $str_im = 'i';
 
         if($this->float_i > 0)
         {
-            $str = '%d+%di';
+            $str_sign = '+';
         }
+        
+        if(abs($this->float_i) > 1)
+        {
+            $str_im = (string) abs($this->float_i) . 'i';
+        }
+        
         
         if($this->float_i == 0)
         {
@@ -248,9 +256,24 @@ class Complex
         
         if($this->float_r == 0)
         {
-            return (string) $this->float_i . 'i';
+            if(abs($this->float_i) == 1)
+            {
+                return $this->float_i == 1 ? 'i' : '-i';
+            }
+            else
+            {
+                return (string) $this->float_i . 'i';
+            }
+        }
+        else
+        {
+            $str_re = (string) $this->float_r;
         }
 
-        return sprintf($str, $this->float_r, $this->float_i);
+        $arr = array();
+        $arr[] = $str_re;
+        $arr[] = $str_im;
+
+        return implode($str_sign, $arr);
     }
 }

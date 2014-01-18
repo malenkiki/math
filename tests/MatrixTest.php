@@ -220,4 +220,26 @@ class MatrixTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($r, $z->add($m));
     }
 
+
+
+    public function testToString()
+    {
+        $m = new Malenki\Math\Matrix(2, 3);
+        $m->populate(array(1, 2, 3, 4, 5, 6));
+
+        $this->assertEquals("1  2  3\n4  5  6", sprintf('%s', $m));
+        
+        
+        $m = new Malenki\Math\Matrix(2, 3);
+        $m->populate(array(1, 20, 3, 4, 5, 60));
+
+        $this->assertEquals("1  20   3\n4   5  60", sprintf('%s', $m));
+        
+        
+        $m = new Malenki\Math\Matrix(2, 3);
+        $m->populate(array(1, new Malenki\Math\Complex(2, 1), 3, 4, 5, 60));
+
+        $this->assertEquals("1  2+i   3\n4    5  60", sprintf('%s', $m));
+    }
+
 }
