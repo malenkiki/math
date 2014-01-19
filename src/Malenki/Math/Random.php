@@ -69,6 +69,11 @@ class Random
 
     public function getMany($n)
     {
+        if(!is_integer($n) || $n < 2)
+        {
+            throw new \InvalidArgumentException('You must take 2 or more items in this case.');
+        }
+
         $arr_out = array();
 
         for($i = 0; $i < $n; $i++)
@@ -77,5 +82,60 @@ class Random
         }
 
         return $arr_out;
+    }
+
+
+    public function getManyWithoutReplacement($n)
+    {
+        if(!is_integer($n) || $n < 2)
+        {
+            throw new \InvalidArgumentException('You must take 2 or more items in this case.');
+        }
+
+
+        if($this->range->as_integer)
+        {
+            $arr_range = range($this->range->min, $this->range->max);
+            $max_takable = count($arr_range);
+
+            shuffle($arr_range);
+
+            if($n > $max_takable)
+            {
+                throw new \OutOfRangeException(
+                    sprintf(
+                        'Cannot take without replacement more than available items into range [%d;%d]',
+                        $this->range->min,
+                        $this->range->max
+                    )
+                );
+            }
+            elseif($n == $max_takable)
+            {
+                return array_values($arr_range);
+            }
+            else
+            {
+                return array_slice($arr_range, 0, $n);
+            }
+        }
+        else
+        {
+            $arr_out = array();
+
+            while(count($arr_out) < $n)
+            {
+                $r = $this->get();
+                
+                if(!in_array($r, $arr_out))
+                {
+                    $arr_out[] = $r;
+                }
+            }
+
+            return $arr_out;
+        }
+
+
     }
 }
