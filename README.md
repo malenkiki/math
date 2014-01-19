@@ -193,7 +193,7 @@ $md->samples(100); // 100 elements into an array
 
 ## Random
 
-You can play with random number, into integer range you or as float between 0 and 1.
+You can play with random numbers, included into integer range or as float between 0 and 1.
 
 You can take one:
 
@@ -206,15 +206,21 @@ var_dump($r->get());
 ```
 
 You can take many:
+
+```php
 $r = new \Malenki\Math\Random(); // double form 0 to 1 only
 var_dump($r->getMany(5));
 
 $r = new \Malenki\Math\Random(-5, 18); // integer range
 var_dump($r->getMany(5));
+```
 
 You can take many without replacement:
+
+```php
 $r = new \Malenki\Math\Random(); // double form 0 to 1 only
 var_dump($r->getManyWithoutReplacement(5));
 
 $r = new \Malenki\Math\Random(-5, 18); // integer range
 var_dump($r->getManyWithoutReplacement(5));
+```
