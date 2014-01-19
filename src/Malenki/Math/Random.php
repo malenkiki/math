@@ -57,7 +57,7 @@ class Random
 
     public function get()
     {
-        if($this->range->is_integer)
+        if($this->range->as_integer)
         {
             return rand($this->range->min, $this->range->max);
         }
