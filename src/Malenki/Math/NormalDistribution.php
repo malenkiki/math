@@ -271,17 +271,20 @@ class NormalDistribution
 
         for($i = 1; $i <= $amount; $i++)
         {
-            $float_u = rand() / getrandmax();
-            $float_v = rand() / getrandmax();
+            $r = new Random();
+            $float_u = $r->get();
+            $float_v = $r->get();
 
             $double_x = $this->float_sigma * sqrt(-2 * log($float_u)) * cos(2 * pi() * $float_v) + $this->float_mu;
 
             if($this->int_precision)
             {
-                return round($double_x, $this->int_precision);
+                $arr[] = round($double_x, $this->int_precision);
             }
-
-            $arr[] = $double_x;
+            else
+            {
+                $arr[] = $double_x;
+            }
         }
 
         return $arr;
