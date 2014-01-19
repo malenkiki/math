@@ -2,7 +2,7 @@
 
 Little library to deal with some mathematical stuff.
 
-Implemented or partially implemented are: Complex number, Matrix and Normal distribution.
+Implemented or partially implemented are: Complex number, Matrix, Normal distribution, Random.
 
 ## Matrix
 
@@ -190,3 +190,31 @@ $nd->f(3);
 // you can generate fake sample following the current normal distribution:
 $md->samples(100); // 100 elements into an array
 ```
+
+## Random
+
+You can play with random number, into integer range you or as float between 0 and 1.
+
+You can take one:
+
+```php
+$r = new \Malenki\Math\Random(); // double form 0 to 1 only
+var_dump($r->get());
+
+$r = new \Malenki\Math\Random(-5, 18); // integer range
+var_dump($r->get());
+```
+
+You can take many:
+$r = new \Malenki\Math\Random(); // double form 0 to 1 only
+var_dump($r->getMany(5));
+
+$r = new \Malenki\Math\Random(-5, 18); // integer range
+var_dump($r->getMany(5));
+
+You can take many without replacement:
+$r = new \Malenki\Math\Random(); // double form 0 to 1 only
+var_dump($r->getManyWithoutReplacement(5));
+
+$r = new \Malenki\Math\Random(-5, 18); // integer range
+var_dump($r->getManyWithoutReplacement(5));
