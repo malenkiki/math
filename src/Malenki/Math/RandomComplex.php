@@ -39,9 +39,21 @@ class RandomComplex
         $whole_min = (integer) $float_min;
         $whole_max = (integer) $float_max;
 
-        $frac_min = $float_min - $whole_min;
-        $frac_max = $float_max - $whole_max;
+        $frac_min = abs($float_min - $whole_min);
+        $frac_max = abs($float_max - $whole_max);
 
+        if($whole_min == $whole_max)
+        {
+            $rand_frac = new Random();
+            
+            do
+            {
+                $out_frac = $rand_frac->get();
+            }
+            while($out_frac > $frac_max || $out_frac < $frac_min);
+
+            return $whole_min + $out_frac;
+        }
         $rand_whole = new Random($whole_min, $whole_max);
         $rand_frac = new Random();
 
@@ -53,14 +65,20 @@ class RandomComplex
         }
         else
         {
-            $out_frac_min = $rand_frac->get() / abs($frac_min);
-            $out_frac_max = $rand_frac->get() / abs($frac_max);
+            do
+            {
+                $out_frac_min = $rand_frac->get();
+            }
+            while($out_frac_min < $frac_min);
 
+            $out_frac_max = $rand_frac->get() * abs($frac_max);
+
+            var_dump($out_frac_max);
             if($out_whole == $whole_min)
             {
-                if($whole_min < 0)
+                if($float_min < 0)
                 {
-                    return $out_whole - $out_frac_min;
+                    return $out_whole - (1 - $out_frac_min);
                 }
                 else
                 {
@@ -69,7 +87,7 @@ class RandomComplex
             }
             else
             {
-                if($whole_max < 0)
+                if($float_max < 0)
                 {
                     return $out_whole - $out_frac_max;
                 }
