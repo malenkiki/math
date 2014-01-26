@@ -26,11 +26,70 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 class RandomComplexTest extends PHPUnit_Framework_TestCase
 {
-    public function testProv()
+    public function testCreatingMultipleComplexOnlyWithPositiveReals()
     {
         $r = new Malenki\Math\RandomComplex();
-        $r->r(3.5, 7.3);
-        //var_dump($r->getMany(10));
+        $r->r(2.2, 7.4);
+        $arr = $r->getMany(100);
+
+        foreach($arr as $z)
+        {
+            $this->assertGreaterThanOrEqual(2.2, $z->r);
+            $this->assertLessThanOrEqual(7.4, $z->r);
+        }
     }
+
+    public function testCreatingMultipleComplexOnlyWithNegativeReals()
+    {
+        $r = new Malenki\Math\RandomComplex();
+        $r->r(-4.3, -1.2);
+        $arr = $r->getMany(100);
+
+        foreach($arr as $z)
+        {
+            $this->assertGreaterThanOrEqual(-4.3, $z->r);
+            $this->assertLessThanOrEqual(-1.2, $z->r);
+        }
+    }
+    
+    public function testCreatingMultipleComplexOnlyWithNegativeAndPositiveReals()
+    {
+        $r = new Malenki\Math\RandomComplex();
+        $r->r(-3.2, 5.6);
+        $arr = $r->getMany(100);
+
+        foreach($arr as $z)
+        {
+            $this->assertGreaterThanOrEqual(-3.2, $z->r);
+            $this->assertLessThanOrEqual(5.6, $z->r);
+        }
+    }
+
+    public function testCreatingMultipleComplexWithPositiveRealsHavingSameWholePart()
+    {
+        $r = new Malenki\Math\RandomComplex();
+        $r->r(3.2, 3.6);
+        $arr = $r->getMany(100);
+
+        foreach($arr as $z)
+        {
+            $this->assertGreaterThanOrEqual(3.2, $z->r);
+            $this->assertLessThanOrEqual(3.6, $z->r);
+        }
+    }
+
+    /*
+    public function testCreatingMultipleComplexWithNegativeRealsHavingSameWholePart()
+    {
+        $r = new Malenki\Math\RandomComplex();
+        $r->r(-3.8, -3.2);
+        $arr = $r->getMany(100);
+
+        foreach($arr as $z)
+        {
+            $this->assertGreaterThanOrEqual(-3.8, $z->r);
+            $this->assertLessThanOrEqual(-3.2, $z->r);
+        }
+    }*/
 
 }

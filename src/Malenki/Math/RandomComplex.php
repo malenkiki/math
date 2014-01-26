@@ -65,17 +65,16 @@ class RandomComplex
         }
         else
         {
-            do
-            {
-                $out_frac_min = $rand_frac->get();
-            }
-            while($out_frac_min < $frac_min);
 
-            $out_frac_max = $rand_frac->get() * abs($frac_max);
 
-            var_dump($out_frac_max);
             if($out_whole == $whole_min)
             {
+                do
+                {
+                    $out_frac_min = $rand_frac->get();
+                }
+                while($out_frac_min < $frac_min);
+
                 if($float_min < 0)
                 {
                     return $out_whole - (1 - $out_frac_min);
@@ -89,10 +88,22 @@ class RandomComplex
             {
                 if($float_max < 0)
                 {
+                    do
+                    {
+                        $out_frac_max = $rand_frac->get();
+                    }
+                    while($out_frac_max < $frac_max);
+
                     return $out_whole - $out_frac_max;
                 }
                 else
                 {
+                    do
+                    {
+                        $out_frac_max = $rand_frac->get();
+                    }
+                    while($out_frac_max > $frac_max);
+
                     return $out_whole + $out_frac_max;
                 }
             }
