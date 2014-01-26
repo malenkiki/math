@@ -45,8 +45,40 @@ class RandomComplex
         $rand_whole = new Random($whole_min, $whole_max);
         $rand_frac = new Random();
 
-        $rand_frac->get() / abs($frac_min);
-        $rand_frac->get() / abs($frac_max);
+        $out_whole = $rand_whole->get();
+
+        if(!in_array($out_whole, array($whole_min, $whole_max)))
+        {
+            return $out_whole + $rand_frac->get();
+        }
+        else
+        {
+            $out_frac_min = $rand_frac->get() / abs($frac_min);
+            $out_frac_max = $rand_frac->get() / abs($frac_max);
+
+            if($out_whole == $whole_min)
+            {
+                if($whole_min < 0)
+                {
+                    return $out_whole - $out_frac_min;
+                }
+                else
+                {
+                    return $out_whole + $out_frac_min;
+                }
+            }
+            else
+            {
+                if($whole_max < 0)
+                {
+                    return $out_whole - $out_frac_max;
+                }
+                else
+                {
+                    return $out_whole + $out_frac_max;
+                }
+            }
+        }
     }
 
 
@@ -97,11 +129,32 @@ class RandomComplex
 
     public function get()
     {
+        if($this->r && !$this->i && !$this->rho && !$this->theta)
+        {
+            return new Complex($this->random($this->r->min, $this->r->max), 0);
+        }
+        if(!$this->r && $this->i && !$this->rho && !$this->theta)
+        {
+            return new Complex(0, $this->random($this->i->min, $this->i->max));
+        }
     }
 
 
 
     public function getMany($n)
     {
+        if(!is_integer($n) || $n < 2)
+        {
+            throw new \InvalidArgumentException('You must take 2 or more items in this case.');
+        }
+
+        $arr_out = array();
+
+        for($i = 0; $i < $n; $i++)
+        {
+            $arr_out[] = $this->get();
+        }
+
+        return $arr_out;
     }
 }
