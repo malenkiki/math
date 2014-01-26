@@ -45,7 +45,7 @@ class RandomComplexTest extends PHPUnit_Framework_TestCase
         $r->r(-4.3, -1.2);
         $arr = $r->getMany(100);
 
-        foreach($arr as $z)
+        foreach($arr as $k => $z)
         {
             $this->assertGreaterThanOrEqual(-4.3, $z->r);
             $this->assertLessThanOrEqual(-1.2, $z->r);

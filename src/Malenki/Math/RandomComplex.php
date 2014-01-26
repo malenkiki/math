@@ -77,7 +77,7 @@ class RandomComplex
 
                 if($float_min < 0)
                 {
-                    return $out_whole - (1 - $out_frac_min);
+                    return $out_whole + (1 - $out_frac_min);
                 }
                 else
                 {
@@ -94,6 +94,7 @@ class RandomComplex
                     }
                     while($out_frac_max < $frac_max);
 
+                    //TODO WTF??? Sometimes it is not the right value!!!
                     return $out_whole - $out_frac_max;
                 }
                 else
