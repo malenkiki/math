@@ -105,7 +105,7 @@ class Angle
     
     public function rad()
     {
-        if($this->original->type == self::TYPE_DEG)
+        if($this->original->type == self::TYPE_RAD)
         {
             return $this->original->value;
         }
