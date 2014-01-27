@@ -134,6 +134,11 @@ class Angle
 
     public function dms()
     {
+        $float_deg = abs($this->deg());
+        $whole_part = (integer) $float_deg;
+        $fractional_part = $float_deg - $whole_part;
+
+        $fractional_part * 60;
     }
 
 

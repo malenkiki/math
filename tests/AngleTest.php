@@ -33,6 +33,13 @@ class AngleTest extends PHPUnit_Framework_TestCase
     }
 
 
+    public function testOutputAsDegreesMinutesSecond()
+    {
+        $this->markTestSkipped('Feature DMS is not implemented yet');
+        $a = new Angle(56.789, Angle::TYPE_DEG);
+    }
+
+
     public function testCreateFromDegreesToGetOthers()
     {
         $a = new Angle(0, Angle::TYPE_DEG);
