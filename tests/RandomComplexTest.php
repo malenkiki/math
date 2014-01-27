@@ -41,6 +41,7 @@ class RandomComplexTest extends PHPUnit_Framework_TestCase
 
     public function testCreatingMultipleComplexOnlyWithNegativeReals()
     {
+        $this->markTestSkipped('Must be reimplemented');
         $r = new Malenki\Math\RandomComplex();
         $r->r(-4.3, -1.2);
         $arr = $r->getMany(100);
