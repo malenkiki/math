@@ -2,7 +2,27 @@
 
 Little library to deal with some mathematical stuff.
 
-Implemented or partially implemented are: Complex number, Matrix, Normal distribution, Random.
+Implemented or partially implemented are: Complex number, Matrix, Normal distribution, Random, Angle.
+
+## Angle
+
+You can use angles as **deg**, **gon**, **rad** or **turn*. By default, radians is used.
+
+```php
+$a = new \Malenki\Math\Angle(pi()/2);
+var_dump($a->deg); // get degrees
+var_dump($a->rad); // get radians
+var_dump($a->gon); // get radians
+var_dump($a->turn); // get turns
+```
+
+You can get DMS style too:
+
+```php
+$a = new \Malenki\Math\Angle(34.53, \Malenki\Math\Angle::TYPE_DEG);
+var_dump($a->dms); // get DMS object
+var_dump($a->dms->str); // get DMS string '34°31′48″'
+```
 
 ## Matrix
 
