@@ -134,11 +134,30 @@ class Angle
 
     public function dms()
     {
-        $float_deg = abs($this->deg());
-        $whole_part = (integer) $float_deg;
-        $fractional_part = $float_deg - $whole_part;
+        $float = abs($this->deg());
 
-        $fractional_part * 60;
+        function prov($float)
+        {
+            $whole_part = (integer) $float;
+            $fractional_part = $float - $whole_part;
+
+            $out = new \stdClass();
+            $out->whole = $whole_part;
+            $out->fractional = $fractional_part * 60;
+            return $out;
+        }
+
+        $prov_1 = prov($float);
+        $prov_2 = prov($prov_1->fractional);
+        $prov_3 = prov($prov_2->fractional);
+
+        $dms = new \stdClass();
+        $dms->d = $prov_1->whole; 
+        $dms->m = $prov_2->whole; 
+        $dms->s = $prov_3->whole;
+        $dms->str = sprintf('%d°%d′%d″', $dms->d, $dms->m, $dms->s);
+
+        return $dms;
     }
 
 
