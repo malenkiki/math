@@ -34,6 +34,7 @@ namespace Malenki\Math;
  * @property-read $gon Get gon
  * @property-read $turn Get number of turns
  * @property-read $dms Get Degrees/Minutes/Second object
+ * @property-read $type Original type used to create Angle, the type returned by get()
  * @todo use http://en.wikipedia.org/wiki/Angle to have other ideas of units. 
  * @author Michel Petit <petit.michel@gmail.com> 
  * @license MIT
