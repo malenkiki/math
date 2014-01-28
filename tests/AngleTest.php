@@ -44,6 +44,41 @@ class AngleTest extends PHPUnit_Framework_TestCase
     }
 
 
+    public function testOtherAngleIsComplementaryWithActual()
+    {
+        $a = new Angle(pi() / 4);
+        $this->assertTrue($a->isComplementary($a));
+        
+        $a = new Angle(pi() / 8);
+        $b = new Angle(3 * pi() / 8);
+        $this->assertTrue($a->isComplementary($b));
+        $this->assertTrue($b->isComplementary($a));
+        
+        
+        $a = new Angle(45, Angle::TYPE_DEG);
+        $this->assertTrue($a->isComplementary($a));
+        
+        $a = new Angle(15, Angle::TYPE_DEG);
+        $b = new Angle(75, Angle::TYPE_DEG);
+        $this->assertTrue($a->isComplementary($b));
+        $this->assertTrue($b->isComplementary($a));
+    }
+
+
+    public function testOtherAngleIsSupplementaryWithActual()
+    {
+        $a = new Angle(pi() / 2);
+        $this->assertTrue($a->isSupplementary($a));
+        
+        $a = new Angle(pi() / 4);
+        $b = new Angle(3 * pi() / 4);
+        $this->assertTrue($a->isSupplementary($b));
+        $this->assertTrue($b->isSupplementary($a));
+        
+
+    }
+
+
 
     public function testAngleIsRight()
     {

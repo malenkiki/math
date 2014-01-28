@@ -56,6 +56,11 @@ class Angle
         {
             return $this->$name();
         }
+
+        if($name == 'type')
+        {
+            return $this->original->type;
+        }
     }
 
 
@@ -186,10 +191,16 @@ class Angle
 
     public function isComplementary(Angle $angle)
     {
+        $out = new self($this->float_rad + $angle->rad);
+
+        return $out->isRight();
     }
     
     
     public function isSupplementary(Angle $angle)
     {
+        $out = new self($this->float_rad + $angle->rad);
+
+        return $out->isStraight();
     }
 }
