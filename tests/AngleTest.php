@@ -40,7 +40,7 @@ class AngleTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(34, $dms->d);
         $this->assertEquals(31, $dms->m);
         $this->assertEquals(48, $dms->s);
-        $this->assertEquals('34°31′48″', sprintf('%d°%d′%d″', $dms->d, $dms->m, $dms->s));
+        $this->assertEquals('34°31′48″', $dms->str);
     }
 
 

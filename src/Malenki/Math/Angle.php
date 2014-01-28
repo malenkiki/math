@@ -29,6 +29,11 @@ namespace Malenki\Math;
 /**
  * Angle 
  * 
+ * @property-read $rad Get radians
+ * @property-read $deg Get degrees
+ * @property-read $gon Get gon
+ * @property-read $turn Get number of turns
+ * @property-read $dms Get Degrees/Minutes/Second object
  * @todo use http://en.wikipedia.org/wiki/Angle to have other ideas of units. 
  * @author Michel Petit <petit.michel@gmail.com> 
  * @license MIT
@@ -47,7 +52,7 @@ class Angle
 
     public function __get($name)
     {
-        if(in_array($name, array('rad', 'deg', 'gon', 'turn')))
+        if(in_array($name, array('rad', 'deg', 'gon', 'turn', 'dms')))
         {
             return $this->$name();
         }
