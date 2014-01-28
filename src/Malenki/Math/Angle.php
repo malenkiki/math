@@ -169,15 +169,18 @@ class Angle
 
     public function isRight()
     {
+        return in_array(abs($this->turn()) - (integer) abs($this->turn()), array(1/4, 3/4));
     }
 
     public function isStraight()
     {
+        return abs($this->turn()) - (integer) abs($this->turn()) == 0.5;
     }
 
 
     public function isPerigon()
     {
+        return fmod(abs($this->turn()), 1) == 0;
     }
 
 

@@ -44,6 +44,120 @@ class AngleTest extends PHPUnit_Framework_TestCase
     }
 
 
+
+    public function testAngleIsRight()
+    {
+        $a = new Angle(pi()/2);
+        $this->assertTrue($a->isRight());
+        
+        $a = new Angle(5*pi()/2);
+        $this->assertTrue($a->isRight());
+        
+        $a = new Angle(3*pi()/2);
+        $this->assertTrue($a->isRight());
+        
+        $a = new Angle(90, Angle::TYPE_DEG);
+        $this->assertTrue($a->isRight());
+        
+        $a = new Angle(450, Angle::TYPE_DEG);
+        $this->assertTrue($a->isRight());
+        
+        $a = new Angle(-1 * pi()/2);
+        $this->assertTrue($a->isRight());
+        
+        $a = new Angle(-5*pi()/2);
+        $this->assertTrue($a->isRight());
+        
+        $a = new Angle(-3*pi()/2);
+        $this->assertTrue($a->isRight());
+        
+        $a = new Angle(-90, Angle::TYPE_DEG);
+        $this->assertTrue($a->isRight());
+        
+        $a = new Angle(-450, Angle::TYPE_DEG);
+        $this->assertTrue($a->isRight());
+    }
+    
+    
+    
+    public function testAngleIsNotRight()
+    {
+        $a = new Angle(pi());
+        $this->assertFalse($a->isRight());
+    }
+
+
+    public function testAngleIsStraight()
+    {
+        $a = new Angle(pi());
+        $this->assertTrue($a->isStraight());
+
+        $a = new Angle(3*pi());
+        $this->assertTrue($a->isStraight());
+        
+        $a = new Angle(180, Angle::TYPE_DEG);
+        $this->assertTrue($a->isStraight());
+        
+        $a = new Angle(540, Angle::TYPE_DEG);
+        $this->assertTrue($a->isStraight());
+        
+        $a = new Angle(-1*pi());
+        $this->assertTrue($a->isStraight());
+
+        $a = new Angle(-3*pi());
+        $this->assertTrue($a->isStraight());
+        
+        $a = new Angle(-180, Angle::TYPE_DEG);
+        $this->assertTrue($a->isStraight());
+        
+        $a = new Angle(-540, Angle::TYPE_DEG);
+        $this->assertTrue($a->isStraight());
+    }
+
+
+    public function testAngleIsNotStraight()
+    {
+        $a = new Angle(pi() / 3);
+        $this->assertFalse($a->isStraight());
+        
+        $a = new Angle(-70, Angle::TYPE_DEG);
+        $this->assertFalse($a->isStraight());
+        
+        $a = new Angle(pi() / 4);
+        $this->assertFalse($a->isStraight());
+        
+    }
+
+
+
+    public function testAngleIsPerigon()
+    {
+        $a = new Angle(2*pi());
+        $this->assertTrue($a->isPerigon());
+        
+        $a = new Angle(4*pi());
+        $this->assertTrue($a->isPerigon());
+        
+        $a = new Angle(-2*pi());
+        $this->assertTrue($a->isPerigon());
+        
+        $a = new Angle(-4*pi());
+        $this->assertTrue($a->isPerigon());
+    }
+
+
+    public function testAngleIsNotPerigon()
+    {
+        $a = new Angle(pi());
+        $this->assertFalse($a->isPerigon());
+        
+        $a = new Angle(3 * pi());
+        $this->assertFalse($a->isPerigon());
+    }
+
+
+
+
     public function testCreateFromDegreesToGetOthers()
     {
         $a = new Angle(0, Angle::TYPE_DEG);
