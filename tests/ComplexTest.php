@@ -150,6 +150,23 @@ class ComplexTest extends PHPUnit_Framework_TestCase
     }
 
 
+    public function testCreatingComplexFromTrigonometricFormUsingAngleObjectAndWithoutThirdArgument()
+    {
+        $a = new \Malenki\Math\Angle(M_PI / 2);
+        $z = new \Malenki\Math\Complex(1, $a);
+        $zz = new Malenki\Math\Complex(0, 1);
+
+        $this->assertTrue($zz->equal($z));
+        
+        $a = new \Malenki\Math\Angle(M_PI);
+        $z = new \Malenki\Math\Complex(1, $a);
+        $zz = new Malenki\Math\Complex(-1, 0);
+
+        $this->assertTrue($zz->equal($z));
+    }
+
+
+
     public function testArgument()
     {
         $z = new Malenki\Math\Complex(1, 1);
