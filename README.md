@@ -189,10 +189,16 @@ $a = new Angle(M_PI);
 $z = new Complex(1, $a); // 3rd argument is useless if Angle is used as second argumeent
 ```
 
-Complex number object acts like string too:
+Complex number object acts like string too, remembering its original form:
 
 ```php
-echo $z; // print 2-3i
+use \Malenki\Math\Complex;
+use \Malenki\Math\Angle;
+
+$z = new Complex(2, -3);
+echo $z; // print "2-3i"
+$zz = new Complex(1, new Angle(3 * M_PI / 2));
+echo $zz; // print "cos 4.712389 + i⋅sin 4.712389"
 ```
 
 You have some magic getters:
