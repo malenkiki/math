@@ -177,13 +177,16 @@ Using complex is like a child game: instanciate it with real part and imaginary 
 $z = new \Malenki\Math\Complex(2, -3);
 ```
 
-But you can create complex number using __rho__ and __theta__ values:
+But you can create complex number using __rho__ and __theta__ values, theta can be simple float or **Angle object**:
 
 ```php
 use \Malenki\Math\Complex;
+use \Malenki\Math\Angle;
+
 $z = new Complex(1, pi(), Complex::TRIGONOMETRIC);
-//is the same as:
-$z = new Complex(-1, 0);
+// or
+$a = new Angle(M_PI);
+$z = new Complex(1, $a); // 3rd argument is useless if Angle is used as second argumeent
 ```
 
 Complex number object acts like string too:
