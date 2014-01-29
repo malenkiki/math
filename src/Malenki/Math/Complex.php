@@ -50,6 +50,7 @@ class Complex
 
     protected $float_r = 0;
     protected $float_i = 0;
+    protected $original = null;
 
 
 
@@ -114,6 +115,11 @@ class Complex
                 throw new \InvalidArgumentException('Rho must be valid real numbers.');
             }
 
+            if($float_a < 0)
+            {
+                throw new \InvalidArgumentException('Rho must be positive or null.');
+            }
+
             if(!(is_numeric($mix_b)||$mix_b instanceof Angle))
             {
                 throw new \InvalidArgumentException('Theta must be valid real numbers or an instance of Angle class.');
@@ -126,6 +132,10 @@ class Complex
             
             $this->float_r = round($float_a * cos($mix_b), $int_precision);
             $this->float_i = round($float_a * sin($mix_b), $int_precision);
+
+            $this->original = new \stdClass();
+            $this->original->rho = $float_a;
+            $this->original->theta = $mix_b;
         }
 
     }
@@ -139,6 +149,11 @@ class Complex
      */
     public function norm()
     {
+        if($this->original)
+        {
+            return $this->original->rho;
+        }
+
         return sqrt(pow($this->float_r, 2) + pow($this->float_i, 2));
     }
 
@@ -155,6 +170,11 @@ class Complex
      */
     public function argument()
     {
+        if($this->original)
+        {
+            return $this->original->theta;
+        }
+
         return atan2($this->float_i, $this->float_r);
     }
 
@@ -266,13 +286,30 @@ class Complex
 
 
     /**
-     * In string context, display complex number into the form `a+ib`. 
+     * In string context, display complex number into the form `a+ib` if it has 
+     * been instanciated using algebraic form or into the form 'ρ(cosθ+isinθ)' 
+     * for the trigonometric form. 
      * 
      * @access public
      * @return string
      */
     public function __toString()
     {
+        // if trigo…
+        if($this->original)
+        {
+            if($this->norm() == 0)
+            {
+                return 0;
+            }
+            if($this->norm() == 1)
+            {
+                return sprintf('cos %1$f + i⋅sin %1$f', $this->argument());
+            }
+
+            return sprintf('%1$f(cos %2$f + i⋅sin %2$f)', $this->norm(), $this->argument());
+        }
+
         $str_sign = '-';
         $str_re = '';
         $str_im = 'i';

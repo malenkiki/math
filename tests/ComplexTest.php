@@ -56,7 +56,7 @@ class ComplexTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(pi() / 4,$z->theta);
     }
 
-    public function testToString()
+    public function testComplexFromAlgebraicFormToString()
     {
         $z = new Malenki\Math\Complex(2, 3);
         $this->assertEquals('2+3i', sprintf('%s', $z));
@@ -101,6 +101,20 @@ class ComplexTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('-2-i', sprintf('%s', $z));
         
     }
+
+
+
+    public function testComplexFromTrigonometricFormToString()
+    {
+        $z = new Malenki\Math\Complex(2, new \Malenki\Math\Angle(M_PI / 2));
+        $this->assertEquals(sprintf('%1$f(cos %2$f + i⋅sin %2$f)', 2, M_PI/2), sprintf('%s', $z));
+        
+        $z = new Malenki\Math\Complex(2, new \Malenki\Math\Angle(90, \Malenki\Math\Angle::TYPE_DEG));
+        $this->assertEquals(sprintf('%1$f(cos %2$f + i⋅sin %2$f)', 2, M_PI/2), sprintf('%s', $z));
+        
+        $z = new Malenki\Math\Complex(1, new \Malenki\Math\Angle(M_PI / 2));
+        $this->assertEquals(sprintf('cos %1$f + i⋅sin %1$f', M_PI/2), sprintf('%s', $z));
+    }
     
     
     public function testEqualTo()
@@ -119,6 +133,16 @@ class ComplexTest extends PHPUnit_Framework_TestCase
 
         $this->assertFalse($z->equal($zz));
         $this->assertFalse($zz->equal($z));
+    }
+
+
+
+    /**
+     * @expectedException InvalidArgumentException
+     */
+    public function testCreatingComplexFromTrigonometricFormWithNegativeRhoThatRaiseException()
+    {
+        $z = new \Malenki\Math\Complex(-1, pi() / 2, \Malenki\Math\Complex::TRIGONOMETRIC);
     }
 
     public function testCreatingComplexFromTrigonometricFormUsingOnlyFloat()
