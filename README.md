@@ -6,7 +6,7 @@ Implemented or partially implemented are: Complex number, Matrix, Normal distrib
 
 ## Angle
 
-You can use angles as **deg**, **gon**, **rad** or **turn*. By default, radians is used.
+You can use angles as **deg**, **gon**, **rad** or **turn**. By default, radians is used.
 
 ```php
 $a = new \Malenki\Math\Angle(pi()/2);
@@ -22,6 +22,33 @@ You can get DMS style too:
 $a = new \Malenki\Math\Angle(34.53, \Malenki\Math\Angle::TYPE_DEG);
 var_dump($a->dms); // get DMS object
 var_dump($a->dms->str); // get DMS string '34°31′48″'
+```
+
+You can test whether current angle is **right**, **straight** or **perigon**:
+
+```php
+$a = new \Malenki\Math\Angle(pi() / 2);
+var_dump($a->isRight()); // should return TRUE
+$b = new \Malenki\Math\Angle(pi());
+var_dump($b->isStraight()); // should return TRUE
+$c = new \Malenki\Math\Angle(2 * pi());
+var_dump($c->isPerigon()); // should return TRUE
+$d = new \Malenki\Math\Angle(450, \Malenki\Math\Angle::TYPE_DEG); //yes, ignore multiple turns :)
+var_dump($d->isRight()); // should return TRUE
+```
+
+You can test current angle with another to know is they are **complementary** or **supplementary**:
+
+```php
+$a = new \Malenki\Math\Angle(pi() / 3);
+$b = new \Malenki\Math\Angle(pi() / 6);
+var_dump($a->isComplementary($b)); // should be TRUE
+var_dump($b->isComplementary($a)); // should be TRUE
+
+$c = new \Malenki\Math\Angle(pi() / 2);
+$d = new \Malenki\Math\Angle(90, \Malenki\Math\Angle::TYPE_DEG);
+var_dump($c->isSupplementary($d)); // should be TRUE
+var_dump($d->isSupplementary($c)); // should be TRUE
 ```
 
 ## Matrix
