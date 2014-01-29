@@ -77,36 +77,55 @@ class Complex
     }
 
     /**
-     * Creates new Complex number object giving its real and imaginary parts or rho and theta.
+     * Creates new Complex number object giving its real and imaginary parts or 
+     * rho and theta.
      * 
+     * For trigonometric form, the second argument can be a Malenki\Math\Angle 
+     * object, and then, the third argument is useless.
+     *
      * @param mixed $float_a Number for the real part if type is algebraic, rho otherwise.
-     * @param mixed $float_b Number for the imaginary part if type is algebraic, theta otherwise.
+     * @param mixed $mix_b Number for the imaginary part if type is algebraic, theta otherwise. Can be an Angle object
      * @param integer $int_type Either Complex::ALGEBRAIC (default) or Complex::TRIGONOMETRIC 
      * @param integer $int_precision Round precision, deafult fixed at 5.
      * @access public
      * @return Complex
      */
-    public function __construct($float_a, $float_b, $int_type = self::ALGEBRAIC, $int_precision = 5)
+    public function __construct($float_a, $mix_b, $int_type = self::ALGEBRAIC, $int_precision = 5)
     {
+        if($mix_b instanceof Angle)
+        {
+            $int_type = self::TRIGONOMETRIC;
+        }
+
         if($int_type == self::ALGEBRAIC)
         {
-            if(!is_numeric($float_a) || !is_numeric($float_b))
+            if(!is_numeric($float_a) || !is_numeric($mix_b))
             {
                 throw new \InvalidArgumentException('Real and Imaginary parts must be valid real numbers.');
             }
             
             $this->float_r = $float_a;
-            $this->float_i = $float_b;
+            $this->float_i = $mix_b;
         }
         else
         {
-            if(!is_numeric($float_a) || !is_numeric($float_b))
+            if(!is_numeric($float_a))
             {
-                throw new \InvalidArgumentException('Rho and Theta must be valid real numbers.');
+                throw new \InvalidArgumentException('Rho must be valid real numbers.');
+            }
+
+            if(!(is_numeric($mix_b)||$mix_b instanceof Angle))
+            {
+                throw new \InvalidArgumentException('Theta must be valid real numbers or an instance of Angle class.');
+            }
+
+            if($mix_b instanceof Angle)
+            {
+                $mix_b = $mix_b->rad;
             }
             
-            $this->float_r = round($float_a * cos($float_b), $int_precision);
-            $this->float_i = round($float_a * sin($float_b), $int_precision);
+            $this->float_r = round($float_a * cos($mix_b), $int_precision);
+            $this->float_i = round($float_a * sin($mix_b), $int_precision);
         }
 
     }

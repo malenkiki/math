@@ -121,7 +121,7 @@ class ComplexTest extends PHPUnit_Framework_TestCase
         $this->assertFalse($zz->equal($z));
     }
 
-    public function testCreatingComplexFromTrigonometricForm()
+    public function testCreatingComplexFromTrigonometricFormUsingOnlyFloat()
     {
         $z = new \Malenki\Math\Complex(1, pi() / 2, \Malenki\Math\Complex::TRIGONOMETRIC);
         $zz = new Malenki\Math\Complex(0, 1);
@@ -129,6 +129,21 @@ class ComplexTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($zz->equal($z));
         
         $z = new \Malenki\Math\Complex(1, pi(), \Malenki\Math\Complex::TRIGONOMETRIC);
+        $zz = new Malenki\Math\Complex(-1, 0);
+
+        $this->assertTrue($zz->equal($z));
+    }
+
+    public function testCreatingComplexFromTrigonometricFormUsingAngleObject()
+    {
+        $a = new \Malenki\Math\Angle(90, \Malenki\Math\Angle::TYPE_DEG);
+        $z = new \Malenki\Math\Complex(1, $a, \Malenki\Math\Complex::TRIGONOMETRIC);
+        $zz = new Malenki\Math\Complex(0, 1);
+
+        $this->assertTrue($zz->equal($z));
+        
+        $a = new \Malenki\Math\Angle(180, \Malenki\Math\Angle::TYPE_DEG);
+        $z = new \Malenki\Math\Complex(1, $a, \Malenki\Math\Complex::TRIGONOMETRIC);
         $zz = new Malenki\Math\Complex(-1, 0);
 
         $this->assertTrue($zz->equal($z));
