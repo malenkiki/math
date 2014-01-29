@@ -180,9 +180,10 @@ $z = new \Malenki\Math\Complex(2, -3);
 But you can create complex number using __rho__ and __theta__ values:
 
 ```php
-$z = \Malenki\Math\Complex::fromPolar(1, pi());
+use \Malenki\Math\Complex;
+$z = new Complex(1, pi(), Complex::TRIGONOMETRIC);
 //is the same as:
-$z = new \Malenki\Math\Complex(-1, 0)
+$z = new Complex(-1, 0);
 ```
 
 Complex number object acts like string too:

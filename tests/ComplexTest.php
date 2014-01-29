@@ -121,14 +121,14 @@ class ComplexTest extends PHPUnit_Framework_TestCase
         $this->assertFalse($zz->equal($z));
     }
 
-    public function testCreatingComplexFromPolarCoordinates()
+    public function testCreatingComplexFromTrigonometricForm()
     {
-        $z = \Malenki\Math\Complex::fromPolar(1, pi() / 2);
+        $z = new \Malenki\Math\Complex(1, pi() / 2, \Malenki\Math\Complex::TRIGONOMETRIC);
         $zz = new Malenki\Math\Complex(0, 1);
 
         $this->assertTrue($zz->equal($z));
         
-        $z = \Malenki\Math\Complex::fromPolar(1, pi());
+        $z = new \Malenki\Math\Complex(1, pi(), \Malenki\Math\Complex::TRIGONOMETRIC);
         $zz = new Malenki\Math\Complex(-1, 0);
 
         $this->assertTrue($zz->equal($z));
