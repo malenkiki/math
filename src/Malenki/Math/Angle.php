@@ -86,6 +86,15 @@ class Angle
 
 
 
+    /**
+     * Create new Angle, from radians by default, or with second argument, can 
+     * be degrees, grades or turns too. 
+     * 
+     * @param float $float_angle Value of the angle, in radians if second argument is not given
+     * @param string $str_type One of the class' constants. Optional.
+     * @access public
+     * @return void
+     */
     public function __construct($float_angle, $str_type = self::TYPE_RAD)
     {
         $this->original = new \stdClass();
@@ -145,6 +154,12 @@ class Angle
     }
 
 
+    /**
+     * Gets angle value, as it was given at instenciation time. 
+     * 
+     * @access public
+     * @return float
+     */
     public function get()
     {
         return $this->original->value;
@@ -193,23 +208,53 @@ class Angle
 
 
 
+    /**
+     * Checks whether current angle is right (90°), even if there are several turns. 
+     * 
+     * @access public
+     * @return boolean
+     */
     public function isRight()
     {
         return in_array(abs($this->turn()) - (integer) abs($this->turn()), array(1/4, 3/4));
     }
 
+    
+    
+    /**
+     * Checks whether current angle is straight (180°), even if there are several turns. 
+     * 
+     * @access public
+     * @return boolean
+     */
     public function isStraight()
     {
         return abs($this->turn()) - (integer) abs($this->turn()) == 0.5;
     }
 
 
+
+
+    /**
+     * Checks whether angle does at least one complete turn (360° × n). 
+     * 
+     * @access public
+     * @return boolean
+     */
     public function isPerigon()
     {
         return fmod(abs($this->turn()), 1) == 0;
     }
 
 
+
+    /**
+     * Tests current angle with another to know if there are complementary together
+     * 
+     * @param Angle $angle 
+     * @access public
+     * @return boolean
+     */
     public function isComplementary(Angle $angle)
     {
         $out = new self($this->float_rad + $angle->rad);
@@ -217,7 +262,15 @@ class Angle
         return $out->isRight();
     }
     
-    
+
+
+    /**
+     * Test if current angle is supplementary with another.
+     * 
+     * @param Angle $angle 
+     * @access public
+     * @return boolean
+     */
     public function isSupplementary(Angle $angle)
     {
         $out = new self($this->float_rad + $angle->rad);
