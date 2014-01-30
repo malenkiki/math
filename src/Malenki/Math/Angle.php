@@ -27,8 +27,28 @@ namespace Malenki\Math;
 
 
 /**
- * Angle 
+ * Angle deals with degrees, radians, grades and turns.
+ *
+ * By default, radians are used, but you can instanciate angle using unit you want.
+ *
+ *     $a = new Angle(M_PI / 2); // create angle from radians
+ *     $a = new Angle(90, Angle::TYPE_DEG); // degrees
+ *
+ * As you can see, the second argument is a class constant. There are 4 constants, listed below:
+ *
+ *  - `TYPE_RAD` for radians,
+ *  - `TYPE_DEG` for degrees,
+ *  - `TYPE_GON` for grades,
+ *  - `TYPE_TURN` for turns.
  * 
+ * When Angle is created, you can compare it with another to know if they are complementary or supplementary.
+ *
+ * For current angle, you can convert it to other units.
+ *
+ * Current angle can also be tested to know if it is right, straight or perigon (complete lap).
+ *
+ * See methods to know more!
+ *
  * @property-read $rad Get radians
  * @property-read $deg Get degrees
  * @property-read $gon Get gon
