@@ -234,4 +234,15 @@ class RandomComplex
 
         return $arr_out;
     }
+
+
+    public function reset()
+    {
+        $this->rho = null;
+        $this->theta = null;
+        $this->r = null;
+        $this->i = null;
+
+        return $this;
+    }
 }

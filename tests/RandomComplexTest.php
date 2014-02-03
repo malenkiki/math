@@ -222,4 +222,19 @@ class RandomComplexTest extends PHPUnit_Framework_TestCase
         $r->theta(1.2, 3.4)->i(5.6, 7.8);
     }
 
+    public function testStartingWithAlgebraicThenResetThenUseTrigonometricWithoutException()
+    {
+        $r = new Malenki\Math\RandomComplex();
+        $r->r(1.2, 3.4)->i(5.6, 7.8);
+        $r->get();
+        $r->reset()->rho(2, 5)->theta(M_PI/4, M_PI / 2);
+    }
+    
+    public function testStartingWithTrigonometricThenResetThenUseAlgebraicWithoutException()
+    {
+        $r = new Malenki\Math\RandomComplex();
+        $r->rho(2, 5)->theta(M_PI/4, M_PI / 2);
+        $r->get();
+        $r->reset()->r(1.2, 3.4)->i(5.6, 7.8);
+    }
 }
