@@ -25,6 +25,34 @@
 
 namespace Malenki\Math;
 
+/**
+ * Random generator of Complex Number.
+ *
+ * This class allows you to get one or many complex numbers with real and 
+ * imaginary or rho and theta inside given range.
+ *
+ * So, to get one complex number with its real part into `[2, 6.5]` range and 
+ * its imaginary part into `[-2, 5]` range, you must do that:
+ *
+ *     $rc = new RandomComplex();
+ *     $rc->r(2, 6.5)->i(-2, 5)->get();
+ *
+ * You can do that with trigonometric form too, but now with 10 generated 
+ * items:
+ *
+ *     $rc = new RandomComplex();
+ *     $rc->rho(1, 5)->theta(M_PI / 4, M_PI /2)->getMany(10);
+ *
+ * Beware: you cannot start with algebraic form and finish with trigonometric. 
+ * You must rest or instanciate other object.
+ * 
+ * @property-read $rho Rho min/max object if defined
+ * @property-read $theta Theta min/max object if defined
+ * @property-read $r Real part min/max object if defined
+ * @property-read $i Imaginary part min/max if defined
+ * @author Michel Petit <petit.michel@gmail.com> 
+ * @license MIT
+ */
 class RandomComplex
 {
     protected $rho = null;
@@ -81,6 +109,17 @@ class RandomComplex
             throw new \InvalidArgumentException('Max value must be greater than min value!');
         }
     }
+
+
+
+    public function __get($name)
+    {
+        if(in_array($name, array('rho', 'theta', 'r', 'i')))
+        {
+            return $this->$name;
+        }
+    }
+
 
 
     public function rho($float_min, $float_max)
