@@ -182,7 +182,7 @@ class Angle
     {
         $float = abs($this->deg());
 
-        function prov($float)
+        $prov = function ($float)
         {
             $whole_part = (integer) $float;
             $fractional_part = $float - $whole_part;
@@ -191,11 +191,11 @@ class Angle
             $out->whole = $whole_part;
             $out->fractional = $fractional_part * 60;
             return $out;
-        }
+        };
 
-        $prov_1 = prov($float);
-        $prov_2 = prov($prov_1->fractional);
-        $prov_3 = prov($prov_2->fractional);
+        $prov_1 = $prov($float);
+        $prov_2 = $prov($prov_1->fractional);
+        $prov_3 = $prov($prov_2->fractional);
 
         $dms = new \stdClass();
         $dms->d = $prov_1->whole; 
