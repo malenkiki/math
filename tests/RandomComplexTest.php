@@ -41,7 +41,7 @@ class RandomComplexTest extends PHPUnit_Framework_TestCase
 
     public function testCreatingMultipleComplexOnlyWithNegativeReals()
     {
-        $this->markTestSkipped('Must be reimplemented');
+        //$this->markTestSkipped('Must be reimplemented');
         $r = new Malenki\Math\RandomComplex();
         $r->r(-4.3, -1.2);
         $arr = $r->getMany(100);
@@ -79,7 +79,6 @@ class RandomComplexTest extends PHPUnit_Framework_TestCase
         }
     }
 
-    /*
     public function testCreatingMultipleComplexWithNegativeRealsHavingSameWholePart()
     {
         $r = new Malenki\Math\RandomComplex();
@@ -91,6 +90,6 @@ class RandomComplexTest extends PHPUnit_Framework_TestCase
             $this->assertGreaterThanOrEqual(-3.8, $z->r);
             $this->assertLessThanOrEqual(-3.2, $z->r);
         }
-    }*/
+    }
 
 }

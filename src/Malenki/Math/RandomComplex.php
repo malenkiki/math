@@ -36,76 +36,33 @@ class RandomComplex
 
     protected function random($float_min, $float_max)
     {
-        $whole_min = (integer) $float_min;
-        $whole_max = (integer) $float_max;
 
-        $frac_min = abs($float_min - $whole_min);
-        $frac_max = abs($float_max - $whole_max);
 
-        if($whole_min == $whole_max)
+        if($float_max >= 0)
         {
-            $rand_frac = new Random();
-            
-            do
+            $r = new Random();
+
+            while(true)
             {
-                $out_frac = $rand_frac->get();
+                $float_prov = $float_max * $r->get();
+
+                if($float_prov >= $float_min)
+                {
+                    return $float_prov;
+                }
             }
-            while($out_frac > $frac_max || $out_frac < $frac_min);
-
-            return $whole_min + $out_frac;
-        }
-        $rand_whole = new Random($whole_min, $whole_max);
-        $rand_frac = new Random();
-
-        $out_whole = $rand_whole->get();
-
-        if(!in_array($out_whole, array($whole_min, $whole_max)))
-        {
-            return $out_whole + $rand_frac->get();
         }
         else
         {
+            $r = new Random();
 
-
-            if($out_whole == $whole_min)
+            while(true)
             {
-                do
-                {
-                    $out_frac_min = $rand_frac->get();
-                }
-                while($out_frac_min < $frac_min);
+                $float_prov = $float_min * $r->get();
 
-                if($float_min < 0)
+                if($float_prov <= $float_max)
                 {
-                    return $out_whole + (1 - $out_frac_min);
-                }
-                else
-                {
-                    return $out_whole + $out_frac_min;
-                }
-            }
-            else
-            {
-                if($float_max < 0)
-                {
-                    do
-                    {
-                        $out_frac_max = $rand_frac->get();
-                    }
-                    while($out_frac_max < $frac_max);
-
-                    //TODO WTF??? Sometimes it is not the right value!!!
-                    return $out_whole - $out_frac_max;
-                }
-                else
-                {
-                    do
-                    {
-                        $out_frac_max = $rand_frac->get();
-                    }
-                    while($out_frac_max > $frac_max);
-
-                    return $out_whole + $out_frac_max;
+                    return $float_prov;
                 }
             }
         }
