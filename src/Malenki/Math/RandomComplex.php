@@ -92,6 +92,11 @@ class RandomComplex
             throw new \InvalidArgumentException('Rho value must be a positive number!');
         }
 
+        if($this->r || $this->i)
+        {
+            throw new \RuntimeException('You cannot set rho value, because algebraic form is in use.');
+        }
+
         $this->rho = new \stdClass();
         $this->rho->min = $float_min;
         $this->rho->max = $float_max;
@@ -104,6 +109,12 @@ class RandomComplex
     public function theta($float_min, $float_max)
     {
         self::checkOrder($float_min, $float_max);
+
+        if($this->r || $this->i)
+        {
+            throw new \RuntimeException('You cannot set theta value, because algebraic form is in use.');
+        }
+
 
         $this->theta = new \stdClass();
         $this->theta->min = $float_min;
@@ -118,6 +129,11 @@ class RandomComplex
     {
         self::checkOrder($float_min, $float_max);
 
+        if($this->rho || $this->theta)
+        {
+            throw new \RuntimeException('You cannot set real part because trigonometric form is in use.');
+        }
+
         $this->r = new \stdClass();
         $this->r->min = $float_min;
         $this->r->max = $float_max;
@@ -131,6 +147,12 @@ class RandomComplex
     {
         self::checkOrder($float_min, $float_max);
 
+        if($this->rho || $this->theta)
+        {
+            throw new \RuntimeException('You cannot set imaginary part because trigonometric form is in use.');
+        }
+
+
         $this->i = new \stdClass();
         $this->i->min = $float_min;
         $this->i->max = $float_max;
@@ -142,13 +164,55 @@ class RandomComplex
 
     public function get()
     {
-        if($this->r && !$this->i && !$this->rho && !$this->theta)
+        if($this->r || $this->i)
         {
-            return new Complex(self::random($this->r->min, $this->r->max), 0);
+            if(!is_object($this->i))
+            {
+                return new Complex(
+                    self::random($this->r->min, $this->r->max),
+                    0
+                );
+            }
+            
+            if(!is_object($this->r))
+            {
+                return new Complex(
+                    0,
+                    self::random($this->i->min, $this->i->max)
+                );
+            }
+
+            return new Complex(
+                self::random($this->r->min, $this->r->max),
+                self::random($this->i->min, $this->i->max)
+            );
         }
-        if(!$this->r && $this->i && !$this->rho && !$this->theta)
+        
+        if($this->rho || $this->theta)
         {
-            return new Complex(0, self::random($this->i->min, $this->i->max));
+            if(!is_object($this->theta))
+            {
+                return new Complex(
+                    self::random($this->rho->min, $this->rho->max),
+                    0,
+                    Complex::TRIGONOMETRIC
+                );
+            }
+            
+            if(!is_object($this->rho))
+            {
+                return new Complex(
+                    0,
+                    self::random($this->theta->min, $this->theta->max),
+                    Complex::TRIGONOMETRIC
+                );
+            }
+
+            return new Complex(
+                self::random($this->rho->min, $this->rho->max),
+                self::random($this->theta->min, $this->theta->max),
+                Complex::TRIGONOMETRIC
+            );
         }
     }
 

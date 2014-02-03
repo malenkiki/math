@@ -144,4 +144,82 @@ class RandomComplexTest extends PHPUnit_Framework_TestCase
         $r->theta(4.1, 2.3);
     }
 
+
+    /**
+     * @expectedException RuntimeException
+     */
+    public function testChainingRhoWhileRealHasBeenUsedRaiseRuntimeException()
+    {
+        $r = new Malenki\Math\RandomComplex();
+        $r->r(1.2, 3.4)->rho(5.6, 7.8);
+    }
+
+
+    /**
+     * @expectedException RuntimeException
+     */
+    public function testChainingThetaWhileRealHasBeenUsedRaiseRuntimeException()
+    {
+        $r = new Malenki\Math\RandomComplex();
+        $r->r(1.2, 3.4)->theta(M_PI / 2, M_PI);
+    }
+
+
+    /**
+     * @expectedException RuntimeException
+     */
+    public function testChainingRhoWhileImaginaryHasBeenUsedRaiseRuntimeException()
+    {
+        $r = new Malenki\Math\RandomComplex();
+        $r->i(1.2, 3.4)->rho(5.6, 7.8);
+    }
+
+
+    /**
+     * @expectedException RuntimeException
+     */
+    public function testChainingThetaWhileImaginaryHasBeenUsedRaiseRuntimeException()
+    {
+        $r = new Malenki\Math\RandomComplex();
+        $r->i(1.2, 3.4)->theta(M_PI / 2, M_PI);
+    }
+
+
+    /**
+     * @expectedException RuntimeException
+     */
+    public function testChainingRealWhileRhoHasBeenUsedRaiseRuntimeException()
+    {
+        $r = new Malenki\Math\RandomComplex();
+        $r->rho(1.2, 3.4)->r(5.6, 7.8);
+    }
+
+    /**
+     * @expectedException RuntimeException
+     */
+    public function testChainingRealWhileThetaHasBeenUsedRaiseRuntimeException()
+    {
+        $r = new Malenki\Math\RandomComplex();
+        $r->theta(1.2, 3.4)->r(5.6, 7.8);
+    }
+
+
+    /**
+     * @expectedException RuntimeException
+     */
+    public function testChainingImaginaryWhileRhoHasBeenUsedRaiseRuntimeException()
+    {
+        $r = new Malenki\Math\RandomComplex();
+        $r->rho(1.2, 3.4)->i(5.6, 7.8);
+    }
+
+    /**
+     * @expectedException RuntimeException
+     */
+    public function testChainingImaginaryWhileThetaHasBeenUsedRaiseRuntimeException()
+    {
+        $r = new Malenki\Math\RandomComplex();
+        $r->theta(1.2, 3.4)->i(5.6, 7.8);
+    }
+
 }
