@@ -28,7 +28,7 @@ namespace Malenki\Math;
 /**
  * Random generator for floats or integers.
  *
- * If no arguments given, generates float values into the [0.0, 1.0] range. If 
+ * If no arguments given, generates float values into the `[0.0, 1.0]` range. If 
  * the two arguments are integers, then generator will return value into this 
  * range.
  *

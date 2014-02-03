@@ -26,6 +26,19 @@
 namespace Malenki\Math;
 
 
+/**
+ * Compute factorial.
+ *
+ * Very easy to use, instanciate it with `n` rank and then get value by calling 
+ * `result` attribute.
+ *
+ *     $f = new Factorial(5);
+ *     $f->result; // should be 120
+ *     $f->n; // you can get rank as reminder too.
+ * 
+ * @author Michel Petit <petit.michel@gmail.com> 
+ * @license MIT
+ */
 class Factorial
 {
     protected $int_n = null;
