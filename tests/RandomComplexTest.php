@@ -41,7 +41,6 @@ class RandomComplexTest extends PHPUnit_Framework_TestCase
 
     public function testCreatingMultipleComplexOnlyWithNegativeReals()
     {
-        //$this->markTestSkipped('Must be reimplemented');
         $r = new Malenki\Math\RandomComplex();
         $r->r(-4.3, -1.2);
         $arr = $r->getMany(100);
@@ -90,6 +89,59 @@ class RandomComplexTest extends PHPUnit_Framework_TestCase
             $this->assertGreaterThanOrEqual(-3.8, $z->r);
             $this->assertLessThanOrEqual(-3.2, $z->r);
         }
+    }
+
+
+    /**
+     * @expectedException InvalidArgumentException
+     */
+    public function testAssigningWrongTypeForRealsOfValuesThatRaiseInvalidArgumentException()
+    {
+        $r = new Malenki\Math\RandomComplex();
+        $r->r(4.1, 2.3);
+    }
+
+
+
+    /**
+     * @expectedException InvalidArgumentException
+     */
+    public function testAssigningWrongTypeForImaginariesOfValuesThatRaiseInvalidArgumentException()
+    {
+        $r = new Malenki\Math\RandomComplex();
+        $r->i(4.1, 2.3);
+    }
+
+
+
+    /**
+     * @expectedException InvalidArgumentException
+     */
+    public function testAssigningWrongTypeForRhosOfValuesThatRaiseInvalidArgumentException()
+    {
+        $r = new Malenki\Math\RandomComplex();
+        $r->rho(4.1, 2.3);
+    }
+
+
+    /**
+     * @expectedException InvalidArgumentException
+     */
+    public function testAssigningNegativeRhosThatRaiseInvalidArgumentException()
+    {
+        $r = new Malenki\Math\RandomComplex();
+        $r->rho(-3, 2.3);
+    }
+
+
+
+    /**
+     * @expectedException InvalidArgumentException
+     */
+    public function testAssigningWrongTypeForThetasOfValuesThatRaiseInvalidArgumentException()
+    {
+        $r = new Malenki\Math\RandomComplex();
+        $r->theta(4.1, 2.3);
     }
 
 }

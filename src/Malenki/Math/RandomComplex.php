@@ -34,7 +34,7 @@ class RandomComplex
 
 
 
-    protected function random($float_min, $float_max)
+    protected static function random($float_min, $float_max)
     {
 
 
@@ -69,9 +69,29 @@ class RandomComplex
     }
 
 
+    protected static function checkOrder($float_min, $float_max)
+    {
+        if(!is_numeric($float_min) && !is_numeric($float_max))
+        {
+            throw new \InvalidArgumentException('Min and max values must be valid numbers.');
+        }
+
+        if($float_min >= $float_max)
+        {
+            throw new \InvalidArgumentException('Max value must be greater than min value!');
+        }
+    }
+
 
     public function rho($float_min, $float_max)
     {
+        self::checkOrder($float_min, $float_max);
+
+        if($float_min < 0 || $float_max < 0)
+        {
+            throw new \InvalidArgumentException('Rho value must be a positive number!');
+        }
+
         $this->rho = new \stdClass();
         $this->rho->min = $float_min;
         $this->rho->max = $float_max;
@@ -83,6 +103,8 @@ class RandomComplex
 
     public function theta($float_min, $float_max)
     {
+        self::checkOrder($float_min, $float_max);
+
         $this->theta = new \stdClass();
         $this->theta->min = $float_min;
         $this->theta->max = $float_max;
@@ -94,6 +116,8 @@ class RandomComplex
     
     public function r($float_min, $float_max)
     {
+        self::checkOrder($float_min, $float_max);
+
         $this->r = new \stdClass();
         $this->r->min = $float_min;
         $this->r->max = $float_max;
@@ -105,6 +129,8 @@ class RandomComplex
     
     public function i($float_min, $float_max)
     {
+        self::checkOrder($float_min, $float_max);
+
         $this->i = new \stdClass();
         $this->i->min = $float_min;
         $this->i->max = $float_max;
@@ -118,11 +144,11 @@ class RandomComplex
     {
         if($this->r && !$this->i && !$this->rho && !$this->theta)
         {
-            return new Complex($this->random($this->r->min, $this->r->max), 0);
+            return new Complex(self::random($this->r->min, $this->r->max), 0);
         }
         if(!$this->r && $this->i && !$this->rho && !$this->theta)
         {
-            return new Complex(0, $this->random($this->i->min, $this->i->max));
+            return new Complex(0, self::random($this->i->min, $this->i->max));
         }
     }
 
