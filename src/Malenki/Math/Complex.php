@@ -333,7 +333,7 @@ class Complex
      * In string context, display complex number as algebraic form or trigonometric form.
      *
      * In string context, display complex number into the form `a+ib` if it has 
-     * been instanciated using algebraic form or into the form 'ρ(cosθ+isinθ)' 
+     * been instanciated using algebraic form or into the form `ρ(cosθ+isinθ)` 
      * for the trigonometric form. 
      * 
      * @access public
