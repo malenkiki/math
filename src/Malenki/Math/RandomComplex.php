@@ -140,6 +140,8 @@ class RandomComplex
      * If given argument are not numeric or first is greater than the second, 
      * then Exception is risen. 
      * 
+     * @throw \InvalidArgumentException If min and max values are not numbers.
+     * @throw \InvalidArgumentException If min value is greater than max.
      * @param float $float_min 
      * @param float $float_max 
      * @static
@@ -178,6 +180,16 @@ class RandomComplex
 
 
 
+    /**
+     * Sets min and max value for random rho 
+     * 
+     * @throw \InvalidArgumentException If rho is not positive number.
+     * @throw \RuntimeException If this is called into algebraic context.
+     * @param float $float_min 
+     * @param float $float_max 
+     * @access public
+     * @return RandomComplex
+     */
     public function rho($float_min, $float_max)
     {
         self::checkOrder($float_min, $float_max);
@@ -201,6 +213,15 @@ class RandomComplex
     
 
 
+    /**
+     * Sets min and max value for random theta angle 
+     * 
+     * @throw \RuntimeException If this is called into algebraic context.
+     * @param float $float_min 
+     * @param float $float_max 
+     * @access public
+     * @return RandomComplex
+     */
     public function theta($float_min, $float_max)
     {
         self::checkOrder($float_min, $float_max);
@@ -220,6 +241,15 @@ class RandomComplex
 
 
     
+    /**
+     * Sets min and max value for random real part 
+     * 
+     * @throw \RuntimeException If this is called into trigonometric context.
+     * @param float $float_min 
+     * @param float $float_max 
+     * @access public
+     * @return RandomComplex
+     */
     public function r($float_min, $float_max)
     {
         self::checkOrder($float_min, $float_max);
@@ -238,6 +268,15 @@ class RandomComplex
     
     
     
+    /**
+     * Sets min and max value for random imaginary part. 
+     * 
+     * @throw \RuntimeException If this is called into trigonometric context.
+     * @param float $float_min 
+     * @param float $float_max 
+     * @access public
+     * @return RandomComplex
+     */
     public function i($float_min, $float_max)
     {
         self::checkOrder($float_min, $float_max);
@@ -257,6 +296,12 @@ class RandomComplex
 
 
 
+    /**
+     * Gets one complex number randomly 
+     * 
+     * @access public
+     * @return Complex
+     */
     public function get()
     {
         if($this->r || $this->i)
@@ -313,6 +358,14 @@ class RandomComplex
 
 
 
+    /**
+     * Get many Complex numbers.
+     * 
+     * @throw \InvalidArgumentException If given amount is less than 2
+     * @param integer $n  Amount of complex numbers to get. Must be greater than 2
+     * @access public
+     * @return array
+     */
     public function getMany($n)
     {
         if(!is_integer($n) || $n < 2)
@@ -331,6 +384,13 @@ class RandomComplex
     }
 
 
+
+    /**
+     * Resets current generator to be able to used other range into other context.
+     * 
+     * @access public
+     * @return RandomComplex
+     */
     public function reset()
     {
         $this->rho = null;
