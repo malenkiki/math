@@ -30,22 +30,28 @@ namespace Malenki\Math;
  *
  * Different ways are available to instanciate a Matrix:
  *
- *  - by setting all values using one dimensional array,
- *  - by adding columns,
- *  - by adding rows
+ * - by setting all values using one dimensional array,
+ * - by adding columns,
+ * - by adding rows
  *
- *      $m = new Matrix(2, 3); // 2 rows, 3 columns
- *      $m->populate(array(1, 2, 3, 4, 5, 6)); // populate into one shot
- *      // or adding columns
- *      $m->addCol(array(1, 4));
- *      $m->addCol(array(2, 5));
- *      $m->addCol(array(3, 6));
- *      // or adding rows
- *      $m->addRow(array(1, 2, 3));
- *      $m->addRow(array(4, 5, 6));
+ * So, a little example to show you:
  *
- *  Some actions are available, like transpose, multiply with scalar or Matrix, 
- *  add Matrix, test if a Matrix is square… See methods to have more information!
+ *     $m = new Matrix(2, 3); // 2 rows, 3 columns
+ *
+ *     $m->populate(array(1, 2, 3, 4, 5, 6)); // populate into one shot
+ *     
+ *     // or adding columns
+ *     $m->addCol(array(1, 4));
+ *     $m->addCol(array(2, 5));
+ *     $m->addCol(array(3, 6));
+ *     
+ *     // or adding rows
+ *     $m->addRow(array(1, 2, 3));
+ *     $m->addRow(array(4, 5, 6));
+ *
+ *
+ *  Some actions are available, like __transpose__, __multiply__ with scalar or Matrix, 
+ *  __add__ Matrix, test if a Matrix is square… See methods to have more information!
  * 
  * @todo as a reminder: http://www.latp.univ-mrs.fr/~torresan/CalcMat/cours/node2.html
  *
