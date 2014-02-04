@@ -66,11 +66,32 @@ class Angle
     const TYPE_GON = 'gon';
     const TYPE_TURN = 'trn';
 
+    /**
+     * Radians internal value. 
+     * 
+     * @var float
+     * @access protected
+     */
     protected $float_rad = 0;
+
+
+    /**
+     * Stored original value if other than radians. 
+     * 
+     * @var mixed
+     * @access protected
+     */
     protected $original = null;
 
 
 
+    /**
+     * Method to have magick getters.
+     *
+     * @param string $name 
+     * @access public
+     * @return mixed
+     */
     public function __get($name)
     {
         if(in_array($name, array('rad', 'deg', 'gon', 'turn', 'dms')))
@@ -120,6 +141,13 @@ class Angle
     }
 
 
+
+    /**
+     * Gets angle's value as gon (grade). 
+     * 
+     * @access public
+     * @return float
+     */
     public function gon()
     {
         if($this->original->type == self::TYPE_GON)
@@ -131,6 +159,13 @@ class Angle
     }
 
 
+
+    /**
+     * Gets angle's value as degrees. 
+     * 
+     * @access public
+     * @return float
+     */
     public function deg()
     {
         if($this->original->type == self::TYPE_DEG)
@@ -143,6 +178,12 @@ class Angle
     
     
     
+    /**
+     * gets angles as radians 
+     * 
+     * @access public
+     * @return float
+     */
     public function rad()
     {
         if($this->original->type == self::TYPE_RAD)
@@ -154,8 +195,9 @@ class Angle
     }
 
 
+
     /**
-     * Gets angle value, as it was given at instenciation time. 
+     * Gets angle's value, as it was given at instenciation time. 
      * 
      * @access public
      * @return float
@@ -166,6 +208,13 @@ class Angle
     }
 
 
+
+    /**
+     * Gets number of turns 
+     * 
+     * @access public
+     * @return float
+     */
     public function turn()
     {
         if($this->original->type == self::TYPE_TURN)
@@ -178,6 +227,19 @@ class Angle
 
 
 
+    /**
+     * Gets angle as a "Degrees/Minutes/seconds" object.
+     *
+     * DMS object returned as 4 attributes:
+     *
+     *  - `d` for degrees,
+     *  - `m` for minutes,
+     *  - `s` for seconds,
+     *  - `str` for the DMS string (`34°56′23″`)
+     * 
+     * @access public
+     * @return stdClass
+     */
     public function dms()
     {
         $float = abs($this->deg());

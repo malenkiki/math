@@ -48,12 +48,42 @@ class Complex
     const ALGEBRAIC = '1';
     const TRIGONOMETRIC = '2';
 
+    /**
+     * Stores real part 
+     * 
+     * @var float
+     * @access protected
+     */
     protected $float_r = 0;
+
+
+    /**
+     * Stores imaginary part. 
+     * 
+     * @var float
+     * @access protected
+     */
     protected $float_i = 0;
+
+
+    /**
+     * If complex is created from trigonometric form, stores original values 
+     * inside this attribute. 
+     * 
+     * @var mixed
+     * @access protected
+     */
     protected $original = null;
 
 
 
+    /**
+     * Defines some magick getters for real and imaginary parts, rho and theta too. 
+     * 
+     * @param string $name 
+     * @access public
+     * @return float
+     */
     public function __get($name)
     {
         if(in_array($name, array('real', 'r', 're')))
@@ -76,6 +106,8 @@ class Complex
             return $this->argument();
         }
     }
+
+
 
     /**
      * Creates new Complex number object giving its real and imaginary parts or 
@@ -141,6 +173,7 @@ class Complex
     }
 
 
+
     /**
      * Computes and returns the norm. 
      * 
@@ -157,10 +190,21 @@ class Complex
         return sqrt(pow($this->float_r, 2) + pow($this->float_i, 2));
     }
 
+
+
+    /**
+     * Gets the complex's modulus.
+     * 
+     * It is same mathod as `norm()`;
+     * @access public
+     * @return float
+     */
     public function modulus()
     {
         return $this->norm();
     }
+
+
 
     /**
      * Computes and returns the argument. 
@@ -286,6 +330,8 @@ class Complex
 
 
     /**
+     * In string context, display complex number as algebraic form or trigonometric form.
+     *
      * In string context, display complex number into the form `a+ib` if it has 
      * been instanciated using algebraic form or into the form 'ρ(cosθ+isinθ)' 
      * for the trigonometric form. 

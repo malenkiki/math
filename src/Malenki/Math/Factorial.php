@@ -36,14 +36,39 @@ namespace Malenki\Math;
  *     $f->result; // should be 120
  *     $f->n; // you can get rank as reminder too.
  * 
+ * @property-read $n Gets the rank
+ * @property-read $result Gets the result
  * @author Michel Petit <petit.michel@gmail.com> 
  * @license MIT
  */
 class Factorial
 {
+    /**
+     * Rank n for the factorial 
+     * 
+     * @var integer
+     * @access protected
+     */
     protected $int_n = null;
+
+
+    /**
+     * Result for the factorial n 
+     * 
+     * @var integer
+     * @access protected
+     */
     protected $int_result = null;
 
+
+
+    /**
+     * Defines magick getters to have the rank and the result. 
+     * 
+     * @param string $name 
+     * @access public
+     * @return integer
+     */
     public function __get($name)
     {
         if(in_array($name, array('n', 'result')))
@@ -53,6 +78,15 @@ class Factorial
         }
     }
 
+
+
+    /**
+     * Creates new factorial of rank n. 
+     * 
+     * @param integer $n The rank
+     * @access public
+     * @return void
+     */
     public function __construct($n)
     {
         if($n < 0 || !is_integer($n))
@@ -72,6 +106,15 @@ class Factorial
         }
     }
 
+
+
+    /**
+     * Computes the factorial and returns the result internally.
+     * 
+     * @param integer $n The rank
+     * @access protected
+     * @return void
+     */
     protected function compute($n)
     {
         $int_fact = 1;
@@ -85,6 +128,13 @@ class Factorial
     }
 
 
+
+    /**
+     * Display the result of the factorial into string context. 
+     * 
+     * @access public
+     * @return string
+     */
     public function __toString()
     {
         return (string) $this->int_result;
