@@ -71,6 +71,13 @@ class NormalDistribution
 
 
 
+    /**
+     * Defines magic getters to have easy acces to mean and standard deviation. 
+     * 
+     * @param string $name 
+     * @access public
+     * @return float
+     */
     public function __get($name)
     {
         if(in_array($name, array('mean', 'mu', 'µ')))
