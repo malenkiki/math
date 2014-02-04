@@ -44,7 +44,7 @@ namespace Malenki\Math;
  *     $rc->rho(1, 5)->theta(M_PI / 4, M_PI /2)->getMany(10);
  *
  * Beware: you cannot start with algebraic form and finish with trigonometric. 
- * You must rest or instanciate other object.
+ * You must reset or instanciate other object.
  * 
  * @property-read $rho Rho min/max object if defined
  * @property-read $theta Theta min/max object if defined
