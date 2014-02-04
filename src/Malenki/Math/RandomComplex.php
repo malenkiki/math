@@ -55,13 +55,49 @@ namespace Malenki\Math;
  */
 class RandomComplex
 {
+    /**
+     * Rho min/max object if defined, null otherwise 
+     * 
+     * @var mixed
+     * @access protected
+     */
     protected $rho = null;
+    
+    /**
+     * theta angle min/max object if defined, null otherwise 
+     * 
+     * @var mixed
+     * @access protected
+     */
     protected $theta = null;
+    
+    /**
+     * Real part min/max object if defined, null otherwise 
+     * 
+     * @var mixed
+     * @access protected
+     */
     protected $r = null;
+
+    /**
+     * Imaginary part min/max object if defined, null otherwise 
+     * 
+     * @var mixed
+     * @access protected
+     */
     protected $i = null;
 
 
 
+    /**
+     * Gets a random float numbers inside the given range. 
+     * 
+     * @param float $float_min Minimal float value allowed 
+     * @param mixed $float_max Maximal float value allowed
+     * @static
+     * @access protected
+     * @return float
+     */
     protected static function random($float_min, $float_max)
     {
 
@@ -97,6 +133,19 @@ class RandomComplex
     }
 
 
+
+    /**
+     * Check helper for some method to tests their arguments.
+     *
+     * If given argument are not numeric or first is greater than the second, 
+     * then Exception is risen. 
+     * 
+     * @param float $float_min 
+     * @param float $float_max 
+     * @static
+     * @access protected
+     * @return void
+     */
     protected static function checkOrder($float_min, $float_max)
     {
         if(!is_numeric($float_min) && !is_numeric($float_max))
@@ -112,6 +161,13 @@ class RandomComplex
 
 
 
+    /**
+     * Defines some magic getters for ranges rho, theta, real part and imaginary part.
+     * 
+     * @param string $name 
+     * @access public
+     * @return stdClass
+     */
     public function __get($name)
     {
         if(in_array($name, array('rho', 'theta', 'r', 'i')))
