@@ -29,18 +29,42 @@ namespace Malenki\Math;
  * Random generator for floats or integers.
  *
  * If no arguments given, generates float values into the `[0.0, 1.0]` range. If 
- * the two arguments are integers, then generator will return value into this 
- * range.
+ * the two arguments are integers, then generator will return value into the 
+ * range created by the this two integers.
  *
- * It can get one or many numbers, with or withour replacement.
+ * It can get one or many random numbers, with or without replacement.
+ *
+ * Into string context, returns one random number.
  * 
  * @author Michel Petit <petit.michel@gmail.com> 
  * @license MIT
  */
 class Random
 {
+    /**
+     * Store the range as an object, with, min, maw and attribute to test if it 
+     * is float or integers. 
+     * 
+     * @var mixed
+     * @access protected
+     */
     protected $range = null;
 
+
+
+    /**
+     * Create one random nuber generator.
+     *
+     * If no argument provided, then will generate only float values between 0 and 1.
+     *
+     * If to integers are provided, then they will define the range where to 
+     * take random number(s). 
+     * 
+     * @param integer $int_min 
+     * @param integer $int_max 
+     * @access public
+     * @return void
+     */
     public function __construct($int_min = null, $int_max = null)
     {
         $this->range = new \stdClass();
@@ -67,6 +91,17 @@ class Random
         }
     }
 
+
+
+    /**
+     * Gets at each call a random number into the defined range.
+     *
+     * Random float between 0 and 1 or integers inside the range defined at 
+     * instanciation time is returned.
+     * 
+     * @access public
+     * @return mixed Integer or float.
+     */
     public function get()
     {
         if($this->range->as_integer)
@@ -79,6 +114,18 @@ class Random
         }
     }
 
+
+
+    /**
+     * Gets many random value.
+     *
+     * Gets many random values, with the same behaviour as `get()` method.
+     * 
+     * @param integer $n Number of items to get. Must be greater than 1
+     * @throw \InvalidArgumentException If argument is not integer or is less than 2
+     * @access public
+     * @return array
+     */
     public function getMany($n)
     {
         if(!is_integer($n) || $n < 2)
@@ -97,6 +144,17 @@ class Random
     }
 
 
+
+    /**
+     * Gets many random items without replacement. 
+     * 
+     * @param integer $n Number of items to get. Must be greater than 1
+     * @throw \InvalidArgumentException If argument is not integer or is less than 2
+     * @throw \OutOfRangeException If argument is bigger than ammount of 
+     * integers into the range (integer range context only)
+     * @access public
+     * @return array
+     */
     public function getManyWithoutReplacement($n)
     {
         if(!is_integer($n) || $n < 2)
@@ -149,5 +207,19 @@ class Random
         }
 
 
+    }
+
+
+
+    /**
+     * Into string context, returns one random number.
+     *
+     * 
+     * @access public
+     * @return string
+     */
+    public function __toString()
+    {
+        return (string) $this->get();
     }
 }
