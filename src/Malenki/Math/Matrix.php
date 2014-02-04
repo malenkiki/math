@@ -27,6 +27,25 @@ namespace Malenki\Math;
 
 /**
  * Matrix basic implementation.
+ *
+ * Different ways are available to instanciate a Matrix:
+ *
+ *  - by setting all values using one dimensional array,
+ *  - by adding columns,
+ *  - by adding rows
+ *
+ *      $m = new Matrix(2, 3); // 2 rows, 3 columns
+ *      $m->populate(array(1, 2, 3, 4, 5, 6)); // populate into one shot
+ *      // or adding columns
+ *      $m->addCol(array(1, 4));
+ *      $m->addCol(array(2, 5));
+ *      $m->addCol(array(3, 6));
+ *      // or adding rows
+ *      $m->addRow(array(1, 2, 3));
+ *      $m->addRow(array(4, 5, 6));
+ *
+ *  Some actions are available, like transpose, multiply with scalar or Matrix, 
+ *  add Matrix, test if a Matrix is square… See methods to have more information!
  * 
  * @todo as a reminder: http://www.latp.univ-mrs.fr/~torresan/CalcMat/cours/node2.html
  *
@@ -37,11 +56,31 @@ namespace Malenki\Math;
  */
 class Matrix
 {
+    /**
+     * Items of the matrix, as an array of array. 
+     * 
+     * @var array
+     * @access protected
+     */
     protected $arr = array();
+
+    /**
+     * Size of the matrix: column and row number. 
+     * 
+     * @var mixed
+     * @access protected
+     */
     protected $size = null;
 
 
 
+    /**
+     * Defines magic getter to acces to column's numbers and row's numbers 
+     * 
+     * @param mixed $name 
+     * @access public
+     * @return integer
+     */
     public function __get($name)
     {
         if(in_array($name, array('cols', 'rows')))
@@ -55,6 +94,8 @@ class Matrix
     /**
      * Constructs new matrix giving its size.
      * 
+     * @throw \InvalidArgumentException If numbers of cols or rows are not integers.
+     * @throw \InvalidArgumentException If numbers of cols or rows are not positive numbers.
      * @param integer $int_rows 
      * @param integer $int_cols 
      * @access public
@@ -104,6 +145,16 @@ class Matrix
 
 
 
+    /**
+     * Gets one item at given row and column. 
+     * 
+     * @throw \InvalidArgumentException If indexes are not integers
+     * @throw \InvalidArgumentException If one of the given indexes does not exist.
+     * @param integer $int_i Row index
+     * @param integer $int_j Column index
+     * @access public
+     * @return float
+     */
     public function get($int_i, $int_j)
     {
         if(!is_integer($int_i) || !is_integer($int_j))
@@ -131,6 +182,8 @@ class Matrix
     /**
      * Adds a row to populate step by step the matrix
      * 
+     * @throw \OutOfRangeException If this is called and the number of rows is full.
+     * @throw \InvalidArgumentException If row has not the same number of column that previous one.
      * @param array $arr_row Data to add
      * @access public
      * @return Matrix
@@ -157,6 +210,8 @@ class Matrix
     /**
      * Adds a column to populate step by step the matrix
      * 
+     * @throw \OutOfRangeException If this is called and the number of columns is full.
+     * @throw \InvalidArgumentException If colmun has not the same number of rows that previous one.
      * @param array $arr_col Data to add
      * @access public
      * @return Matrix
@@ -189,6 +244,7 @@ class Matrix
     /**
      * Gets the row having the given index.
      * 
+     * @throw \OutOfRangeException If given index does not exist.
      * @param integer $int Row's index
      * @access public
      * @return mixed
@@ -208,6 +264,7 @@ class Matrix
     /**
      * Gets the column having the given index.
      * 
+     * @throw \OutOfRangeException If given index does not exist.
      * @param integer $int column's index 
      * @access public
      * @return mixed
@@ -314,6 +371,8 @@ class Matrix
     /**
      * Adds the given matrix with the current one to give another new matrix. 
      * 
+     * @throw \InvalidArgumentException If argument is not a Matrix
+     * @throw \RuntimeException If given matrix has not the same size.
      * @param Matrix $matrix Matrix to add
      * @access public
      * @return Matrix
@@ -364,6 +423,8 @@ class Matrix
     /**
      * Multiplies current matrix to another one or to a scalar. 
      * 
+     * @throw \RuntimeException If argument is not valid number or if the given 
+     * matrix has not the right numbers of rows.
      * @param mixed $mix Number (Real or Complex) or Matrix
      * @access public
      * @return Matrix
@@ -473,6 +534,12 @@ class Matrix
     }
 
 
+    /**
+     * Gets the cofactor matrix
+     * 
+     * @access public
+     * @return Matrix
+     */
     public function cofactor()
     {
         $c = new self($this->size->rows, $this->size->cols);
@@ -509,6 +576,15 @@ class Matrix
 
 
 
+    /**
+     * Gets inverse matrix.
+     *
+     * Inverse matrix is get if and only if the determinant is not null.
+     *
+     * @throw \RuntimeException If determinant is null.
+     * @access public
+     * @return Matrix
+     */
     public function inverse()
     {
         $det = $this->det();
