@@ -2,7 +2,7 @@
 
 Little library to deal with some mathematical stuff.
 
-Implemented or partially implemented are: Complex number, Matrix, Normal distribution, Random, Angle.
+Implemented or partially implemented are: Complex number, Matrix, Normal distribution, Random, Angle, Random Complex.
 
 ## Angle
 
@@ -246,6 +246,23 @@ $nd = new \Malenki\Math\NormalDistribution(2, 0.3);
 $nd->f(3);
 // you can generate fake sample following the current normal distribution:
 $md->samples(100); // 100 elements into an array
+```
+
+## Factorial
+
+You can get factorial of one integer, it is very easy to use, instanciate it with `n` rank and then get value by calling `result` attribute.
+
+```php
+$f = new Factorial(5);
+$f->result; // should be 120
+$f->n; // you can get rank as reminder too.
+```
+
+String context is available too:
+
+```php
+$f = new Factorial(5);
+echo $f; // string '120'
 ```
 
 ## Random
