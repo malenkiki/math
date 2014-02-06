@@ -281,3 +281,24 @@ var_dump($r->getManyWithoutReplacement(5));
 $r = new \Malenki\Math\Random(-5, 18); // integer range
 var_dump($r->getManyWithoutReplacement(5));
 ```
+
+## Random Complex Number
+
+This class allows you to get one or many complex numbers with real and 
+imaginary or rho and theta inside given range.
+
+So, to get one complex number with its real part into `[2, 6.5]` range and 
+its imaginary part into `[-2, 5]` range, you must do that:
+
+```php
+$rc = new RandomComplex();
+$rc->r(2, 6.5)->i(-2, 5)->get();
+```
+
+You can do that with trigonometric form too, but now with 10 generated 
+items:
+
+```php
+$rc = new RandomComplex();
+$rc->rho(1, 5)->theta(M_PI / 4, M_PI /2)->getMany(10);
+```
