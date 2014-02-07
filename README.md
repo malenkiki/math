@@ -9,7 +9,9 @@ Implemented or partially implemented are: Complex number, Matrix, Normal distrib
 You can use angles as **deg**, **gon**, **rad** or **turn**. By default, radians is used.
 
 ```php
-$a = new \Malenki\Math\Angle(pi()/2);
+use \Malenki\Math\Angle;
+
+$a = new Angle(pi()/2);
 var_dump($a->deg); // get degrees
 var_dump($a->rad); // get radians
 var_dump($a->gon); // get radians
@@ -19,7 +21,9 @@ var_dump($a->turn); // get turns
 You can get DMS style too:
 
 ```php
-$a = new \Malenki\Math\Angle(34.53, \Malenki\Math\Angle::TYPE_DEG);
+use \Malenki\Math\Angle;
+
+$a = new Angle(34.53, Angle::TYPE_DEG);
 var_dump($a->dms); // get DMS object
 var_dump($a->dms->str); // get DMS string '34°31′48″'
 ```
@@ -27,26 +31,33 @@ var_dump($a->dms->str); // get DMS string '34°31′48″'
 You can test whether current angle is **right**, **straight** or **perigon**:
 
 ```php
-$a = new \Malenki\Math\Angle(pi() / 2);
+use \Malenki\Math\Angle;
+
+$a = new Angle(pi() / 2);
 var_dump($a->isRight()); // should return TRUE
-$b = new \Malenki\Math\Angle(pi());
+
+$b = new Angle(pi());
 var_dump($b->isStraight()); // should return TRUE
-$c = new \Malenki\Math\Angle(2 * pi());
+
+$c = new Angle(2 * M_PI);
 var_dump($c->isPerigon()); // should return TRUE
-$d = new \Malenki\Math\Angle(450, \Malenki\Math\Angle::TYPE_DEG); //yes, ignore multiple turns :)
+
+$d = new Angle(450, Angle::TYPE_DEG); //yes, ignore multiple turns :)
 var_dump($d->isRight()); // should return TRUE
 ```
 
 You can test current angle with another to know is they are **complementary** or **supplementary**:
 
 ```php
-$a = new \Malenki\Math\Angle(pi() / 3);
-$b = new \Malenki\Math\Angle(pi() / 6);
+use \Malenki\Math\Angle;
+
+$a = new Angle(M_PI / 3);
+$b = new Angle(M_PI / 6);
 var_dump($a->isComplementary($b)); // should be TRUE
 var_dump($b->isComplementary($a)); // should be TRUE
 
-$c = new \Malenki\Math\Angle(pi() / 2);
-$d = new \Malenki\Math\Angle(90, \Malenki\Math\Angle::TYPE_DEG);
+$c = new Angle(M_PI / 2);
+$d = new Angle(90, Angle::TYPE_DEG);
 var_dump($c->isSupplementary($d)); // should be TRUE
 var_dump($d->isSupplementary($c)); // should be TRUE
 ```
@@ -56,8 +67,10 @@ var_dump($d->isSupplementary($c)); // should be TRUE
 Creating matrix is simple, first step, you instanciate it with column numbers and row numbers, second step, you put data into it.
 
 ```php
+use \Malenki\Math\Matrix;
+
 //instanciate
-$m = new \Malenki\Math\Matrix(3, 2);
+$m = new Matrix(3, 2);
 //then populate
 $m->populate(array(1,2,3,4,5,6));
 //or
@@ -98,7 +111,9 @@ OK, you can get, you can set… but you can do more complicated things.
 You can __multiply__ matrix with another one, __but beware of compatibility!__
 
 ```php
-$n = new \Malenki\Math\Matrix(2, 3);
+use \Malenki\Math\Matrix;
+
+$n = new Matrix(2, 3);
 $n->populate(array(7, 8, 9, 10, 11, 12));
 
 if($m->multiplyAllow($n))
@@ -110,7 +125,9 @@ if($m->multiplyAllow($n))
 You can multiply matrix with a scalar too, or a complex number:
 
 ```php
-$z = new \Malenki\Math\Complex(2, -3);
+use \Malenki\Math\Complex;
+
+$z = new Complex(2, -3);
 $n->multiply(2);
 $n->multiply($z);
 ```
@@ -141,7 +158,9 @@ else
 Getting __determinant__ of a square matrix is easy, just do the following:
 
 ```php
-$m = new \Malenki\Math\Matrix(2,2);
+use \Malenki\Math\Matrix;
+
+$m = new Matrix(2,2);
 $m->populate(array(1,2,3,4));
 var_dump($m->det()); // should be -2
 ```
@@ -151,7 +170,9 @@ If you try to get determinant for a non square matrix, you get an Exception.
 __Inverse__ of square matrix is simple too, and like you can imagine, it is like that:
 
 ```php
-$m = new \Malenki\Math\Matrix(2,2);
+use \Malenki\Math\Matrix;
+
+$m = new Matrix(2,2);
 $m->populate(array(1,2,3,4));
 $i = $m->inverse();
 echo $i;
@@ -162,7 +183,9 @@ echo $i;
 The __cofactor matrix__, used be previous method, is compute with that:
 
 ```php
-$m = new \Malenki\Math\Matrix(2,2);
+use \Malenki\Math\Matrix;
+
+$m = new Matrix(2,2);
 $m->populate(array(1,2,3,4));
 $c = $m->cofactor();
 echo $c;
@@ -174,7 +197,9 @@ echo $c;
 Using complex is like a child game: instanciate it with real part and imaginary part. That’s all!
 
 ```php
-$z = new \Malenki\Math\Complex(2, -3);
+use \Malenki\Math\Complex;
+
+$z = new Complex(2, -3);
 ```
 
 But you can create complex number using __rho__ and __theta__ values, theta can be simple float or **Angle object**:
@@ -204,7 +229,9 @@ echo $zz; // print "cos 4.712389 + i⋅sin 4.712389"
 You have some magic getters:
 
 ```php
-$z = new \Malenki\Math\Complex(1,2);
+use \Malenki\Math\Complex;
+
+$z = new Complex(1,2);
 var_dump($z->real); // real part
 var_dump($z->re); // real part
 var_dump($z->r); // real part
@@ -218,8 +245,10 @@ var_dump($z->theta); // argument (angle)
 You can do addition, multiplication:
 
 ```php
-$z = new \Malenki\Math\Complex(1,2);
-$zz = new \Malenki\Math\Complex(2,3);
+use \Malenki\Math\Complex;
+
+$z = new Complex(1,2);
+$zz = new Complex(2,3);
 echo $z->add($zz); // give new complex nulber
 echo $z->multiply($zz); // give another complex number
 ```
@@ -227,7 +256,9 @@ echo $z->multiply($zz); // give another complex number
 Get negative and conjugate is simple too:
 
 ```php
-$z = new \Malenki\Math\Complex(1,2);
+use \Malenki\Math\Complex;
+
+$z = new Complex(1,2);
 echo $z->conjugate();
 echo $z->negative();
 ```
@@ -240,10 +271,14 @@ You can play with graph for given mean and standard deviation, or you can genera
 Some examples to understand:
 
 ```php
+use \Malenki\Math\NormalDistribution;
+
 // Normal Distribution with mean equals to 2 and has standard deviation of 0.3
-$nd = new \Malenki\Math\NormalDistribution(2, 0.3);
+$nd = new NormalDistribution(2, 0.3);
+
 // you can get value of function:
 $nd->f(3);
+
 // you can generate fake sample following the current normal distribution:
 $md->samples(100); // 100 elements into an array
 ```
@@ -253,6 +288,8 @@ $md->samples(100); // 100 elements into an array
 You can get factorial of one integer, it is very easy to use, instanciate it with `n` rank and then get value by calling `result` attribute.
 
 ```php
+use \Malenki\Math\Factorial;
+
 $f = new Factorial(5);
 $f->result; // should be 120
 $f->n; // you can get rank as reminder too.
@@ -261,6 +298,8 @@ $f->n; // you can get rank as reminder too.
 String context is available too:
 
 ```php
+use \Malenki\Math\Factorial;
+
 $f = new Factorial(5);
 echo $f; // string '120'
 ```
@@ -272,30 +311,36 @@ You can play with random numbers, included into integer range or as float betwee
 You can take one:
 
 ```php
-$r = new \Malenki\Math\Random(); // double form 0 to 1 only
+use \Malenki\Math\Random;
+
+$r = new Random(); // double form 0 to 1 only
 var_dump($r->get());
 
-$r = new \Malenki\Math\Random(-5, 18); // integer range
+$r = new Random(-5, 18); // integer range
 var_dump($r->get());
 ```
 
 You can take many:
 
 ```php
-$r = new \Malenki\Math\Random(); // double form 0 to 1 only
+use \Malenki\Math\Random;
+
+$r = new Random(); // double form 0 to 1 only
 var_dump($r->getMany(5));
 
-$r = new \Malenki\Math\Random(-5, 18); // integer range
+$r = new Random(-5, 18); // integer range
 var_dump($r->getMany(5));
 ```
 
 You can take many without replacement:
 
 ```php
-$r = new \Malenki\Math\Random(); // double form 0 to 1 only
+use \Malenki\Math\Random;
+
+$r = new Random(); // double form 0 to 1 only
 var_dump($r->getManyWithoutReplacement(5));
 
-$r = new \Malenki\Math\Random(-5, 18); // integer range
+$r = new Random(-5, 18); // integer range
 var_dump($r->getManyWithoutReplacement(5));
 ```
 
@@ -308,6 +353,8 @@ So, to get one complex number with its real part into `[2, 6.5]` range and
 its imaginary part into `[-2, 5]` range, you must do that:
 
 ```php
+use \Malenki\Math\RandomComplex;
+
 $rc = new RandomComplex();
 $rc->r(2, 6.5)->i(-2, 5)->get();
 ```
@@ -316,6 +363,8 @@ You can do that with trigonometric form too, but now with 10 generated
 items:
 
 ```php
+use \Malenki\Math\RandomComplex;
+
 $rc = new RandomComplex();
 $rc->rho(1, 5)->theta(M_PI / 4, M_PI /2)->getMany(10);
 ```
