@@ -1,8 +1,19 @@
 # Math
 
-Little library to deal with some mathematical stuff.
+Library to deal with some mathematical stuff.
 
-Implemented or partially implemented are: Complex number, Matrix, Normal distribution, Random, Angle, Random Complex.
+Implemented or partially implemented mathematical concepts are: **Complex number**, **Matrix**, **Normal distribution**, **Random**, **Angle**, **Random Complex**.
+
+## Install
+
+You can get this lib by downloading the [ZIP archive](https://github.com/malenkiki/math/archive/master.zip), cloning this repository or using [Composer](https://getcomposer.org/) with the following code to put into your `composer.json` file:
+
+```json
+{
+"require": {"malenki/math": "dev-master"}
+}
+```
+
 
 ## Angle
 
