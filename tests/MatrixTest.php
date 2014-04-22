@@ -188,16 +188,19 @@ class MatrixTest extends PHPUnit_Framework_TestCase
         $m->populate(array(1, 2, 3, 4));
 
         $this->assertEquals(-2, $m->det());
+        $this->assertEquals(-2, $m->det);
         
         $m = new Malenki\Math\Matrix(3, 3);
         $m->populate(array(0,2,3,4,5,6,0,8,9));
 
         $this->assertEquals(24, $m->det());
+        $this->assertEquals(24, $m->det);
         
         $m = new Malenki\Math\Matrix(4, 4);
         $m->populate(array(-1,0,2,3,4,5,-6,0,8,-4,9,-3,0,3,-1,0));
 
         $this->assertEquals(621, $m->det());
+        $this->assertEquals(621, $m->det);
     }
 
 
@@ -225,7 +228,7 @@ class MatrixTest extends PHPUnit_Framework_TestCase
         $m = new Malenki\Math\Matrix(3, 3);
         $m->populate(array(-1,2,5,1,2,3,-2,8,10));
 
-        $i = $m->inverse();
+        $i = $m->inverse;
         $this->assertEquals(array(-1/8, 5/8, -1/8), $i->getRow(0));
         $this->assertEquals(array(-0.5,0,0.25), $i->getRow(1));
         $this->assertEquals(array(3/8,1/8, -1/8), $i->getRow(2));
@@ -233,10 +236,9 @@ class MatrixTest extends PHPUnit_Framework_TestCase
         $m = new Malenki\Math\Matrix(3, 3);
         $m->populate(array(-3, 5, 6, -1, 2, 2, 1, -1, -1));
 
-        $i = $m->inverse();
-        $this->assertEquals(array(0, 1, 2), $i->getRow(0));
-        $this->assertEquals(array(-1, 3, 0), $i->getRow(1));
-        $this->assertEquals(array(1, -2, 1), $i->getRow(2));
+        $this->assertEquals(array(0, 1, 2), $m->inverse->getRow(0));
+        $this->assertEquals(array(-1, 3, 0), $m->inverse->getRow(1));
+        $this->assertEquals(array(1, -2, 1), $m->inverse->getRow(2));
     }
     
     

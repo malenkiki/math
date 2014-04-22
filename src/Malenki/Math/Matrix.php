@@ -93,6 +93,21 @@ class Matrix
         {
             return $this->size->$name;
         }
+
+        if($name == 'array')
+        {
+            return $this->arr;
+        }
+
+        if($name == 'is_square')
+        {
+            return $this->isSquare();
+        }
+
+        if(in_array($name, array('cofactor', 'adjugate', 'inverse', 'det', 'determinant', 'transpose')))
+        {
+            return $this->$name();
+        }
     }
 
 
@@ -675,6 +690,13 @@ class Matrix
             return $int_out;
         }
     }
+
+
+    public function determinant()
+    {
+        return $this->det();
+    }
+
         
 
 
