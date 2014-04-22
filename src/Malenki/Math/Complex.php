@@ -40,6 +40,14 @@ namespace Malenki\Math;
  * @property-read float $imaginary The imaginary part
  * @property-read float $im 2nd way to get imaginary part
  * @property-read float $i 3rd way to get imaginary part
+ * @property-read float $rho 1st way to get rho, aka norm, aka modulus
+ * @property-read float $modulus 2nd way to get rho
+ * @property-read float $norm 3rd way to get rho
+ * @property-read float $theta 1st way to get theta, aka arg, aka argument
+ * @property-read float $arg 2nd way to get theta
+ * @property-read float $argument 3rd way to get tehta
+ * @property-read float $conjugate gets the conjugate number for the curent complex number
+ * @property-read float $negative gets the negative of the current number
  * @author Michel Petit <petit.michel@gmail.com> 
  * @license MIT
  */
@@ -96,14 +104,19 @@ class Complex
             return $this->float_i;
         }
 
-        if($name == 'rho')
+        if(in_array($name, array('rho', 'modulus', 'norm')))
         {
             return $this->modulus();
         }
 
-        if($name == 'theta')
+        if(in_array($name, array('theta', 'arg', 'argument')))
         {
             return $this->argument();
+        }
+
+        if(in_array($name, array('conjugate', 'negative')))
+        {
+            return $this->$name();
         }
     }
 

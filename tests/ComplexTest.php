@@ -196,26 +196,38 @@ class ComplexTest extends PHPUnit_Framework_TestCase
         $z = new Malenki\Math\Complex(1, 1);
         $this->assertEquals(pi()/4, $z->argument());
         $this->assertEquals(pi()/4, $z->theta);
+        $this->assertEquals(pi()/4, $z->arg);
+        $this->assertEquals(pi()/4, $z->argument);
         
         $z = new Malenki\Math\Complex(1, 0);
         $this->assertEquals(0, $z->argument());
         $this->assertEquals(0, $z->theta);
+        $this->assertEquals(0, $z->arg);
+        $this->assertEquals(0, $z->argument);
         
         $z = new Malenki\Math\Complex(0, 1);
         $this->assertEquals(pi() / 2, $z->argument());
         $this->assertEquals(pi() / 2, $z->theta);
+        $this->assertEquals(pi() / 2, $z->arg);
+        $this->assertEquals(pi() / 2, $z->argument);
         
         $z = new Malenki\Math\Complex(-1, -1);
         $this->assertEquals(-3 * pi() / 4, $z->argument());
         $this->assertEquals(-3 * pi() / 4, $z->theta);
+        $this->assertEquals(-3 * pi() / 4, $z->arg);
+        $this->assertEquals(-3 * pi() / 4, $z->argument);
         
         $z = new Malenki\Math\Complex(-1, 0);
         $this->assertEquals(pi(), $z->argument());
         $this->assertEquals(pi(), $z->theta);
+        $this->assertEquals(pi(), $z->arg);
+        $this->assertEquals(pi(), $z->argument);
         
         $z = new Malenki\Math\Complex(0, -1);
         $this->assertEquals(pi() / -2, $z->argument());
         $this->assertEquals(pi() / -2, $z->theta);
+        $this->assertEquals(pi() / -2, $z->arg);
+        $this->assertEquals(pi() / -2, $z->argument);
     }
     
     public function testModulus()
@@ -223,12 +235,18 @@ class ComplexTest extends PHPUnit_Framework_TestCase
         $z = new Malenki\Math\Complex(1, 1);
         $this->assertEquals(sqrt(2), $z->modulus());
         $this->assertEquals(sqrt(2), $z->rho);
+        $this->assertEquals(sqrt(2), $z->modulus);
+        $this->assertEquals(sqrt(2), $z->norm);
         $z = new Malenki\Math\Complex(2, 4);
         $this->assertEquals(2 * sqrt(5), $z->modulus());
         $this->assertEquals(2 * sqrt(5), $z->rho);
+        $this->assertEquals(2 * sqrt(5), $z->modulus);
+        $this->assertEquals(2 * sqrt(5), $z->norm);
         $z = new Malenki\Math\Complex(1, 2);
         $this->assertEquals(sqrt(5), $z->modulus());
         $this->assertEquals(sqrt(5), $z->rho);
+        $this->assertEquals(sqrt(5), $z->modulus);
+        $this->assertEquals(sqrt(5), $z->norm);
     }
 
 
@@ -237,10 +255,12 @@ class ComplexTest extends PHPUnit_Framework_TestCase
         $z = new Malenki\Math\Complex(1, 1);
         $zc = new Malenki\Math\Complex(1, -1);
         $this->assertTrue($zc->equal($z->conjugate()));
+        $this->assertTrue($zc->equal($z->conjugate));
         
         $z = new Malenki\Math\Complex(1, -1);
         $zc = new Malenki\Math\Complex(1, 1);
         $this->assertTrue($zc->equal($z->conjugate()));
+        $this->assertTrue($zc->equal($z->conjugate));
     }
 
     public function testAdditionUsingComplexAndRealNumber()
