@@ -51,6 +51,13 @@ class MatrixTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(array(3, 6), $m->getCol(2));
     }
 
+    public function testGettingValuesAsArrayShouldSuccess()
+    {
+        $m = new Malenki\Math\Matrix(2, 3);
+        $m->populate(array(1,2,3,4,5,6));
+        $this->assertEquals(array(array(1,2,3), array(4,5,6)), $m->array);
+        $this->assertEquals(array(array(1,2,3), array(4,5,6)), $m->getAll());
+    }
 
 
     public function testGettingSubMatrix()
@@ -181,6 +188,17 @@ class MatrixTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($mf, $m->multiply($mr));
     }
 
+    public function testIfMatrixIsSquareShouldSuccess()
+    {
+        $m = new Malenki\Math\Matrix(2, 2);
+        $m->populate(array(1, 2, 3, 4));
+        $this->assertTrue($m->isSquare());
+        $this->assertTrue($m->is_square);
+        $m = new Malenki\Math\Matrix(2, 3);
+        $m->populate(array(1, 2, 3, 4, 5, 6));
+        $this->assertFalse($m->isSquare());
+        $this->assertFalse($m->is_square);
+    }
 
     public function testComputeDeterminantOfSquareMatrix()
     {
