@@ -311,4 +311,23 @@ class MatrixTest extends PHPUnit_Framework_TestCase
         $this->assertEquals("1  2+i   3\n4    5  60", sprintf('%s', $m));
     }
 
+    public function testGettingTraceShouldSuccess()
+    {
+        $m = new Matrix(2, 2);
+        $m->populate(array(1, 2, 3, 4));
+
+        $this->assertEquals(5, $m->trace());
+        $this->assertEquals(5, $m->trace);
+    }
+    
+    /**
+     * @expectedException \RuntimeException
+     */
+    public function testGettingTraceiFromNonSquareMatrixShouldFail()
+    {
+        $m = new Matrix(2, 3);
+        $m->populate(array(1, 2, 3, 4, 5, 6));
+
+        $m->trace();
+    }
 }

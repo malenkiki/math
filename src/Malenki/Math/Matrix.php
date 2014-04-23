@@ -104,7 +104,7 @@ class Matrix
             return $this->isSquare();
         }
 
-        if(in_array($name, array('cofactor', 'adjugate', 'inverse', 'det', 'determinant', 'transpose')))
+        if(in_array($name, array('cofactor', 'adjugate', 'inverse', 'det', 'trace', 'determinant', 'transpose')))
         {
             return $this->$name();
         }
@@ -689,6 +689,23 @@ class Matrix
 
             return $int_out;
         }
+    }
+
+    public function trace()
+    {
+        if(!$this->isSquare())
+        {
+            throw new \RuntimeException('Cannot compute trace of non square matrix!');
+        }
+
+        $int = 0;
+
+        for($i = 0; $i < $this->size->rows; $i++)
+        {
+            $int += $this->get($i, $i);
+        }
+
+        return $int;
     }
 
 
