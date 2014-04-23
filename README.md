@@ -1,5 +1,7 @@
 # Math
 
+[![Build Status](https://travis-ci.org/malenkiki/math.svg?branch=master)](https://travis-ci.org/malenkiki/math)
+
 Library to deal with some mathematical stuff.
 
 Implemented or partially implemented mathematical concepts are: **Complex number**, **Matrix**, **Normal distribution**, **Random**, **Angle**, **Random Complex**.
