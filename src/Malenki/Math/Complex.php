@@ -48,6 +48,7 @@ namespace Malenki\Math;
  * @property-read float $argument 3rd way to get tehta
  * @property-read float $conjugate gets the conjugate number for the curent complex number
  * @property-read float $negative gets the negative of the current number
+ * @property-read boolean $is_zero Tells if complex number is zero or not
  * @author Michel Petit <petit.michel@gmail.com> 
  * @license MIT
  */
@@ -118,6 +119,12 @@ class Complex
         {
             return $this->$name();
         }
+
+        if($name == 'is_zero')
+        {
+            return $this->isZero();
+        }
+
     }
 
 
@@ -185,6 +192,11 @@ class Complex
 
     }
 
+
+    public function isZero()
+    {
+        return $this->float_r == 0 && $this->float_i == 0;
+    }
 
 
     /**
@@ -318,8 +330,34 @@ class Complex
 
 
 
+    /**
+     * Divides current complex number with another.
+     * 
+     * @throw \InvalidArgumentException If argument is zero
+     * @param mixed $z  Complex or real number
+     * @access public
+     * @return Complex
+     */
     public function divide($z)
     {
+        if(is_numeric($z))
+        {
+            $z = new self($z, 0);
+        }
+
+        if($z->is_zero)
+        {
+            throw new \InvalidArgumentException('Cannot divide by zero!');
+        }
+
+        $divisor = pow($z->re, 2) + pow($z->im, 2);
+        
+        $r = ($this->float_r * $z->re) + ($this->float_i * $z->im);
+        $i = ($this->float_i * $z->re) - ($this->float_r * $z->im);
+        $r = $r / $divisor;
+        $i = $i / $divisor;
+
+        return new self( $r, $i);
     }
 
 

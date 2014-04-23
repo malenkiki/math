@@ -357,4 +357,76 @@ class ComplexTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($r, $z->multiply($real));
         $this->assertTrue($r->equal($z->multiply($real)));
     }    
+
+
+
+    public function testComplexNumberIsZeroOrNotShouldSuccess()
+    {
+        $z = new Complex(0, 0);
+
+        $this->assertTrue($z->isZero());
+        $this->assertTrue($z->is_zero);
+
+        $z = new Complex(0, 1);
+
+        $this->assertFalse($z->isZero());
+        $this->assertFalse($z->is_zero);
+
+        $z = new Complex(1, 0);
+
+        $this->assertFalse($z->isZero());
+        $this->assertFalse($z->is_zero);
+
+        $z = new Complex(1, 1);
+
+        $this->assertFalse($z->isZero());
+        $this->assertFalse($z->is_zero);
+    }
+
+
+    public function testDivideComplexNumberByComplexNumberShouldSuccess()
+    {
+        $z = new Complex(1, 2);
+        $zz = new Complex(3, -4);
+
+        $must = new Complex(-0.2, 0.4);
+
+        $this->assertEquals($must, $z->divide($zz));
+        
+        $must = new Complex(-1,-2);
+
+        $this->assertEquals($must, $zz->divide($z));
+    }
+    
+    public function testDivideComplexNumberByRealShouldSuccess()
+    {
+        $z = new Complex(1, 2);
+
+        $must = new Complex(0.5, 1);
+
+        $this->assertEquals($must, $z->divide(2));
+
+        $real = new Complex(2, 0);
+        $must = new Complex(0.4,-0.8);
+
+        $this->assertEquals($must, $real->divide($z));
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     */
+    public function testDivideComplexByZeroComplexShouldFail()
+    {
+        $z = new Complex(1, 2);
+        $z->divide(new Complex(0, 0));
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     */
+    public function testDivideComplexByZeroRealShouldFail()
+    {
+        $z = new Complex(1, 2);
+        $z->divide(0);
+    }
 }
