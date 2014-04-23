@@ -31,14 +31,33 @@ class Stats implements \Countable
     protected $int_count = null;
 
     protected $float_harmonic_mean = null;
+    protected $float_geometric_mean = null;
+    protected $float_arithmetic_mean = null;
+    protected $float_root_mean_square = null;
 
 
     public function __get($name)
     {
-        if(in_array($name, array('harmonic_mean', 'H')))
+        if(in_array($name, array('harmonic_mean', 'subcontrary_mean', 'H')))
         {
             return $this->harmonicMean();
         }
+        
+        if(in_array($name, array('geometric_mean', 'G')))
+        {
+            return $this->geometricMean();
+        }
+        
+        if(in_array($name, array('arithmetic_mean', 'mean')))
+        {
+            return $this->arithmeticMean();
+        }
+        
+        if(in_array($name, array('root_mean_square', 'rms', 'quadratic_mean')))
+        {
+            return $this->rootMeanSquare();
+        }
+
     }
 
 
@@ -67,6 +86,32 @@ class Stats implements \Countable
     }
 
 
+    public function add($num)
+    {
+        if(!is_numeric($num))
+        {
+            throw new \InvalidArgumentException('Only  umeric values are allowed into statistical collection.');
+        }
+        $this->arr[] = (double) $num;
+        $this->int_count = null;
+    }
+
+    public function arithmeticMean()
+    {
+        if(is_null($this->float_arithmetic_mean))
+        {
+            $this->float_arithmetic_mean = array_sum($this->arr) / count($this);
+        }
+
+        return $this->float_arithmetic_mean;
+    }
+
+    public function mean()
+    {
+        return $this->arithmeticMean();
+    }
+
+
     public function harmonicMean()
     {
         if(is_null($this->float_harmonic_mean))
@@ -82,5 +127,49 @@ class Stats implements \Countable
         }
 
         return $this->float_harmonic_mean;
+    }
+
+
+    public function geometricMean()
+    {
+        if(is_null($this->float_geometric_mean))
+        {
+            $this->float_geometric_mean = pow(
+                array_product($this->arr),
+                1 / count($this)
+            );
+        }
+
+        return $this->float_geometric_mean;
+    }
+
+
+    public function rootMeanSquare()
+    {
+        if(is_null($this->float_root_mean_square))
+        {
+            $s = new self(
+                array_map(
+                    function($n){
+                        return $n * $n;
+                    },
+                    $this->arr
+                )
+            );
+
+            $this->float_root_mean_square = sqrt($s->mean);
+        }
+
+        return $this->float_root_mean_square;
+    }
+
+    public function rms()
+    {
+        return $this->rootMeanSquare();
+    }
+
+    public function quadraticMean()
+    {
+        return $this->rootMeanSquare();
     }
 }

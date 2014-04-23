@@ -54,4 +54,47 @@ class StatsTest extends PHPUnit_Framework_TestCase
         $this->assertCount(5, $s);
     }
 
+
+    public function testComputingArithmeticMeanShouldSuccess()
+    {
+        $s = new Stats(array(1, 2, 3, 4));
+        $this->assertEquals(2.5, $s->arithmeticMean());
+        $this->assertEquals(2.5, $s->arithmetic_mean);
+        $this->assertEquals(2.5, $s->mean());
+        $this->assertEquals(2.5, $s->mean);
+        
+        $s = new Stats(array(1, 2, 4, 8, 16));
+        $this->assertEquals(6.2, $s->arithmeticMean());
+        $this->assertEquals(6.2, $s->arithmetic_mean);
+        $this->assertEquals(6.2, $s->mean());
+        $this->assertEquals(6.2, $s->mean);
+    }
+
+
+    public function testComputeHarmonicMeanShouldSuccess()
+    {
+        $s = new Stats(array(1, 2, 4));
+        $this->assertEquals(12/7, $s->harmonicMean());
+        $this->assertEquals(12/7, $s->harmonic_mean);
+        $this->assertEquals(12/7, $s->subcontrary_mean);
+        $this->assertEquals(12/7, $s->H);
+    }
+
+    public function testComputeGeometricMeanShouldSuccess()
+    {
+        $s = new Stats(array(4, 1, 1/32));
+        $this->assertEquals(1/2, $s->geometricMean());
+        $this->assertEquals(1/2, $s->geometric_mean);
+        $this->assertEquals(1/2, $s->G);
+        
+        $s = new Stats(array(2, 8));
+        $this->assertEquals(4, $s->geometricMean());
+        $this->assertEquals(4, $s->geometric_mean);
+        $this->assertEquals(4, $s->G);
+    }
+
+    public function testComputingQuadraticMeanShouldSuccess()
+    {
+        $this->markTestIncomplete();
+    }
 }
