@@ -34,6 +34,7 @@ class Stats implements \Countable
     protected $float_geometric_mean = null;
     protected $float_arithmetic_mean = null;
     protected $float_root_mean_square = null;
+    protected $float_range = null;
 
 
     public function __get($name)
@@ -48,16 +49,35 @@ class Stats implements \Countable
             return $this->geometricMean();
         }
         
-        if(in_array($name, array('arithmetic_mean', 'mean')))
+        if(in_array($name, array('arithmetic_mean', 'mean', 'A', 'mu')))
         {
             return $this->arithmeticMean();
         }
         
-        if(in_array($name, array('root_mean_square', 'rms', 'quadratic_mean')))
+        if(in_array($name, array('root_mean_square', 'rms', 'quadratic_mean', 'Q')))
         {
             return $this->rootMeanSquare();
         }
+        
+        if(in_array($name, array('midrange', 'midextreme', 'mid_range', 'mid_extreme')))
+        {
+            return $this->midrange();
+        }
 
+        if($name == 'range')
+        {
+            return $this->range();
+        }
+        
+        if(in_array($name, array('variance', 'var')))
+        {
+            return $this->variance();
+        }
+        
+        if(in_array($name, array('stdev', 'standard_deviation', 'sigma')))
+        {
+            return $this->standardDeviation();
+        }
     }
 
 
@@ -77,12 +97,37 @@ class Stats implements \Countable
         return $this->int_count;
     }
 
+    public function allPositive()
+    {
+        for($i = 0; $i < count($this); $i++)
+        {
+            if($this->arr[$i] < 0)
+            {
+                return false;
+            }
+        }
 
+        return true;
+    }
+
+
+    protected function clear()
+    {
+        $this->int_count = null;
+
+        $this->float_harmonic_mean = null;
+        $this->float_geometric_mean = null;
+        $this->float_arithmetic_mean = null;
+        $this->float_root_mean_square = null;
+        $this->float_range = null;
+    }
 
     public function merge($arr)
     {
         $this->arr = array_merge($this->arr, $arr);
-        $this->int_count = null;
+        $this->clear();
+
+        return $this;
     }
 
 
@@ -93,7 +138,20 @@ class Stats implements \Countable
             throw new \InvalidArgumentException('Only  umeric values are allowed into statistical collection.');
         }
         $this->arr[] = (double) $num;
-        $this->int_count = null;
+        $this->clear();
+
+        return $this;
+    }
+
+
+    public function range()
+    {
+        if(is_null($this->float_range))
+        {
+            $this->float_range = max($this->arr) - min($this->arr);
+        }
+
+        return $this->float_range;
     }
 
     public function arithmeticMean()
@@ -171,5 +229,64 @@ class Stats implements \Countable
     public function quadraticMean()
     {
         return $this->rootMeanSquare();
+    }
+
+
+    public function generalizedMean($p)
+    {
+        if($p <= 0)
+        {
+            throw new \InvalidArgumentException('Generalized mean takes p as non-zero positive real number.');
+        }
+
+        if(!$this->allPositive())
+        {
+            throw new \RuntimeException('Power mean use only collection of positive numbers!');
+        }
+
+        $arr = array();
+
+        for($i = 0; $i < count($this); $i++)
+        {
+            $arr[] = pow($this->arr[$i], $p);
+        }
+
+        return pow(array_sum($arr) / count($this), 1/$p);
+    }
+
+    public function powerMean($p)
+    {
+        return $this->generalizedMean($p);
+    }
+
+
+    public function midrange()
+    {
+        $s = new self();
+        $s->add(max($this->arr));
+        $s->add(min($this->arr));
+
+        return $s->mean;
+    }
+
+    public function midextreme()
+    {
+        return $this->midrange();
+    }
+
+    public function variance()
+    {
+        //TODO
+        return 0;
+    }
+
+    public function standardDeviation()
+    {
+        return sqrt($this->variance());
+    }
+
+    public function stdev()
+    {
+        return $this->standardDeviation();
     }
 }

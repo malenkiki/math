@@ -97,4 +97,39 @@ class StatsTest extends PHPUnit_Framework_TestCase
     {
         $this->markTestIncomplete();
     }
+
+    public function testComputingGeneralizedMeanShouldSuccess()
+    {
+        $this->markTestIncomplete();
+    }
+
+    public function testComputingGeneralizedMeanWithPEqualdZeroShouldFail()
+    {
+        $this->markTestIncomplete();
+    }
+
+    public function testComputingGeneralizedMeanWithPNegativeShouldFail()
+    {
+        $this->markTestIncomplete();
+    }
+
+    public function testComputingGeneralizedMeanWithCollectionHavingNegativeNumbersShouldFail()
+    {
+        $this->markTestIncomplete();
+    }
+
+    public function testGettingRangeShouldSuccess()
+    {
+        $this->markTestIncomplete();
+    }
+
+    public function testGettingVarianceShouldSuccess()
+    {
+        $this->markTestIncomplete();
+    }
+
+    public function testGettingStandardDeviationShouldSuccess()
+    {
+        $this->markTestIncomplete();
+    }
 }
