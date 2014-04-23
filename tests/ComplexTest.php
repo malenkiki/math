@@ -22,13 +22,14 @@ OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-
+use Malenki\Math\Complex;
+use Malenki\Math\Angle;
 
 class ComplexTest extends PHPUnit_Framework_TestCase
 {
     public function testInstanciateOK()
     {
-        $m = new Malenki\Math\Complex(2, 3);
+        $m = new Complex(2, 3);
     }
 
 
@@ -37,13 +38,13 @@ class ComplexTest extends PHPUnit_Framework_TestCase
      */
     public function testInstanciateKO()
     {
-        $z = new Malenki\Math\Complex(2, 'A');
+        $z = new Complex(2, 'A');
     }
 
 
     public function testRealAndImaginaryGetters()
     {
-        $z = new Malenki\Math\Complex(2, 3);
+        $z = new Complex(2, 3);
         $this->assertEquals(2,$z->real);
         $this->assertEquals(2,$z->re);
         $this->assertEquals(2,$z->r);
@@ -51,53 +52,53 @@ class ComplexTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(3,$z->im);
         $this->assertEquals(3,$z->i);
         
-        $z = new Malenki\Math\Complex(1, 1);
+        $z = new Complex(1, 1);
         $this->assertEquals(sqrt(2),$z->rho);
         $this->assertEquals(pi() / 4,$z->theta);
     }
 
     public function testComplexFromAlgebraicFormToString()
     {
-        $z = new Malenki\Math\Complex(2, 3);
+        $z = new Complex(2, 3);
         $this->assertEquals('2+3i', sprintf('%s', $z));
         
-        $z = new Malenki\Math\Complex(2, -3);
+        $z = new Complex(2, -3);
         $this->assertEquals('2-3i', sprintf('%s', $z));
         
-        $z = new Malenki\Math\Complex(-2, 3);
+        $z = new Complex(-2, 3);
         $this->assertEquals('-2+3i', sprintf('%s', $z));
         
-        $z = new Malenki\Math\Complex(-2, -3);
+        $z = new Complex(-2, -3);
         $this->assertEquals('-2-3i', sprintf('%s', $z));
         
-        $z = new Malenki\Math\Complex(2, 0);
+        $z = new Complex(2, 0);
         $this->assertEquals('2', sprintf('%s', $z));
         
-        $z = new Malenki\Math\Complex(-2, 0);
+        $z = new Complex(-2, 0);
         $this->assertEquals('-2', sprintf('%s', $z));
         
-        $z = new Malenki\Math\Complex(0, 2);
+        $z = new Complex(0, 2);
         $this->assertEquals('2i', sprintf('%s', $z));
         
-        $z = new Malenki\Math\Complex(0, -2);
+        $z = new Complex(0, -2);
         $this->assertEquals('-2i', sprintf('%s', $z));
         
-        $z = new Malenki\Math\Complex(0, 1);
+        $z = new Complex(0, 1);
         $this->assertEquals('i', sprintf('%s', $z));
         
-        $z = new Malenki\Math\Complex(0, -1);
+        $z = new Complex(0, -1);
         $this->assertEquals('-i', sprintf('%s', $z));
         
-        $z = new Malenki\Math\Complex(2, 1);
+        $z = new Complex(2, 1);
         $this->assertEquals('2+i', sprintf('%s', $z));
         
-        $z = new Malenki\Math\Complex(2, -1);
+        $z = new Complex(2, -1);
         $this->assertEquals('2-i', sprintf('%s', $z));
         
-        $z = new Malenki\Math\Complex(-2, 1);
+        $z = new Complex(-2, 1);
         $this->assertEquals('-2+i', sprintf('%s', $z));
         
-        $z = new Malenki\Math\Complex(-2, -1);
+        $z = new Complex(-2, -1);
         $this->assertEquals('-2-i', sprintf('%s', $z));
         
     }
@@ -106,21 +107,21 @@ class ComplexTest extends PHPUnit_Framework_TestCase
 
     public function testComplexFromTrigonometricFormToString()
     {
-        $z = new Malenki\Math\Complex(2, new \Malenki\Math\Angle(M_PI / 2));
+        $z = new Complex(2, new Angle(M_PI / 2));
         $this->assertEquals(sprintf('%1$f(cos %2$f + i⋅sin %2$f)', 2, M_PI/2), sprintf('%s', $z));
         
-        $z = new Malenki\Math\Complex(2, new \Malenki\Math\Angle(90, \Malenki\Math\Angle::TYPE_DEG));
+        $z = new Complex(2, new Angle(90, Angle::TYPE_DEG));
         $this->assertEquals(sprintf('%1$f(cos %2$f + i⋅sin %2$f)', 2, M_PI/2), sprintf('%s', $z));
         
-        $z = new Malenki\Math\Complex(1, new \Malenki\Math\Angle(M_PI / 2));
+        $z = new Complex(1, new Angle(M_PI / 2));
         $this->assertEquals(sprintf('cos %1$f + i⋅sin %1$f', M_PI/2), sprintf('%s', $z));
     }
     
     
     public function testEqualTo()
     {
-        $z = new Malenki\Math\Complex(2, 3);
-        $zz = new Malenki\Math\Complex(2, 3);
+        $z = new Complex(2, 3);
+        $zz = new Complex(2, 3);
 
         $this->assertTrue($z->equal($zz));
         $this->assertTrue($zz->equal($z));
@@ -128,8 +129,8 @@ class ComplexTest extends PHPUnit_Framework_TestCase
     
     public function testNotEqualTo()
     {
-        $z = new Malenki\Math\Complex(2, 3);
-        $zz = new Malenki\Math\Complex(3, 2);
+        $z = new Complex(2, 3);
+        $zz = new Complex(3, 2);
 
         $this->assertFalse($z->equal($zz));
         $this->assertFalse($zz->equal($z));
@@ -142,33 +143,33 @@ class ComplexTest extends PHPUnit_Framework_TestCase
      */
     public function testCreatingComplexFromTrigonometricFormWithNegativeRhoThatRaiseException()
     {
-        $z = new \Malenki\Math\Complex(-1, pi() / 2, \Malenki\Math\Complex::TRIGONOMETRIC);
+        $z = new Complex(-1, pi() / 2, Complex::TRIGONOMETRIC);
     }
 
     public function testCreatingComplexFromTrigonometricFormUsingOnlyFloat()
     {
-        $z = new \Malenki\Math\Complex(1, pi() / 2, \Malenki\Math\Complex::TRIGONOMETRIC);
-        $zz = new Malenki\Math\Complex(0, 1);
+        $z = new Complex(1, pi() / 2, Complex::TRIGONOMETRIC);
+        $zz = new Complex(0, 1);
 
         $this->assertTrue($zz->equal($z));
         
-        $z = new \Malenki\Math\Complex(1, pi(), \Malenki\Math\Complex::TRIGONOMETRIC);
-        $zz = new Malenki\Math\Complex(-1, 0);
+        $z = new Complex(1, pi(), Complex::TRIGONOMETRIC);
+        $zz = new Complex(-1, 0);
 
         $this->assertTrue($zz->equal($z));
     }
 
     public function testCreatingComplexFromTrigonometricFormUsingAngleObject()
     {
-        $a = new \Malenki\Math\Angle(90, \Malenki\Math\Angle::TYPE_DEG);
-        $z = new \Malenki\Math\Complex(1, $a, \Malenki\Math\Complex::TRIGONOMETRIC);
-        $zz = new Malenki\Math\Complex(0, 1);
+        $a = new Angle(90, Angle::TYPE_DEG);
+        $z = new Complex(1, $a, Complex::TRIGONOMETRIC);
+        $zz = new Complex(0, 1);
 
         $this->assertTrue($zz->equal($z));
         
-        $a = new \Malenki\Math\Angle(180, \Malenki\Math\Angle::TYPE_DEG);
-        $z = new \Malenki\Math\Complex(1, $a, \Malenki\Math\Complex::TRIGONOMETRIC);
-        $zz = new Malenki\Math\Complex(-1, 0);
+        $a = new Angle(180, Angle::TYPE_DEG);
+        $z = new Complex(1, $a, Complex::TRIGONOMETRIC);
+        $zz = new Complex(-1, 0);
 
         $this->assertTrue($zz->equal($z));
     }
@@ -176,15 +177,15 @@ class ComplexTest extends PHPUnit_Framework_TestCase
 
     public function testCreatingComplexFromTrigonometricFormUsingAngleObjectAndWithoutThirdArgument()
     {
-        $a = new \Malenki\Math\Angle(M_PI / 2);
-        $z = new \Malenki\Math\Complex(1, $a);
-        $zz = new Malenki\Math\Complex(0, 1);
+        $a = new Angle(M_PI / 2);
+        $z = new Complex(1, $a);
+        $zz = new Complex(0, 1);
 
         $this->assertTrue($zz->equal($z));
         
-        $a = new \Malenki\Math\Angle(M_PI);
-        $z = new \Malenki\Math\Complex(1, $a);
-        $zz = new Malenki\Math\Complex(-1, 0);
+        $a = new Angle(M_PI);
+        $z = new Complex(1, $a);
+        $zz = new Complex(-1, 0);
 
         $this->assertTrue($zz->equal($z));
     }
@@ -193,37 +194,37 @@ class ComplexTest extends PHPUnit_Framework_TestCase
 
     public function testArgument()
     {
-        $z = new Malenki\Math\Complex(1, 1);
+        $z = new Complex(1, 1);
         $this->assertEquals(pi()/4, $z->argument());
         $this->assertEquals(pi()/4, $z->theta);
         $this->assertEquals(pi()/4, $z->arg);
         $this->assertEquals(pi()/4, $z->argument);
         
-        $z = new Malenki\Math\Complex(1, 0);
+        $z = new Complex(1, 0);
         $this->assertEquals(0, $z->argument());
         $this->assertEquals(0, $z->theta);
         $this->assertEquals(0, $z->arg);
         $this->assertEquals(0, $z->argument);
         
-        $z = new Malenki\Math\Complex(0, 1);
+        $z = new Complex(0, 1);
         $this->assertEquals(pi() / 2, $z->argument());
         $this->assertEquals(pi() / 2, $z->theta);
         $this->assertEquals(pi() / 2, $z->arg);
         $this->assertEquals(pi() / 2, $z->argument);
         
-        $z = new Malenki\Math\Complex(-1, -1);
+        $z = new Complex(-1, -1);
         $this->assertEquals(-3 * pi() / 4, $z->argument());
         $this->assertEquals(-3 * pi() / 4, $z->theta);
         $this->assertEquals(-3 * pi() / 4, $z->arg);
         $this->assertEquals(-3 * pi() / 4, $z->argument);
         
-        $z = new Malenki\Math\Complex(-1, 0);
+        $z = new Complex(-1, 0);
         $this->assertEquals(pi(), $z->argument());
         $this->assertEquals(pi(), $z->theta);
         $this->assertEquals(pi(), $z->arg);
         $this->assertEquals(pi(), $z->argument);
         
-        $z = new Malenki\Math\Complex(0, -1);
+        $z = new Complex(0, -1);
         $this->assertEquals(pi() / -2, $z->argument());
         $this->assertEquals(pi() / -2, $z->theta);
         $this->assertEquals(pi() / -2, $z->arg);
@@ -232,17 +233,17 @@ class ComplexTest extends PHPUnit_Framework_TestCase
     
     public function testModulus()
     {
-        $z = new Malenki\Math\Complex(1, 1);
+        $z = new Complex(1, 1);
         $this->assertEquals(sqrt(2), $z->modulus());
         $this->assertEquals(sqrt(2), $z->rho);
         $this->assertEquals(sqrt(2), $z->modulus);
         $this->assertEquals(sqrt(2), $z->norm);
-        $z = new Malenki\Math\Complex(2, 4);
+        $z = new Complex(2, 4);
         $this->assertEquals(2 * sqrt(5), $z->modulus());
         $this->assertEquals(2 * sqrt(5), $z->rho);
         $this->assertEquals(2 * sqrt(5), $z->modulus);
         $this->assertEquals(2 * sqrt(5), $z->norm);
-        $z = new Malenki\Math\Complex(1, 2);
+        $z = new Complex(1, 2);
         $this->assertEquals(sqrt(5), $z->modulus());
         $this->assertEquals(sqrt(5), $z->rho);
         $this->assertEquals(sqrt(5), $z->modulus);
@@ -252,13 +253,13 @@ class ComplexTest extends PHPUnit_Framework_TestCase
 
     public function testConjugate()
     {
-        $z = new Malenki\Math\Complex(1, 1);
-        $zc = new Malenki\Math\Complex(1, -1);
+        $z = new Complex(1, 1);
+        $zc = new Complex(1, -1);
         $this->assertTrue($zc->equal($z->conjugate()));
         $this->assertTrue($zc->equal($z->conjugate));
         
-        $z = new Malenki\Math\Complex(1, -1);
-        $zc = new Malenki\Math\Complex(1, 1);
+        $z = new Complex(1, -1);
+        $zc = new Complex(1, 1);
         $this->assertTrue($zc->equal($z->conjugate()));
         $this->assertTrue($zc->equal($z->conjugate));
     }
@@ -266,42 +267,42 @@ class ComplexTest extends PHPUnit_Framework_TestCase
     public function testAdditionUsingComplexAndRealNumber()
     {
         $r = -5;
-        $z = new Malenki\Math\Complex(1, 1);
-        $za = new Malenki\Math\Complex(3, -2);
-        $zs = new Malenki\Math\Complex(4, -1);
+        $z = new Complex(1, 1);
+        $za = new Complex(3, -2);
+        $zs = new Complex(4, -1);
         $this->assertTrue($zs->equal($z->add($za)));
 
-        $zs = new Malenki\Math\Complex(-4, 1);
+        $zs = new Complex(-4, 1);
         $this->assertTrue($zs->equal($z->add($r)));
     }
 
 
     public function testMultiplicationOfComplexWithComplex()
     {
-        $z = new Malenki\Math\Complex(1, 2);
-        $za = new Malenki\Math\Complex(3, 4);
-        $r = new Malenki\Math\Complex(-5, 10);
+        $z = new Complex(1, 2);
+        $za = new Complex(3, 4);
+        $r = new Complex(-5, 10);
         $this->assertEquals($r, $z->multiply($za));
         $this->assertEquals($r, $za->multiply($z));
         $this->assertTrue($r->equal($z->multiply($za)));
         $this->assertTrue($r->equal($za->multiply($z)));
         
-        $za = new Malenki\Math\Complex(3, -4);
-        $r = new Malenki\Math\Complex(11, 2);
+        $za = new Complex(3, -4);
+        $r = new Complex(11, 2);
         $this->assertEquals($r, $z->multiply($za));
         $this->assertEquals($r, $za->multiply($z));
         $this->assertTrue($r->equal($z->multiply($za)));
         $this->assertTrue($r->equal($za->multiply($z)));
         
-        $za = new Malenki\Math\Complex(-3, -4);
-        $r = new Malenki\Math\Complex(5, -10);
+        $za = new Complex(-3, -4);
+        $r = new Complex(5, -10);
         $this->assertEquals($r, $z->multiply($za));
         $this->assertEquals($r, $za->multiply($z));
         $this->assertTrue($r->equal($z->multiply($za)));
         $this->assertTrue($r->equal($za->multiply($z)));
         
-        $za = new Malenki\Math\Complex(-3, 4);
-        $r = new Malenki\Math\Complex(-11, -2);
+        $za = new Complex(-3, 4);
+        $r = new Complex(-11, -2);
         $this->assertEquals($r, $z->multiply($za));
         $this->assertEquals($r, $za->multiply($z));
         $this->assertTrue($r->equal($z->multiply($za)));
@@ -311,48 +312,48 @@ class ComplexTest extends PHPUnit_Framework_TestCase
     
     public function testMultiplicationOfComplexWithRealNumber()
     {
-        $z = new Malenki\Math\Complex(1, 2);
+        $z = new Complex(1, 2);
         $real = 4;
-        $r = new Malenki\Math\Complex(4, 8);
+        $r = new Complex(4, 8);
         $this->assertEquals($r, $z->multiply($real));
         $this->assertTrue($r->equal($z->multiply($real)));
         
         $real = -4;
-        $r = new Malenki\Math\Complex(-4, -8);
+        $r = new Complex(-4, -8);
         $this->assertEquals($r, $z->multiply($real));
         $this->assertTrue($r->equal($z->multiply($real)));
         
-        $z = new Malenki\Math\Complex(1, -2);
+        $z = new Complex(1, -2);
         $real = 4;
-        $r = new Malenki\Math\Complex(4, -8);
+        $r = new Complex(4, -8);
         $this->assertEquals($r, $z->multiply($real));
         $this->assertTrue($r->equal($z->multiply($real)));
         
         $real = -4;
-        $r = new Malenki\Math\Complex(-4, 8);
+        $r = new Complex(-4, 8);
         $this->assertEquals($r, $z->multiply($real));
         $this->assertTrue($r->equal($z->multiply($real)));
         
         
-        $z = new Malenki\Math\Complex(-1, 2);
+        $z = new Complex(-1, 2);
         $real = 4;
-        $r = new Malenki\Math\Complex(-4, 8);
+        $r = new Complex(-4, 8);
         $this->assertEquals($r, $z->multiply($real));
         $this->assertTrue($r->equal($z->multiply($real)));
         
         $real = -4;
-        $r = new Malenki\Math\Complex(4, -8);
+        $r = new Complex(4, -8);
         $this->assertEquals($r, $z->multiply($real));
         $this->assertTrue($r->equal($z->multiply($real)));
         
-        $z = new Malenki\Math\Complex(-1, -2);
+        $z = new Complex(-1, -2);
         $real = 4;
-        $r = new Malenki\Math\Complex(-4, -8);
+        $r = new Complex(-4, -8);
         $this->assertEquals($r, $z->multiply($real));
         $this->assertTrue($r->equal($z->multiply($real)));
         
         $real = -4;
-        $r = new Malenki\Math\Complex(4, 8);
+        $r = new Complex(4, 8);
         $this->assertEquals($r, $z->multiply($real));
         $this->assertTrue($r->equal($z->multiply($real)));
     }    

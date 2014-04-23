@@ -22,7 +22,7 @@ OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-
+use Malenki\Math\Factorial;
 
 class FactorialTest extends PHPUnit_Framework_TestCase
 {
@@ -31,13 +31,13 @@ class FactorialTest extends PHPUnit_Framework_TestCase
      */
     public function testFactorialWithBadArgumentThatRaisesException()
     {
-        $f = new Malenki\Math\Factorial(-6);
+        $f = new Factorial(-6);
     }
 
 
     public function testFactorialZeroEqualsOne()
     {
-        $f = new Malenki\Math\Factorial(0);
+        $f = new Factorial(0);
         $this->assertEquals(1, $f->result);
     }
 
@@ -45,7 +45,7 @@ class FactorialTest extends PHPUnit_Framework_TestCase
 
     public function testFactorialOneEqualsOne()
     {
-        $f = new Malenki\Math\Factorial(1);
+        $f = new Factorial(1);
         $this->assertEquals(1, $f->result);
     }
 
@@ -53,11 +53,11 @@ class FactorialTest extends PHPUnit_Framework_TestCase
 
     public function testFactorialVariousValidFactorials()
     {
-        $f = new Malenki\Math\Factorial(2);
+        $f = new Factorial(2);
         $this->assertEquals(2, $f->result);
-        $f = new Malenki\Math\Factorial(3);
+        $f = new Factorial(3);
         $this->assertEquals(6, $f->result);
-        $f = new Malenki\Math\Factorial(5);
+        $f = new Factorial(5);
         $this->assertEquals(120, $f->result);
     }
 }

@@ -22,13 +22,13 @@ OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-
+use Malenki\Math\Random;
 
 class RandomTest extends PHPUnit_Framework_TestCase
 {
     public function testGettingManyIntegerItemsSuccess()
     {
-        $r = new Malenki\Math\Random(0, 9);
+        $r = new Random(0, 9);
         $this->assertEquals(2, count($r->getMany(2)));
         $this->assertEquals(3, count($r->getMany(3)));
         $this->assertEquals(4, count($r->getMany(4)));
@@ -44,7 +44,7 @@ class RandomTest extends PHPUnit_Framework_TestCase
 
     public function testGettingManyDoubleItemsSuccess()
     {
-        $r = new Malenki\Math\Random();
+        $r = new Random();
         $this->assertEquals(2, count($r->getMany(2)));
         $this->assertEquals(3, count($r->getMany(3)));
         $this->assertEquals(4, count($r->getMany(4)));
@@ -62,9 +62,9 @@ class RandomTest extends PHPUnit_Framework_TestCase
      */
     public function testGettingManyItemsWhithArgLessThan2RaisesException()
     {
-        $r = new Malenki\Math\Random(0, 9);
+        $r = new Random(0, 9);
         $r->getMany(1);
-        $r = new Malenki\Math\Random();
+        $r = new Random();
         $r->getMany(1);
     }
 
@@ -72,7 +72,7 @@ class RandomTest extends PHPUnit_Framework_TestCase
 
     public function testGettingManyIntegerItemsWithoutReplacementSuccess()
     {
-        $r = new Malenki\Math\Random(0, 9);
+        $r = new Random(0, 9);
         $this->assertEquals(2, count(array_unique($r->getManyWithoutReplacement(2), SORT_NUMERIC)));
         $this->assertEquals(3, count(array_unique($r->getManyWithoutReplacement(3), SORT_NUMERIC)));
         $this->assertEquals(4, count(array_unique($r->getManyWithoutReplacement(4), SORT_NUMERIC)));
@@ -88,7 +88,7 @@ class RandomTest extends PHPUnit_Framework_TestCase
 
     public function testGettingManyDoubleItemsWithoutReplacementSuccess()
     {
-        $r = new Malenki\Math\Random();
+        $r = new Random();
         $this->assertEquals(2, count(array_unique($r->getManyWithoutReplacement(2), SORT_NUMERIC)));
         $this->assertEquals(3, count(array_unique($r->getManyWithoutReplacement(3), SORT_NUMERIC)));
         $this->assertEquals(4, count(array_unique($r->getManyWithoutReplacement(4), SORT_NUMERIC)));
@@ -107,7 +107,7 @@ class RandomTest extends PHPUnit_Framework_TestCase
      */
     public function testGettingManyIntegerItemsWithoutReplacementRaisesOutOfRange()
     {
-        $r = new Malenki\Math\Random(0, 9);
+        $r = new Random(0, 9);
         $r->getManyWithoutReplacement(11);
     }
     
@@ -119,9 +119,9 @@ class RandomTest extends PHPUnit_Framework_TestCase
      */
     public function testGettingManyItemsWithoutReplacementWhithArgLessThan2RaisesException()
     {
-        $r = new Malenki\Math\Random(0, 9);
+        $r = new Random(0, 9);
         $r->getManyWithoutReplacement(1);
-        $r = new Malenki\Math\Random();
+        $r = new Random();
         $r->getManyWithoutReplacement(1);
     }
 }

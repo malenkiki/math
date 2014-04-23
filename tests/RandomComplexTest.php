@@ -22,13 +22,13 @@ OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-
+use Malenki\Math\RandomComplex;
 
 class RandomComplexTest extends PHPUnit_Framework_TestCase
 {
     public function testCreatingMultipleComplexOnlyWithPositiveReals()
     {
-        $r = new Malenki\Math\RandomComplex();
+        $r = new RandomComplex();
         $r->r(2.2, 7.4);
         $arr = $r->getMany(100);
 
@@ -41,7 +41,7 @@ class RandomComplexTest extends PHPUnit_Framework_TestCase
 
     public function testCreatingMultipleComplexOnlyWithNegativeReals()
     {
-        $r = new Malenki\Math\RandomComplex();
+        $r = new RandomComplex();
         $r->r(-4.3, -1.2);
         $arr = $r->getMany(100);
 
@@ -54,7 +54,7 @@ class RandomComplexTest extends PHPUnit_Framework_TestCase
     
     public function testCreatingMultipleComplexOnlyWithNegativeAndPositiveReals()
     {
-        $r = new Malenki\Math\RandomComplex();
+        $r = new RandomComplex();
         $r->r(-3.2, 5.6);
         $arr = $r->getMany(100);
 
@@ -67,7 +67,7 @@ class RandomComplexTest extends PHPUnit_Framework_TestCase
 
     public function testCreatingMultipleComplexWithPositiveRealsHavingSameWholePart()
     {
-        $r = new Malenki\Math\RandomComplex();
+        $r = new RandomComplex();
         $r->r(3.2, 3.6);
         $arr = $r->getMany(100);
 
@@ -80,7 +80,7 @@ class RandomComplexTest extends PHPUnit_Framework_TestCase
 
     public function testCreatingMultipleComplexWithNegativeRealsHavingSameWholePart()
     {
-        $r = new Malenki\Math\RandomComplex();
+        $r = new RandomComplex();
         $r->r(-3.8, -3.2);
         $arr = $r->getMany(100);
 
@@ -97,7 +97,7 @@ class RandomComplexTest extends PHPUnit_Framework_TestCase
      */
     public function testAssigningWrongTypeForRealsOfValuesThatRaiseInvalidArgumentException()
     {
-        $r = new Malenki\Math\RandomComplex();
+        $r = new RandomComplex();
         $r->r(4.1, 2.3);
     }
 
@@ -108,7 +108,7 @@ class RandomComplexTest extends PHPUnit_Framework_TestCase
      */
     public function testAssigningWrongTypeForImaginariesOfValuesThatRaiseInvalidArgumentException()
     {
-        $r = new Malenki\Math\RandomComplex();
+        $r = new RandomComplex();
         $r->i(4.1, 2.3);
     }
 
@@ -119,7 +119,7 @@ class RandomComplexTest extends PHPUnit_Framework_TestCase
      */
     public function testAssigningWrongTypeForRhosOfValuesThatRaiseInvalidArgumentException()
     {
-        $r = new Malenki\Math\RandomComplex();
+        $r = new RandomComplex();
         $r->rho(4.1, 2.3);
     }
 
@@ -129,7 +129,7 @@ class RandomComplexTest extends PHPUnit_Framework_TestCase
      */
     public function testAssigningNegativeRhosThatRaiseInvalidArgumentException()
     {
-        $r = new Malenki\Math\RandomComplex();
+        $r = new RandomComplex();
         $r->rho(-3, 2.3);
     }
 
@@ -140,7 +140,7 @@ class RandomComplexTest extends PHPUnit_Framework_TestCase
      */
     public function testAssigningWrongTypeForThetasOfValuesThatRaiseInvalidArgumentException()
     {
-        $r = new Malenki\Math\RandomComplex();
+        $r = new RandomComplex();
         $r->theta(4.1, 2.3);
     }
 
@@ -150,7 +150,7 @@ class RandomComplexTest extends PHPUnit_Framework_TestCase
      */
     public function testChainingRhoWhileRealHasBeenUsedRaiseRuntimeException()
     {
-        $r = new Malenki\Math\RandomComplex();
+        $r = new RandomComplex();
         $r->r(1.2, 3.4)->rho(5.6, 7.8);
     }
 
@@ -160,7 +160,7 @@ class RandomComplexTest extends PHPUnit_Framework_TestCase
      */
     public function testChainingThetaWhileRealHasBeenUsedRaiseRuntimeException()
     {
-        $r = new Malenki\Math\RandomComplex();
+        $r = new RandomComplex();
         $r->r(1.2, 3.4)->theta(M_PI / 2, M_PI);
     }
 
@@ -170,7 +170,7 @@ class RandomComplexTest extends PHPUnit_Framework_TestCase
      */
     public function testChainingRhoWhileImaginaryHasBeenUsedRaiseRuntimeException()
     {
-        $r = new Malenki\Math\RandomComplex();
+        $r = new RandomComplex();
         $r->i(1.2, 3.4)->rho(5.6, 7.8);
     }
 
@@ -180,7 +180,7 @@ class RandomComplexTest extends PHPUnit_Framework_TestCase
      */
     public function testChainingThetaWhileImaginaryHasBeenUsedRaiseRuntimeException()
     {
-        $r = new Malenki\Math\RandomComplex();
+        $r = new RandomComplex();
         $r->i(1.2, 3.4)->theta(M_PI / 2, M_PI);
     }
 
@@ -190,7 +190,7 @@ class RandomComplexTest extends PHPUnit_Framework_TestCase
      */
     public function testChainingRealWhileRhoHasBeenUsedRaiseRuntimeException()
     {
-        $r = new Malenki\Math\RandomComplex();
+        $r = new RandomComplex();
         $r->rho(1.2, 3.4)->r(5.6, 7.8);
     }
 
@@ -199,7 +199,7 @@ class RandomComplexTest extends PHPUnit_Framework_TestCase
      */
     public function testChainingRealWhileThetaHasBeenUsedRaiseRuntimeException()
     {
-        $r = new Malenki\Math\RandomComplex();
+        $r = new RandomComplex();
         $r->theta(1.2, 3.4)->r(5.6, 7.8);
     }
 
@@ -209,7 +209,7 @@ class RandomComplexTest extends PHPUnit_Framework_TestCase
      */
     public function testChainingImaginaryWhileRhoHasBeenUsedRaiseRuntimeException()
     {
-        $r = new Malenki\Math\RandomComplex();
+        $r = new RandomComplex();
         $r->rho(1.2, 3.4)->i(5.6, 7.8);
     }
 
@@ -218,13 +218,13 @@ class RandomComplexTest extends PHPUnit_Framework_TestCase
      */
     public function testChainingImaginaryWhileThetaHasBeenUsedRaiseRuntimeException()
     {
-        $r = new Malenki\Math\RandomComplex();
+        $r = new RandomComplex();
         $r->theta(1.2, 3.4)->i(5.6, 7.8);
     }
 
     public function testStartingWithAlgebraicThenResetThenUseTrigonometricWithoutException()
     {
-        $r = new Malenki\Math\RandomComplex();
+        $r = new RandomComplex();
         $r->r(1.2, 3.4)->i(5.6, 7.8);
         $r->get();
         $r->reset()->rho(2, 5)->theta(M_PI/4, M_PI / 2);
@@ -232,7 +232,7 @@ class RandomComplexTest extends PHPUnit_Framework_TestCase
     
     public function testStartingWithTrigonometricThenResetThenUseAlgebraicWithoutException()
     {
-        $r = new Malenki\Math\RandomComplex();
+        $r = new RandomComplex();
         $r->rho(2, 5)->theta(M_PI/4, M_PI / 2);
         $r->get();
         $r->reset()->r(1.2, 3.4)->i(5.6, 7.8);

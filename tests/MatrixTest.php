@@ -23,25 +23,27 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
 
+use Malenki\Math\Matrix;
+use Malenki\Math\Complex;
 
 class MatrixTest extends PHPUnit_Framework_TestCase
 {
     public function testPopulateOK()
     {
-        $m = new Malenki\Math\Matrix(2, 3);
+        $m = new Matrix(2, 3);
         $m->populate(array(1, 2, 3, 4, 5, 6));
 
         $this->assertEquals(array(1, 2, 3), $m->getRow(0));
         $this->assertEquals(array(4, 5, 6), $m->getRow(1));
         
-        $m = new Malenki\Math\Matrix(2, 3);
+        $m = new Matrix(2, 3);
         $m->addRow(array(1, 2, 3));
         $m->addRow(array(4, 5, 6));
 
         $this->assertEquals(array(1, 2, 3), $m->getRow(0));
         $this->assertEquals(array(4, 5, 6), $m->getRow(1));
         
-        $m = new Malenki\Math\Matrix(2, 3);
+        $m = new Matrix(2, 3);
         $m->addCol(array(1, 4));
         $m->addCol(array(2, 5));
         $m->addCol(array(3, 6));
@@ -53,7 +55,7 @@ class MatrixTest extends PHPUnit_Framework_TestCase
 
     public function testGettingValuesAsArrayShouldSuccess()
     {
-        $m = new Malenki\Math\Matrix(2, 3);
+        $m = new Matrix(2, 3);
         $m->populate(array(1,2,3,4,5,6));
         $this->assertEquals(array(array(1,2,3), array(4,5,6)), $m->array);
         $this->assertEquals(array(array(1,2,3), array(4,5,6)), $m->getAll());
@@ -62,45 +64,45 @@ class MatrixTest extends PHPUnit_Framework_TestCase
 
     public function testGettingSubMatrix()
     {
-        $m = new Malenki\Math\Matrix(2, 2);
+        $m = new Matrix(2, 2);
         $m->populate(array(1, 2, 3, 4));
 
 
-        $r = new Malenki\Math\Matrix(1, 1);
+        $r = new Matrix(1, 1);
         $r->populate(array(4));
 
         $this->assertEquals($r, $m->subMatrix(0, 0));
 
-        $r = new Malenki\Math\Matrix(1, 1);
+        $r = new Matrix(1, 1);
         $r->populate(array(3));
 
         $this->assertEquals($r, $m->subMatrix(0, 1));
 
-        $r = new Malenki\Math\Matrix(1, 1);
+        $r = new Matrix(1, 1);
         $r->populate(array(2));
 
         $this->assertEquals($r, $m->subMatrix(1, 0));
 
-        $r = new Malenki\Math\Matrix(1, 1);
+        $r = new Matrix(1, 1);
         $r->populate(array(1));
 
         $this->assertEquals($r, $m->subMatrix(1, 1));
         
         
-        $m = new Malenki\Math\Matrix(3, 3);
+        $m = new Matrix(3, 3);
         $m->populate(array(1, 2, 3, 4, 5, 6, 7, 8, 9));
         
-        $r = new Malenki\Math\Matrix(2, 2);
+        $r = new Matrix(2, 2);
         $r->populate(array(1, 3, 7, 9));
 
         $this->assertEquals($r, $m->subMatrix(1, 1));
         
-        $r = new Malenki\Math\Matrix(2, 2);
+        $r = new Matrix(2, 2);
         $r->populate(array(5, 6, 8, 9));
 
         $this->assertEquals($r, $m->subMatrix(0, 0));
         
-        $r = new Malenki\Math\Matrix(2, 2);
+        $r = new Matrix(2, 2);
         $r->populate(array(1, 2, 4, 5));
 
         $this->assertEquals($r, $m->subMatrix(2, 2));
@@ -108,17 +110,17 @@ class MatrixTest extends PHPUnit_Framework_TestCase
 
     public function testMultiplyMatrixWithScalarOrComplexNumber()
     {
-        $m = new Malenki\Math\Matrix(2, 2);
+        $m = new Matrix(2, 2);
         $m->populate(array(1, 2, 3, 4));
 
-        $mr = new Malenki\Math\Matrix(2, 2);
+        $mr = new Matrix(2, 2);
         $mr->populate(array(2, 4, 6, 8));
         
         $this->assertEquals($mr, $m->multiply(2));
 
-        $z = new Malenki\Math\Complex(1, 2);
+        $z = new Complex(1, 2);
 
-        $mr = new Malenki\Math\Matrix(2, 2);
+        $mr = new Matrix(2, 2);
         $mr->populate(
             array($z->multiply(1), $z->multiply(2), $z->multiply(3), $z->multiply(4))
         );
@@ -129,34 +131,34 @@ class MatrixTest extends PHPUnit_Framework_TestCase
 
     public function testMultiplyRealMatrixWithRealMatrix()
     {
-        $m = new Malenki\Math\Matrix(2, 2);
+        $m = new Matrix(2, 2);
         $m->populate(array(1, 2, 3, 4));
         
-        $n = new Malenki\Math\Matrix(2, 2);
+        $n = new Matrix(2, 2);
         $n->populate(array(5, 6, 7, 8));
 
-        $r = new Malenki\Math\Matrix(2, 2);
+        $r = new Matrix(2, 2);
         $r->populate(array(19, 22, 43, 50));
 
         $this->assertEquals($r, $m->multiply($n));
 
-        $r = new Malenki\Math\Matrix(2, 2);
+        $r = new Matrix(2, 2);
         $r->populate(array(23, 34, 31, 46));
 
         $this->assertEquals($r, $n->multiply($m));
 
-        $n = new Malenki\Math\Matrix(2, 3);
+        $n = new Matrix(2, 3);
         $n->populate(array(5, 6, 7, 8, 9, 10));
 
-        $r = new Malenki\Math\Matrix(2, 3);
+        $r = new Matrix(2, 3);
         $r->populate(array(21,24,27,47,54,61));
 
         $this->assertEquals($r, $m->multiply($n));
 
-        $n = new Malenki\Math\Matrix(2, 1);
+        $n = new Matrix(2, 1);
         $n->populate(array(5, 6));
 
-        $r = new Malenki\Math\Matrix(2, 1);
+        $r = new Matrix(2, 1);
         $r->populate(array(17, 39));
 
         $this->assertEquals($r, $m->multiply($n));
@@ -164,24 +166,24 @@ class MatrixTest extends PHPUnit_Framework_TestCase
 
     public function testMultiplyRealMatrixWithComplexMatrix()
     {
-        $m = new Malenki\Math\Matrix(2, 2);
+        $m = new Matrix(2, 2);
         $m->populate(array(1, 3, 2, 4));
 
 
-        $z = new Malenki\Math\Complex(1, 2);
+        $z = new Complex(1, 2);
         
-        $mr = new Malenki\Math\Matrix(2, 2);
+        $mr = new Matrix(2, 2);
         $mr->populate(
             array($z->multiply(1), $z->multiply(3), $z->multiply(2), $z->multiply(4))
         );
         
-        $mf = new Malenki\Math\Matrix(2, 2);
+        $mf = new Matrix(2, 2);
         $mf->populate(
             array(
-                new Malenki\Math\Complex(7,14),
-                new Malenki\Math\Complex(15,30),
-                new Malenki\Math\Complex(10,20),
-                new Malenki\Math\Complex(22,44)
+                new Complex(7,14),
+                new Complex(15,30),
+                new Complex(10,20),
+                new Complex(22,44)
             )
         );
 
@@ -190,11 +192,11 @@ class MatrixTest extends PHPUnit_Framework_TestCase
 
     public function testIfMatrixIsSquareShouldSuccess()
     {
-        $m = new Malenki\Math\Matrix(2, 2);
+        $m = new Matrix(2, 2);
         $m->populate(array(1, 2, 3, 4));
         $this->assertTrue($m->isSquare());
         $this->assertTrue($m->is_square);
-        $m = new Malenki\Math\Matrix(2, 3);
+        $m = new Matrix(2, 3);
         $m->populate(array(1, 2, 3, 4, 5, 6));
         $this->assertFalse($m->isSquare());
         $this->assertFalse($m->is_square);
@@ -202,19 +204,19 @@ class MatrixTest extends PHPUnit_Framework_TestCase
 
     public function testComputeDeterminantOfSquareMatrix()
     {
-        $m = new Malenki\Math\Matrix(2, 2);
+        $m = new Matrix(2, 2);
         $m->populate(array(1, 2, 3, 4));
 
         $this->assertEquals(-2, $m->det());
         $this->assertEquals(-2, $m->det);
         
-        $m = new Malenki\Math\Matrix(3, 3);
+        $m = new Matrix(3, 3);
         $m->populate(array(0,2,3,4,5,6,0,8,9));
 
         $this->assertEquals(24, $m->det());
         $this->assertEquals(24, $m->det);
         
-        $m = new Malenki\Math\Matrix(4, 4);
+        $m = new Matrix(4, 4);
         $m->populate(array(-1,0,2,3,4,5,-6,0,8,-4,9,-3,0,3,-1,0));
 
         $this->assertEquals(621, $m->det());
@@ -227,7 +229,7 @@ class MatrixTest extends PHPUnit_Framework_TestCase
      */
     public function testComputingDeterminantForNonSquareMatrixMustRaiseRuntimeException()
     {
-        $m = new Malenki\Math\Matrix(2, 3);
+        $m = new Matrix(2, 3);
         $m->populate(array(1, 2, 3, 4, 5, 6));
 
         $m->det();
@@ -236,14 +238,14 @@ class MatrixTest extends PHPUnit_Framework_TestCase
 
     public function testGettingInverseMatrixFromInversibleMatrixWillSuccess()
     {
-        $m = new Malenki\Math\Matrix(2, 2);
+        $m = new Matrix(2, 2);
         $m->populate(array(2,3,4,5));
 
         $i = $m->inverse();
         $this->assertEquals(array(-5/2, 3/2), $i->getRow(0));
         $this->assertEquals(array(2, -1), $i->getRow(1));
         
-        $m = new Malenki\Math\Matrix(3, 3);
+        $m = new Matrix(3, 3);
         $m->populate(array(-1,2,5,1,2,3,-2,8,10));
 
         $i = $m->inverse;
@@ -251,7 +253,7 @@ class MatrixTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(array(-0.5,0,0.25), $i->getRow(1));
         $this->assertEquals(array(3/8,1/8, -1/8), $i->getRow(2));
         
-        $m = new Malenki\Math\Matrix(3, 3);
+        $m = new Matrix(3, 3);
         $m->populate(array(-3, 5, 6, -1, 2, 2, 1, -1, -1));
 
         $this->assertEquals(array(0, 1, 2), $m->inverse->getRow(0));
@@ -265,7 +267,7 @@ class MatrixTest extends PHPUnit_Framework_TestCase
      */
     public function testGettingInverseMatrixFromNonInversibleMatrixWillRaiseRuntimeException()
     {
-        $m = new Malenki\Math\Matrix(2, 2);
+        $m = new Matrix(2, 2);
         $m->populate(array(2,0,4,0));
 
         $i = $m->inverse();
@@ -274,13 +276,13 @@ class MatrixTest extends PHPUnit_Framework_TestCase
     
     public function testAddRealMatrixWithPartlyComplexMatrix()
     {
-        $m = new Malenki\Math\Matrix(2, 2);
+        $m = new Matrix(2, 2);
         $m->populate(array(1, 2, 3, 4));
         
-        $z = new Malenki\Math\Matrix(2, 2);
+        $z = new Matrix(2, 2);
         $z->populate(array(1, new Malenki\Math\Complex(2, 1), 3, 4));
         
-        $r = new Malenki\Math\Matrix(2, 2);
+        $r = new Matrix(2, 2);
         $r->populate(array(2, new Malenki\Math\Complex(4, 1), 6, 8));
 
         $this->assertEquals($r, $m->add($z));
@@ -291,19 +293,19 @@ class MatrixTest extends PHPUnit_Framework_TestCase
 
     public function testToString()
     {
-        $m = new Malenki\Math\Matrix(2, 3);
+        $m = new Matrix(2, 3);
         $m->populate(array(1, 2, 3, 4, 5, 6));
 
         $this->assertEquals("1  2  3\n4  5  6", sprintf('%s', $m));
         
         
-        $m = new Malenki\Math\Matrix(2, 3);
+        $m = new Matrix(2, 3);
         $m->populate(array(1, 20, 3, 4, 5, 60));
 
         $this->assertEquals("1  20   3\n4   5  60", sprintf('%s', $m));
         
         
-        $m = new Malenki\Math\Matrix(2, 3);
+        $m = new Matrix(2, 3);
         $m->populate(array(1, new Malenki\Math\Complex(2, 1), 3, 4, 5, 60));
 
         $this->assertEquals("1  2+i   3\n4    5  60", sprintf('%s', $m));
