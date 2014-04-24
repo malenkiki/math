@@ -35,6 +35,10 @@ class Stats implements \Countable
     protected $float_arithmetic_mean = null;
     protected $float_root_mean_square = null;
     protected $float_range = null;
+    protected $float_variance = null;
+    protected $float_stddev = null;
+    protected $float_sample_variance = null;
+    protected $float_kurtosis = null;
 
 
     public function __get($name)
@@ -69,14 +73,39 @@ class Stats implements \Countable
             return $this->range();
         }
         
-        if(in_array($name, array('variance', 'var')))
+        if(in_array($name, array('variance', 'var', 'population_variance')))
         {
             return $this->variance();
         }
         
-        if(in_array($name, array('stdev', 'standard_deviation', 'sigma')))
+        if(in_array($name, array('stdev', 'stddev', 'standard_deviation', 'sigma')))
         {
             return $this->standardDeviation();
+        }
+        
+        if(in_array($name, array('sample_variance', 's2')))
+        {
+            return $this->sampleVariance();
+        }
+        
+        if($name == 'kurtosis')
+        {
+            return $this->kurtosis();
+        }
+        
+        if($name == 'is_platykurtic')
+        {
+            return $this->isPlatykurtic();
+        }
+        
+        if($name == 'is_leptokurtic')
+        {
+            return $this->isLeptokurtic();
+        }
+        
+        if($name == 'is_mesokurtic')
+        {
+            return $this->isMesokurtic();
         }
     }
 
@@ -97,6 +126,11 @@ class Stats implements \Countable
         return $this->int_count;
     }
 
+    public function isEmpty()
+    {
+        return count($this) == 0;
+    }
+
     public function allPositive()
     {
         for($i = 0; $i < count($this); $i++)
@@ -114,12 +148,15 @@ class Stats implements \Countable
     protected function clear()
     {
         $this->int_count = null;
-
         $this->float_harmonic_mean = null;
         $this->float_geometric_mean = null;
         $this->float_arithmetic_mean = null;
         $this->float_root_mean_square = null;
         $this->float_range = null;
+        $this->float_variance = null;
+        $this->float_sample_variance = null;
+        $this->float_stddev = null;
+        $this->float_kurtosis = null;
     }
 
     public function merge($arr)
@@ -276,8 +313,23 @@ class Stats implements \Countable
 
     public function variance()
     {
-        //TODO
-        return 0;
+        if($this->isEmpty())
+        {
+            throw new \RuntimeException('Cannot compute variance on void collection');
+        }
+
+        if(is_null($this->float_variance))
+        {
+            $this->float_variance = $this->centralMoment(2);
+        }
+
+        return $this->float_variance;
+    }
+
+
+    public function populationVariance()
+    {
+        return $this->variance();
     }
 
     public function standardDeviation()
@@ -285,8 +337,88 @@ class Stats implements \Countable
         return sqrt($this->variance());
     }
 
+    public function stddev()
+    {
+        return $this->standardDeviation();
+    }
+
     public function stdev()
     {
         return $this->standardDeviation();
+    }
+
+    public function sigma()
+    {
+        return $this->standardDeviation();
+    }
+
+
+    public function sampleVariance()
+    {
+        if(count($this) <= 1)
+        {
+            throw new \RuntimeException('Cannot compute sample variance, sample must have at least 2 elements');
+        }
+
+        if(is_null($this->float_sample_variance))
+        {
+            $arr = array();
+            
+            for($i = 0; $i < count($this); $i++)
+            {
+                $arr[] = pow($this->arr[$i] - $this->mean(), 2);
+            }
+
+            $this->float_sample_variance = array_sum($arr) / (count($this) - 1);
+        }
+
+        return $this->float_sample_variance;
+    }
+
+    public function s2()
+    {
+        return $this->sampleVariance();
+    }
+
+    public function centralMoment($k)
+    {
+        $arr = array();
+
+        for($i = 0; $i < count($this); $i++)
+        {
+            $arr[] = pow($this->arr[$i] - $this->mean(), $k);
+        }
+
+        return array_sum($arr) / count($this);
+    }
+
+    public function moment($k)
+    {
+        return $this->centralMoment($k);
+    }
+
+    public function kurtosis()
+    {
+        if(is_null($this->float_kurtosis))
+        {
+            $this->float_kurtosis = ($this->moment(4) / pow($this->moment(2), 2)) - 3;
+        }
+
+        return $this->float_kurtosis;
+    }
+
+    public function isPlatykurtic()
+    {
+        return $this->kurtosis() < 0;
+    }
+
+    public function isLeptokurtic()
+    {
+        return $this->kurtosis() > 0;
+    }
+
+    public function isMesokurtic()
+    {
+        return $this->kurtosis() == 0;
     }
 }

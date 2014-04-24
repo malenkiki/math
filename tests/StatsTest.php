@@ -125,11 +125,69 @@ class StatsTest extends PHPUnit_Framework_TestCase
 
     public function testGettingVarianceShouldSuccess()
     {
-        $this->markTestIncomplete();
+        $s = new Stats(array(1,2,3));
+        $this->assertEquals((float) 0.667, round($s->variance(), 3));
+        $this->assertEquals((float) 0.667, round($s->variance, 3));
+        $this->assertEquals((float) 0.667, round($s->var, 3));
+    }
+
+    /**
+     * @expectedException \RuntimeException
+     */
+    public function testGettingVarianceFromVoidCollectionShouldFail()
+    {
+        $s = new Stats();
+        $s->variance;
     }
 
     public function testGettingStandardDeviationShouldSuccess()
     {
-        $this->markTestIncomplete();
+        $s = new Stats(array(1,2,3));
+        $this->assertEquals((float) 0.816, round($s->standardDeviation(), 3));
+        $this->assertEquals((float) 0.816, round($s->standard_deviation, 3));
+        $this->assertEquals((float) 0.816, round($s->stddev, 3));
+        $this->assertEquals((float) 0.816, round($s->stdev, 3));
+    }
+    
+    public function testGettingSampleVarianceShouldSuccess()
+    {
+        $s = new Stats(array(1,2,3));
+        $this->assertEquals((float) 1, $s->sampleVariance());
+        $this->assertEquals((float) 1, $s->sample_variance);
+        $this->assertEquals((float) 1, $s->s2);
+    }
+    
+
+    /**
+     * @expectedException \RuntimeException
+     */
+    public function testGettingVarianceFromCollectionHavingLessThanTwoElementsShouldFail()
+    {
+        $s = new Stats(array(5));
+        $s->sample_variance;
+    }
+
+    public function testGettingKurtosisShouldSuccess()
+    {
+        $s = new Stats(array(1,2,3,4,5));
+        $this->assertEquals((float) -1.3, $s->kurtosis());
+        $this->assertEquals((float) -1.3, $s->kurtosis);
+        
+        $s = new Stats(array(1,2,3,4,500, 6));
+        $this->assertEquals((float) 1.199, round($s->kurtosis(), 3));
+        $this->assertEquals((float) 1.199, round($s->kurtosis, 3));
+    }
+
+    public function testGettingKurtosisTypeShouldSuccess()
+    {
+        $s = new Stats(array(1,2,3,4,5));
+        $this->assertTrue($s->isPlatykurtic());
+        $this->assertFalse($s->isLeptokurtic());
+        $this->assertFalse($s->isMesokurtic());
+        
+        $s = new Stats(array(1,2,3,4,500, 6));
+        $this->assertFalse($s->isPlatykurtic());
+        $this->assertTrue($s->isLeptokurtic());
+        $this->assertFalse($s->isMesokurtic());
     }
 }
