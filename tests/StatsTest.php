@@ -204,4 +204,14 @@ class StatsTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(37, $s->third_quartile);
         $this->assertEquals(37, $s->last_quartile);
     }
+
+    public function testGettingInterquartileRangeShouldSuccess()
+    {
+        $s = new Stats(array(1, 11, 15, 19, 20, 24, 28, 34, 37, 47, 50, 57));
+        $this->assertEquals(22, $s->interquartileRange());
+        $this->assertEquals(22, $s->iqr());
+        $this->assertEquals(22, $s->iqr);
+        $this->assertEquals(22, $s->IQR);
+        $this->assertEquals(22, $s->interquartile_range);
+    }
 }

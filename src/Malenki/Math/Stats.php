@@ -132,6 +132,12 @@ class Stats implements \Countable
         {
             return $this->median();
         }
+        
+        if(in_array($name, array('interquartile_range', 'interquartile', 'iqr', 'IQR')))
+        {
+            return $this->interquartileRange();
+        }
+        
     }
 
 
@@ -478,5 +484,16 @@ class Stats implements \Countable
     public function median()
     {
         return $this->quartile(2);
+    }
+
+
+    public function interquartileRange()
+    {
+        return $this->quartile(3) - $this->quartile(1);
+    }
+
+    public function iqr()
+    {
+        return $this->interquartileRange();
     }
 }
