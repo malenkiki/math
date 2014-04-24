@@ -214,4 +214,60 @@ class StatsTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(22, $s->IQR);
         $this->assertEquals(22, $s->interquartile_range);
     }
+
+    public function testGettingSkewnessShouldSuccess()
+    {
+        $s = new Stats(array(1, 11, 15, 19, 20, 24, 28, 34, 37, 47, 50, 57));
+        $this->assertEquals((float) 0.181, round($s->skewness(), 3));
+        $this->assertEquals((float) 0.181, round($s->skew(), 3));
+        $this->assertEquals((float) 0.181, round($s->skew, 3));
+        $this->assertEquals((float) 0.181, round($s->skewness, 3));
+    }
+
+    public function testIfSkewIsNegativeShouldSuccess()
+    {
+        $s = new Stats(array(1, 11, 15, 19, 20, 24, 28, 34, 37, 47, 50, 57));
+        $this->assertFalse($s->isLeftSkewed());
+        $this->assertFalse($s->is_left_skewed);
+        $this->assertFalse($s->left_skewed);
+        $this->assertFalse($s->is_negative_skew);
+        $this->assertFalse($s->negative_skew);
+        $this->assertFalse($s->is_left_tailed);
+        $this->assertFalse($s->left_tailed);
+        $this->assertFalse($s->skewed_to_the_left);
+
+        $s = new Stats(array(1,1001,1002,1003));
+        $this->assertTrue($s->isLeftSkewed());
+        $this->assertTrue($s->is_left_skewed);
+        $this->assertTrue($s->left_skewed);
+        $this->assertTrue($s->is_negative_skew);
+        $this->assertTrue($s->negative_skew);
+        $this->assertTrue($s->is_left_tailed);
+        $this->assertTrue($s->left_tailed);
+        $this->assertTrue($s->skewed_to_the_left);
+    }
+    
+    public function testIfSkewIsPositiveShouldSuccess()
+    {
+        $s = new Stats(array(1, 11, 15, 19, 20, 24, 28, 34, 37, 47, 50, 57));
+        $this->assertTrue($s->isRightSkewed());
+        $this->assertTrue($s->is_right_skewed);
+        $this->assertTrue($s->right_skewed);
+        $this->assertTrue($s->is_positive_skew);
+        $this->assertTrue($s->positive_skew);
+        $this->assertTrue($s->is_right_tailed);
+        $this->assertTrue($s->right_tailed);
+        $this->assertTrue($s->skewed_to_the_right);
+
+        $s = new Stats(array(1,2,3,1000));
+        $this->assertTrue($s->isRightSkewed());
+        $this->assertTrue($s->is_right_skewed);
+        $this->assertTrue($s->right_skewed);
+        $this->assertTrue($s->is_positive_skew);
+        $this->assertTrue($s->positive_skew);
+        $this->assertTrue($s->is_right_tailed);
+        $this->assertTrue($s->right_tailed);
+        $this->assertTrue($s->skewed_to_the_right);
+
+    }
 }

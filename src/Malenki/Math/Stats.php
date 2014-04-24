@@ -138,6 +138,46 @@ class Stats implements \Countable
             return $this->interquartileRange();
         }
         
+        if($name == 'skew' || $name == 'skewness')
+        {
+            return $this->$name();
+        }
+
+        if(
+            in_array(
+                $name,
+                array(
+                    'is_left_skewed',
+                    'left_skewed',
+                    'is_negative_skew',
+                    'negative_skew',
+                    'is_left_tailed',
+                    'left_tailed',
+                    'skewed_to_the_left'
+                )
+            )
+        )
+        {
+            return $this->isLeftSkewed();
+        }
+
+        if(
+            in_array(
+                $name,
+                array(
+                    'is_right_skewed', 
+                    'right_skewed', 
+                    'is_positive_skew', 
+                    'positive_skew', 
+                    'is_right_tailed', 
+                    'right_tailed',
+                    'skewed_to_the_right'
+                )
+            )
+        )
+        {
+            return $this->isRightSkewed();
+        }
     }
 
 
@@ -495,5 +535,25 @@ class Stats implements \Countable
     public function iqr()
     {
         return $this->interquartileRange();
+    }
+
+    public function skewness()
+    {
+        return $this->centralMoment(3) / pow($this->centralMoment(2), 3/2);
+    }
+
+    public function skew()
+    {
+        return $this->skewness();
+    }
+
+    public function isLeftSkewed()
+    {
+        return $this->skewness() < 0;
+    }
+
+    public function isRightSkewed()
+    {
+        return $this->skewness() > 0;
     }
 }
