@@ -4,7 +4,7 @@
 
 Library to deal with some mathematical stuff.
 
-Implemented or partially implemented mathematical concepts are: **Complex number**, **Matrix**, **Normal distribution**, **Random**, **Angle**, **Random Complex**.
+Implemented or partially implemented mathematical concepts are: **Complex number**, **Matrix**, **Normal distribution**, **Random**, **Angle**, **Random Complex** and **Descriptive Statistics**.
 
 ## Install
 
@@ -381,3 +381,129 @@ use \Malenki\Math\RandomComplex;
 $rc = new RandomComplex();
 $rc->rho(1, 5)->theta(M_PI / 4, M_PI /2)->getMany(10);
 ```
+
+## Descriptive Statistics
+
+You can do a lot of stats about data, like **mean**, **variance**, **standard deviation**, **kurtosis**, etc.
+
+You can put all values at once while instanciating:
+
+```php
+use \Malenki\Math\Stats;
+$s = new Stats(array(1,2,4,2,6,4));
+```
+
+You can add others data after too:
+
+```php
+$s->merge(array(8,4,6,3)); // to add several values
+$s->add(5); // to add one by one value
+```
+
+Counting values is as easy to use `count()`:
+
+```php
+use \Malenki\Math\Stats;
+$s = new Stats(array(1,2,4,2,6,4));
+var_dump(count($s));
+```
+
+Many means are avaialble too:
+
+```php
+use \Malenki\Math\Stats;
+$s = new Stats(array(1,2,4,2,6,4));
+
+// arithmetic mean
+var_dump($s->arithmeticMean());
+var_dump($s->arithmetic_mean);
+var_dump($s->mean);
+var_dump($s->A);
+var_dump($s->mu);
+
+// harmonic mean
+var_dump($s->harmonicMean());
+var_dump($s->harmonic_mean);
+var_dump($s->subcontrary_mean);
+var_dump($s->H);
+
+// geometric mean
+var_dump($s->geometricMean());
+var_dump($s->geometric_mean);
+var_dump($s->G);
+
+// root mean square aka RMS
+var_dump($s->rootMeanSquare());
+var_dump($s->root_mean_square);
+var_dump($s->rms);
+var_dump($s->quadratic_mean);
+var_dump($s->Q);
+```
+
+Variance, population or sample are available with standard deviation too:
+
+```php
+use \Malenki\Math\Stats;
+$s = new Stats(array(1,2,4,2,6,4));
+
+// Variance (population)
+var_dump($s->variance());
+var_dump($s->var);
+var_dump($s->variance);
+var_dump($s->population_variance);
+
+// Variance (sample)
+var_dump($s->sampleVariance());
+var_dump($s->sample_variance);
+var_dump($s->s2);
+
+// Standard deviation
+var_dump($s->standardDeviation());
+var_dump($s->standard_deviation);
+var_dump($s->stdev);
+var_dump($s->stddev);
+var_dump($s->sigma);
+```
+Quartiles and median:
+
+```php
+use \Malenki\Math\Stats;
+$s = new Stats(array(1,2,4,2,6,4));
+
+
+var_dump($s->quartile(1));
+
+var_dump($s->quartile(2));
+//or
+var_dump($s->mediane());
+
+var_dump($s->quartile(3));
+
+// or just by magic getters:
+
+var_dump($s->first_quartile);
+var_dump($s->second_quartile);
+var_dump($s->third_quartile);
+var_dump($s->last_quartile);
+var_dump($s->mediane);
+```
+
+Kurtosis and its tests are available:
+
+```php
+use \Malenki\Math\Stats;
+$s = new Stats(array(1,2,4,2,6,4));
+
+var_dump($s->kurtosis);
+var_dump($s->is_platykurtic);
+var_dump($s->is_leptokurtic);
+var_dump($s->is_mesokurtic);
+
+// or method way:
+var_dump($s->kurtosis());
+var_dump($s->isPlatykurtic());
+var_dump($s->isLeptokurtic());
+var_dump($s->isMesokurtic());
+```
+
+Dev in progress, more informations soon here on into source code!
