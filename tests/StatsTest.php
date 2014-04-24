@@ -190,4 +190,18 @@ class StatsTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($s->isLeptokurtic());
         $this->assertFalse($s->isMesokurtic());
     }
+
+
+    public function testGettingQuartileShouldSuccess()
+    {
+        $s = new Stats(array(1, 11, 15, 19, 20, 24, 28, 34, 37, 47, 50, 57));
+        $this->assertEquals(15, $s->quartile(1));
+        $this->assertEquals(15, $s->first_quartile);
+        $this->assertEquals(26, $s->quartile(2));
+        $this->assertEquals(26, $s->second_quartile);
+        $this->assertEquals(26, $s->median);
+        $this->assertEquals(37, $s->quartile(3));
+        $this->assertEquals(37, $s->third_quartile);
+        $this->assertEquals(37, $s->last_quartile);
+    }
 }

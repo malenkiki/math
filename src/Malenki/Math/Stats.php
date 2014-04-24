@@ -107,6 +107,31 @@ class Stats implements \Countable
         {
             return $this->isMesokurtic();
         }
+
+        if(preg_match('/(first|second|third|last)_quartile/', $name))
+        {
+            $n = 1;
+
+            if(preg_match('/^first/', $name))
+            {
+                $n = 1;
+            }
+            if(preg_match('/^second/', $name))
+            {
+                $n = 2;
+            }
+            if(preg_match('/^(third|last)/', $name))
+            {
+                $n = 3;
+            }
+
+            return $this->quartile($n);
+        }
+
+        if($name == 'median')
+        {
+            return $this->median();
+        }
     }
 
 
@@ -147,6 +172,7 @@ class Stats implements \Countable
 
     protected function clear()
     {
+        sort($this->arr, SORT_NUMERIC);
         $this->int_count = null;
         $this->float_harmonic_mean = null;
         $this->float_geometric_mean = null;
@@ -420,5 +446,37 @@ class Stats implements \Countable
     public function isMesokurtic()
     {
         return $this->kurtosis() == 0;
+    }
+
+    public function quartile($n)
+    {
+        if($n == 1 || $n == 3)
+        {
+            return $this->arr[floor($n * count($this) / 4) - 1];
+        }
+        else
+        {
+            //odd
+            if(count($this) & 1)
+            {
+                return $this->arr[floor(count($this) / 2)];
+            }
+            //even
+            else
+            {
+                $s = new self();
+                $s->add($this->arr[(count($this)/2) - 1]);
+                $s->add($this->arr[count($this)/2]);
+
+                return $s->mean;
+
+            }
+        }
+    }
+
+
+    public function median()
+    {
+        return $this->quartile(2);
     }
 }
