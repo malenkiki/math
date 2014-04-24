@@ -268,6 +268,11 @@ class StatsTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($s->is_right_tailed);
         $this->assertTrue($s->right_tailed);
         $this->assertTrue($s->skewed_to_the_right);
+    }
 
+    public function testGettingFrequency()
+    {
+        $s = new Stats(array(1,3,1,5,3,3));
+        $this->assertEquals(array('1' => 2, '3' => 3, '5' => 1), $s->frequency());
     }
 }

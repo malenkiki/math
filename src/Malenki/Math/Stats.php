@@ -178,6 +178,12 @@ class Stats implements \Countable
         {
             return $this->isRightSkewed();
         }
+
+
+        if(in_array($name, array('frequency', 'freq')))
+        {
+            return $this->frequency();
+        }
     }
 
 
@@ -555,5 +561,27 @@ class Stats implements \Countable
     public function isRightSkewed()
     {
         return $this->skewness() > 0;
+    }
+
+
+    public function frequency()
+    {
+        $arr = array();
+
+        foreach($this->arr as $n)
+        {
+            $idx = "$n";
+
+            if(isset($arr[$idx]))
+            {
+                $arr[$idx]++;
+            }
+            else
+            {
+                $arr[$idx] = 1;
+            }
+        }
+
+        return $arr;
     }
 }
