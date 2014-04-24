@@ -39,6 +39,8 @@ class Stats implements \Countable
     protected $float_stddev = null;
     protected $float_sample_variance = null;
     protected $float_kurtosis = null;
+    protected $float_median = null;
+    protected $float_skew = null;
 
 
     public function __get($name)
@@ -235,6 +237,8 @@ class Stats implements \Countable
         $this->float_sample_variance = null;
         $this->float_stddev = null;
         $this->float_kurtosis = null;
+        $this->float_median = null;
+        $this->float_skew = null;
     }
 
     public function merge($arr)
@@ -529,7 +533,11 @@ class Stats implements \Countable
 
     public function median()
     {
-        return $this->quartile(2);
+        if(is_null($this->float_median))
+        {
+            $this->float_median = $this->quartile(2);
+        }
+        return $this->float_median;
     }
 
 
@@ -545,7 +553,12 @@ class Stats implements \Countable
 
     public function skewness()
     {
-        return $this->centralMoment(3) / pow($this->centralMoment(2), 3/2);
+        if(is_null($this->float_skew))
+        {
+            $this->float_skew = $this->centralMoment(3) / pow($this->centralMoment(2), 3/2);
+        }
+
+        return $this->float_skew;
     }
 
     public function skew()
