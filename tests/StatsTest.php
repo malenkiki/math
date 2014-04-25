@@ -146,6 +146,20 @@ class StatsTest extends PHPUnit_Framework_TestCase
         $this->assertEquals((float) 7.357, round($s->heronian, 3));
     }
 
+    public function testGettingLehmerMeanShouldSucess()
+    {
+        $this->markTestIncomplete();
+    }
+
+    public function testGettingLehmerMeanWithNegativeNumbersShouldFail()
+    {
+        $this->markTestIncomplete();
+    }
+    public function testGettingContraharmonicMeanShouldSucess()
+    {
+        $this->markTestIncomplete();
+    }
+
 
     public function testEqualityOfLehmerMeanWithOtherMeans()
     {
@@ -153,7 +167,7 @@ class StatsTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($s->harmonic_mean, $s->lehmerMean(0));
         $this->assertEquals($s->geometric_mean, $s->lehmerMean(1/2));
         $this->assertEquals($s->mean, $s->lehmerMean(1));
-        //$this->assertEquals($s->contraharmonic_mean, $s->lehmerMean(2));
+        $this->assertEquals($s->contraharmonic_mean, $s->lehmerMean(2));
     }
 
 

@@ -70,6 +70,11 @@ class Stats implements \Countable
             return $this->heronianMean();
         }
         
+        if(in_array($name, array('contraharmonic_mean', 'contraharmonic')))
+        {
+            return $this->contraharmonicMean();
+        }
+        
         
         if(in_array($name, array('midrange', 'midextreme', 'mid_range', 'mid_extreme')))
         {
@@ -447,6 +452,20 @@ class Stats implements \Countable
         return $top / $bottom;
     }
 
+    public function lehmer($p)
+    {
+        return $this->lehmerMean();
+    }
+
+    public function contraharmonicMean()
+    {
+        return $this->lehmerMean(2);
+    }
+    
+    public function contraharmonic()
+    {
+        return $this->lehmerMean(2);
+    }
 
     public function midrange()
     {
