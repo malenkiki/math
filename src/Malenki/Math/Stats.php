@@ -152,6 +152,11 @@ class Stats implements \Countable
             return $this->median();
         }
         
+        if($name == 'array')
+        {
+            return $this->arr;
+        }
+        
         if(in_array($name, array('interquartile_range', 'interquartile', 'iqr', 'IQR')))
         {
             return $this->interquartileRange();
@@ -202,6 +207,11 @@ class Stats implements \Countable
         if(in_array($name, array('frequency', 'freq')))
         {
             return $this->frequency();
+        }
+
+        if(in_array($name, array('coefficient_of_variation', 'cv')))
+        {
+            return $this->coefficientOfVariation();
         }
     }
 
@@ -750,5 +760,15 @@ class Stats implements \Countable
         }
 
         return $arr;
+    }
+
+    public function coefficientOfVariation()
+    {
+        return $this->standardDeviation() / $this->arithmeticMean();
+    }
+
+    public function cv()
+    {
+        return $this->coefficientOfVariation();
     }
 }

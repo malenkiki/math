@@ -423,4 +423,9 @@ class StatsTest extends PHPUnit_Framework_TestCase
         $s = new Stats(array(1,3,1,5,3,3));
         $this->assertEquals(array('1' => 2, '3' => 3, '5' => 1), $s->frequency());
     }
+
+    public function testGettingCoefficientOfVariationShouldSuccess()
+    {
+        $this->markTestIncomplete();
+    }
 }
