@@ -86,6 +86,12 @@ class Stats implements \Countable
             return $this->range();
         }
         
+        if($name == 'sum')
+        {
+            return $this->sum();
+        }
+        
+        
         if(in_array($name, array('variance', 'var', 'population_variance')))
         {
             return $this->variance();
@@ -205,6 +211,25 @@ class Stats implements \Countable
         $this->merge($arr);
     }
 
+    public function get($idx)
+    {
+        if(!is_integer($idx))
+        {
+            throw new \InvalidArgumentException('Index must be an integer');
+        }
+
+        if($idx < 0)
+        {
+            throw new \InvalidArgumentException('Index must be null or positive integer!');
+        }
+
+        return $this->arr[$idx];
+    }
+
+    public function sum()
+    {
+        return array_sum($this->arr);
+    }
 
     public function count()
     {
@@ -237,7 +262,7 @@ class Stats implements \Countable
 
     protected function clear()
     {
-        sort($this->arr, SORT_NUMERIC);
+        //sort($this->arr, SORT_NUMERIC);
         $this->int_count = null;
         $this->float_harmonic_mean = null;
         $this->float_geometric_mean = null;
@@ -502,6 +527,44 @@ class Stats implements \Countable
         return $this->variance();
     }
 
+    public function covariance($data, $is_sample = false)
+    {
+        if(!is_array($data) && !($data instanceof Stats))
+        {
+            throw new \InvalidArgumentException('Covariance must be compute using array or Stats instance');
+        }
+
+        if(is_array($data))
+        {
+            $data = new self($data);
+        }
+
+        $a = ($this->sum() * $data->sum())/ count($this);
+
+        $sum = 0;
+
+        for($i = 0; $i < count($this); $i++)
+        {
+            $sum += $this->get($i) * $data->get($i);
+        }
+
+        $cnt = $is_sample ? count($this) - 1 : count($this);
+
+        return ($sum - $a)/ $cnt;
+    }
+
+    public function populationCovariance($data)
+    {
+        return $this->covariance($data);
+    }
+
+
+    public function sampleCovariance($data)
+    {
+        return $this->covariance($data, true);
+    }
+
+
     public function standardDeviation()
     {
         return sqrt($this->variance());
@@ -594,23 +657,26 @@ class Stats implements \Countable
 
     public function quartile($n)
     {
+        $arr = $this->arr;
+        sort($arr, SORT_NUMERIC);
+
         if($n == 1 || $n == 3)
         {
-            return $this->arr[floor($n * count($this) / 4) - 1];
+            return $arr[floor($n * count($this) / 4) - 1];
         }
         else
         {
             //odd
             if(count($this) & 1)
             {
-                return $this->arr[floor(count($this) / 2)];
+                return $arr[floor(count($this) / 2)];
             }
             //even
             else
             {
                 $s = new self();
-                $s->add($this->arr[(count($this)/2) - 1]);
-                $s->add($this->arr[count($this)/2]);
+                $s->add($arr[(count($this)/2) - 1]);
+                $s->add($arr[count($this)/2]);
 
                 return $s->mean;
 

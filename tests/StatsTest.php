@@ -289,6 +289,22 @@ class StatsTest extends PHPUnit_Framework_TestCase
         $s->sample_variance;
     }
 
+
+    public function testComputingCovarianceShouldSuccess()
+    {
+        $s1 = new Stats(array(1,3,2,6,4));
+        $arr = array(6,4,7,1,4);
+        $this->assertEquals((float) -4.1, $s1->sampleCovariance($arr));
+        $s2 = new Stats($arr);
+        $this->assertEquals((float) -4.1, $s1->sampleCovariance($s2));
+
+        $s1 = new Stats(array(3,4,5,7));
+        $arr = array(10,11,13,14);
+        $this->assertEquals(3, $s1->sampleCovariance($arr));
+        $s2 = new Stats($arr);
+        $this->assertEquals(3, $s1->sampleCovariance($s2));
+    }
+
     public function testGettingKurtosisShouldSuccess()
     {
         $s = new Stats(array(1,2,3,4,5));
@@ -317,6 +333,16 @@ class StatsTest extends PHPUnit_Framework_TestCase
     public function testGettingQuartileShouldSuccess()
     {
         $s = new Stats(array(1, 11, 15, 19, 20, 24, 28, 34, 37, 47, 50, 57));
+        $this->assertEquals(15, $s->quartile(1));
+        $this->assertEquals(15, $s->first_quartile);
+        $this->assertEquals(26, $s->quartile(2));
+        $this->assertEquals(26, $s->second_quartile);
+        $this->assertEquals(26, $s->median);
+        $this->assertEquals(37, $s->quartile(3));
+        $this->assertEquals(37, $s->third_quartile);
+        $this->assertEquals(37, $s->last_quartile);
+        
+        $s = new Stats(array(1, 15, 11, 19, 20, 24, 28, 34, 37, 47, 50, 57));
         $this->assertEquals(15, $s->quartile(1));
         $this->assertEquals(15, $s->first_quartile);
         $this->assertEquals(26, $s->quartile(2));
