@@ -433,4 +433,9 @@ class StatsTest extends PHPUnit_Framework_TestCase
     {
         $this->markTestIncomplete();
     }
+
+    public function testGettingPPMCCShouldSuccess()
+    {
+        $this->markTestIncomplete();
+    }
 }

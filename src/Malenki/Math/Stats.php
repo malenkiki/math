@@ -218,6 +218,12 @@ class Stats implements \Countable
         {
             return $this->indexOfDispersion();
         }
+        
+        if(in_array($name, array('pearsons_rho', 'ppmcc', 'pcc', 'pearson_product_moment_correlation_coefficient')))
+        {
+            return $this->pearsonsR();
+        }
+
     }
 
 
@@ -780,5 +786,21 @@ class Stats implements \Countable
     public function indexOfDispersion()
     {
         return $this->variance() / $this->arithmeticMean();
+    }
+
+    public function pearsonsR($data)
+    {
+        //TODO: complete and test it
+        if(!is_array($data) && !($data instanceof Stats))
+        {
+            throw new \InvalidArgumentException('PPMCC must be compute using array or Stats instance');
+        }
+
+        if(is_array($data))
+        {
+            $data = new self($data);
+        }
+
+        return $this->covariance($data) / ($this->standardDeviation() * $data->stddev);
     }
 }
