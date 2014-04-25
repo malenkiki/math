@@ -86,9 +86,9 @@ class Stats implements \Countable
             return $this->range();
         }
         
-        if($name == 'sum')
+        if(in_array($name, array('sum', 'median', 'array', 'min', 'max')))
         {
-            return $this->sum();
+            return $this->$name();
         }
         
         
@@ -146,17 +146,6 @@ class Stats implements \Countable
 
             return $this->quartile($n);
         }
-
-        if($name == 'median')
-        {
-            return $this->median();
-        }
-        
-        if($name == 'array')
-        {
-            return $this->arr;
-        }
-        
         if(in_array($name, array('interquartile_range', 'interquartile', 'iqr', 'IQR')))
         {
             return $this->interquartileRange();
@@ -250,6 +239,17 @@ class Stats implements \Countable
     public function sum()
     {
         return array_sum($this->arr);
+    }
+
+    public function min()
+    {
+        return min($this->arr);
+    }
+
+
+    public function max()
+    {
+        return max($this->arr);
     }
 
     public function count()
