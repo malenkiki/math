@@ -65,6 +65,12 @@ class Stats implements \Countable
             return $this->rootMeanSquare();
         }
         
+        if(in_array($name, array('heronian_mean', 'heronian')))
+        {
+            return $this->heronianMean();
+        }
+        
+        
         if(in_array($name, array('midrange', 'midextreme', 'mid_range', 'mid_extreme')))
         {
             return $this->midrange();
@@ -243,6 +249,21 @@ class Stats implements \Countable
 
     public function merge($arr)
     {
+        if(!is_array($arr))
+        {
+            throw new \InvalidArgumentException('Merging new values must be done with array!');
+        }
+
+        foreach($arr as $k => $v)
+        {
+            if(!is_numeric($v))
+            {
+                throw new \RuntimeException('Array to merge contains non numeric values!');
+            }
+
+            $arr[$k] = (double) $v;
+        }
+
         $this->arr = array_merge($this->arr, $arr);
         $this->clear();
 
@@ -254,7 +275,7 @@ class Stats implements \Countable
     {
         if(!is_numeric($num))
         {
-            throw new \InvalidArgumentException('Only  umeric values are allowed into statistical collection.');
+            throw new \InvalidArgumentException('Only numeric values are allowed into statistical collection.');
         }
         $this->arr[] = (double) $num;
         $this->clear();
@@ -376,6 +397,29 @@ class Stats implements \Countable
     public function powerMean($p)
     {
         return $this->generalizedMean($p);
+    }
+
+
+
+    public function heronianMean()
+    {
+        if(count($this) != 2)
+        {
+            throw new \RuntimeException('Heronian mean use only 2 numbers!');
+        }
+
+        if(!$this->allPositive())
+        {
+            throw new \RuntimeException('Heronian mean is only possible on positive real numbers');
+        }
+
+        return ($this->arr[0] + sqrt(array_product($this->arr)) + $this->arr[1]) / 3;
+    }
+
+
+    public function heronian()
+    {
+        return $this->heronianMean();
     }
 
 

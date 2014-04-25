@@ -38,9 +38,31 @@ class StatsTest extends PHPUnit_Framework_TestCase
         $this->assertInstanceOf('Malenki\Math\Stats', $s);
     }
 
+    /**
+     * @expectedException \RuntimeException
+     */
     public function testInstanciateWithArrayHavingBadValueTypeMustFail()
     {
-        $this->markTestIncomplete();
+        $s = new Stats(array(1,4,7,5,'height'));
+    }
+
+
+    /**
+     * @expectedException \InvalidArgumentException
+     */
+    public function testInstanciateWithNoArrayShouldFail()
+    {
+        $s = new Stats(1, 2, 3);
+    }
+
+
+    /**
+     * @expectedException \RuntimeException
+     */
+    public function testMegingWithArrayHavingNonNumericValuesShouldFail()
+    {
+        $s = new Stats();
+        $s->merge(array(1,4,7,5,'height'));
     }
 
 
@@ -95,7 +117,13 @@ class StatsTest extends PHPUnit_Framework_TestCase
 
     public function testComputingQuadraticMeanShouldSuccess()
     {
-        $this->markTestIncomplete();
+        $s = new Stats(array(1,2,3,4,5,6,7));
+        $this->assertEquals((float) 4.472136, round($s->rootMeanSquare(), 6));
+        $this->assertEquals((float) 4.472136, round($s->rms(), 6));
+        $this->assertEquals((float) 4.472136, round($s->quadraticMean(), 6));
+        $this->assertEquals((float) 4.472136, round($s->root_mean_square, 6));
+        $this->assertEquals((float) 4.472136, round($s->rms, 6));
+        $this->assertEquals((float) 4.472136, round($s->quadratic_mean, 6));
     }
 
     public function testComputingGeneralizedMeanShouldSuccess()
@@ -103,24 +131,84 @@ class StatsTest extends PHPUnit_Framework_TestCase
         $this->markTestIncomplete();
     }
 
-    public function testComputingGeneralizedMeanWithPEqualdZeroShouldFail()
+
+    public function testGettingHeronianMeanShouldSuccess()
     {
-        $this->markTestIncomplete();
+        $s = new Stats(array(2, 7));
+        $this->assertEquals((float) 4.247, round($s->heronianMean(), 3));
+        $this->assertEquals((float) 4.247, round($s->heronian(), 3));
+        $this->assertEquals((float) 4.247, round($s->heronian_mean, 3));
+        $this->assertEquals((float) 4.247, round($s->heronian, 3));
+        $s = new Stats(array(5, 10));
+        $this->assertEquals((float) 7.357, round($s->heronianMean(), 3));
+        $this->assertEquals((float) 7.357, round($s->heronian(), 3));
+        $this->assertEquals((float) 7.357, round($s->heronian_mean, 3));
+        $this->assertEquals((float) 7.357, round($s->heronian, 3));
+    }
+    
+    
+    /**
+     * @expectedException \RuntimeException
+     */
+    public function testGettingHeronianMeanWithCollectionHavingNegativeNumbersShouldFail()
+    {
+        $s = new Stats(array(-2, 7));
+        $s->heronianMean();
+    }
+    
+    
+    /**
+     * @expectedException \RuntimeException
+     */
+    public function testGettingHeronianMeanWithCollectionHavingMoreThanTwoElementsShouldFail()
+    {
+        $s = new Stats(array(2, 7, 3));
+        $s->heronianMean();
     }
 
+    
+    /**
+     * @expectedException \RuntimeException
+     */
+    public function testGettingHeronianMeanWithCollectionHavingLessThanTwoElementsShouldFail()
+    {
+        $s = new Stats(array(2));
+        $s->heronianMean();
+    }
+
+
+    /**
+     *@expectedException \InvalidArgumentException
+     */
+    public function testComputingGeneralizedMeanWithPEqualZeroShouldFail()
+    {
+        $s = new Stats(array(1,2,3,4,3,7,2));
+        $s->generalizedMean(0);
+    }
+
+    /**
+     *@expectedException \InvalidArgumentException
+     */
     public function testComputingGeneralizedMeanWithPNegativeShouldFail()
     {
-        $this->markTestIncomplete();
+        $s = new Stats(array(1,2,3,4,3,7,2));
+        $s->generalizedMean(-3);
     }
 
+    /**
+     *@expectedException \RuntimeException
+     */
     public function testComputingGeneralizedMeanWithCollectionHavingNegativeNumbersShouldFail()
     {
-        $this->markTestIncomplete();
+        $s = new Stats(array(1,2,-3,4,3,7,2));
+        $s->generalizedMean(3);
     }
 
     public function testGettingRangeShouldSuccess()
     {
-        $this->markTestIncomplete();
+        $s = new Stats(array(1,2,3,4,3,7,2));
+        $this->assertEquals(6, $s->range());
+        $this->assertEquals(6, $s->range);
     }
 
     public function testGettingVarianceShouldSuccess()
