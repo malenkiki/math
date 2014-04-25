@@ -228,6 +228,16 @@ class StatsTest extends PHPUnit_Framework_TestCase
         $s->generalizedMean(3);
     }
 
+    public function testGettingModeShouldSucess()
+    {
+        $this->markTestIncomplete();
+    }
+    
+    public function testGettingPercentilShouldSucess()
+    {
+        $this->markTestIncomplete();
+    }
+    
     public function testGettingRangeShouldSuccess()
     {
         $s = new Stats(array(1,2,3,4,3,7,2));
