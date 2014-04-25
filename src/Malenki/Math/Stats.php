@@ -423,6 +423,31 @@ class Stats implements \Countable
     }
 
 
+    public function lehmerMean($p)
+    {
+        if(!is_numeric($p))
+        {
+            throw new \InvalidArgumentException('P must be a real number');
+        }
+
+        if(!$this->allPositive())
+        {
+            throw new \RuntimeException('Lehmer mean is only possible on positive real numbers');
+        }
+
+        $top = 0;
+        $bottom = 0;
+
+        foreach($this->arr as $v)
+        {
+            $top += pow($v, $p);
+            $bottom += pow($v, $p - 1);
+        }
+
+        return $top / $bottom;
+    }
+
+
     public function midrange()
     {
         $s = new self();
