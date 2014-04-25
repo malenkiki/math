@@ -428,4 +428,9 @@ class StatsTest extends PHPUnit_Framework_TestCase
     {
         $this->markTestIncomplete();
     }
+
+    public function testGettingCoefficientOfDispersionShouldSuccess()
+    {
+        $this->markTestIncomplete();
+    }
 }

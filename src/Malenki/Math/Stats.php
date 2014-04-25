@@ -213,6 +213,11 @@ class Stats implements \Countable
         {
             return $this->coefficientOfVariation();
         }
+
+        if(in_array($name, array('coefficient_of_dispersion', 'dispersion_index', 'coefficient_of_dispersion', 'variance_to_mean_ratio', 'vmr', 'VMR', 'D')))
+        {
+            return $this->indexOfDispersion();
+        }
     }
 
 
@@ -770,5 +775,10 @@ class Stats implements \Countable
     public function cv()
     {
         return $this->coefficientOfVariation();
+    }
+
+    public function indexOfDispersion()
+    {
+        return $this->variance() / $this->arithmeticMean();
     }
 }
