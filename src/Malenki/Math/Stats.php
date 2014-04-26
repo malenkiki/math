@@ -41,6 +41,8 @@ class Stats implements \Countable
     protected $float_median = null;
     protected $float_skew = null;
     protected $arr_mode = null;
+    protected $arr_f = null;
+    protected $arr_frequency = null;
 
     public function __get($name)
     {
@@ -88,7 +90,7 @@ class Stats implements \Countable
             return $this->range();
         }
 
-        if (in_array($name, array('sum', 'median', 'array', 'min', 'max', 'mode'))) {
+        if (in_array($name, array('sum', 'median', 'array', 'min', 'max', 'mode', 'f'))) {
             return $this->$name();
         }
 
@@ -320,6 +322,8 @@ class Stats implements \Countable
         $this->float_median = null;
         $this->float_skew = null;
         $this->arr_mode = null;
+        $this->arr_frequency = null;
+        $this->arr_f = null;
     }
 
     public function merge($arr)
@@ -771,19 +775,48 @@ class Stats implements \Countable
 
     public function frequency()
     {
-        $arr = array();
+        if(is_null($this->arr_frequency)){
+            $arr = array();
 
-        foreach ($this->arr as $n) {
-            $idx = "$n";
+            foreach ($this->arr as $n) {
+                $idx = "$n";
 
-            if (isset($arr[$idx])) {
-                $arr[$idx]++;
-            } else {
-                $arr[$idx] = 1;
+                if (isset($arr[$idx])) {
+                    $arr[$idx]++;
+                } else {
+                    $arr[$idx] = 1;
+                }
             }
+
+            $this->arr_frequency = $arr;
         }
 
-        return $arr;
+        return $this->arr_frequency;
+    }
+
+
+    /**
+     * Like frequency, but divide each but total amount. 
+     * 
+     * @access public
+     * @return array
+     */
+    public function f()
+    {
+        if(is_null($this->arr_f)){
+            $arr = $this->frequency();
+            array_walk(
+                $arr, 
+                function(&$v, $k, $n){
+                    $v = $v / $n;
+                }, 
+                count($this)
+            );
+
+            $this->arr_f = $arr;
+        }
+
+        return $this->arr_f;
     }
 
     public function coefficientOfVariation()

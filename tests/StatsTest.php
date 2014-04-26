@@ -496,6 +496,16 @@ class StatsTest extends PHPUnit_Framework_TestCase
     {
         $s = new Stats(array(1,3,1,5,3,3));
         $this->assertEquals(array('1' => 2, '3' => 3, '5' => 1), $s->frequency());
+        $this->assertEquals(array('1' => 2, '3' => 3, '5' => 1), $s->frequency);
+        $this->assertEquals(count($s), array_sum($s->frequency));
+    }
+
+    public function testGettingFrequencyDividedByTotalAmountShouldSuccess()
+    {
+        $s = new Stats(array(1,3,1,5,3,3));
+        $this->assertEquals(array('1' => 1/3, '3' => 1/2, '5' => 1/6), $s->f());
+        $this->assertEquals(array('1' => 1/3, '3' => 1/2, '5' => 1/6), $s->f);
+        $this->assertEquals(1, array_sum($s->f));
     }
 
     public function testGettingCoefficientOfVariationShouldSuccess()
