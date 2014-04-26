@@ -32,8 +32,7 @@ class RandomComplexTest extends PHPUnit_Framework_TestCase
         $r->r(2.2, 7.4);
         $arr = $r->getMany(100);
 
-        foreach($arr as $z)
-        {
+        foreach ($arr as $z) {
             $this->assertGreaterThanOrEqual(2.2, $z->r);
             $this->assertLessThanOrEqual(7.4, $z->r);
         }
@@ -45,21 +44,19 @@ class RandomComplexTest extends PHPUnit_Framework_TestCase
         $r->r(-4.3, -1.2);
         $arr = $r->getMany(100);
 
-        foreach($arr as $k => $z)
-        {
+        foreach ($arr as $k => $z) {
             $this->assertGreaterThanOrEqual(-4.3, $z->r);
             $this->assertLessThanOrEqual(-1.2, $z->r);
         }
     }
-    
+
     public function testCreatingMultipleComplexOnlyWithNegativeAndPositiveReals()
     {
         $r = new RandomComplex();
         $r->r(-3.2, 5.6);
         $arr = $r->getMany(100);
 
-        foreach($arr as $z)
-        {
+        foreach ($arr as $z) {
             $this->assertGreaterThanOrEqual(-3.2, $z->r);
             $this->assertLessThanOrEqual(5.6, $z->r);
         }
@@ -71,8 +68,7 @@ class RandomComplexTest extends PHPUnit_Framework_TestCase
         $r->r(3.2, 3.6);
         $arr = $r->getMany(100);
 
-        foreach($arr as $z)
-        {
+        foreach ($arr as $z) {
             $this->assertGreaterThanOrEqual(3.2, $z->r);
             $this->assertLessThanOrEqual(3.6, $z->r);
         }
@@ -84,13 +80,11 @@ class RandomComplexTest extends PHPUnit_Framework_TestCase
         $r->r(-3.8, -3.2);
         $arr = $r->getMany(100);
 
-        foreach($arr as $z)
-        {
+        foreach ($arr as $z) {
             $this->assertGreaterThanOrEqual(-3.8, $z->r);
             $this->assertLessThanOrEqual(-3.2, $z->r);
         }
     }
-
 
     /**
      * @expectedException InvalidArgumentException
@@ -101,8 +95,6 @@ class RandomComplexTest extends PHPUnit_Framework_TestCase
         $r->r(4.1, 2.3);
     }
 
-
-
     /**
      * @expectedException InvalidArgumentException
      */
@@ -111,8 +103,6 @@ class RandomComplexTest extends PHPUnit_Framework_TestCase
         $r = new RandomComplex();
         $r->i(4.1, 2.3);
     }
-
-
 
     /**
      * @expectedException InvalidArgumentException
@@ -123,7 +113,6 @@ class RandomComplexTest extends PHPUnit_Framework_TestCase
         $r->rho(4.1, 2.3);
     }
 
-
     /**
      * @expectedException InvalidArgumentException
      */
@@ -132,8 +121,6 @@ class RandomComplexTest extends PHPUnit_Framework_TestCase
         $r = new RandomComplex();
         $r->rho(-3, 2.3);
     }
-
-
 
     /**
      * @expectedException InvalidArgumentException
@@ -144,7 +131,6 @@ class RandomComplexTest extends PHPUnit_Framework_TestCase
         $r->theta(4.1, 2.3);
     }
 
-
     /**
      * @expectedException RuntimeException
      */
@@ -153,7 +139,6 @@ class RandomComplexTest extends PHPUnit_Framework_TestCase
         $r = new RandomComplex();
         $r->r(1.2, 3.4)->rho(5.6, 7.8);
     }
-
 
     /**
      * @expectedException RuntimeException
@@ -164,7 +149,6 @@ class RandomComplexTest extends PHPUnit_Framework_TestCase
         $r->r(1.2, 3.4)->theta(M_PI / 2, M_PI);
     }
 
-
     /**
      * @expectedException RuntimeException
      */
@@ -174,7 +158,6 @@ class RandomComplexTest extends PHPUnit_Framework_TestCase
         $r->i(1.2, 3.4)->rho(5.6, 7.8);
     }
 
-
     /**
      * @expectedException RuntimeException
      */
@@ -183,7 +166,6 @@ class RandomComplexTest extends PHPUnit_Framework_TestCase
         $r = new RandomComplex();
         $r->i(1.2, 3.4)->theta(M_PI / 2, M_PI);
     }
-
 
     /**
      * @expectedException RuntimeException
@@ -202,7 +184,6 @@ class RandomComplexTest extends PHPUnit_Framework_TestCase
         $r = new RandomComplex();
         $r->theta(1.2, 3.4)->r(5.6, 7.8);
     }
-
 
     /**
      * @expectedException RuntimeException
@@ -229,7 +210,7 @@ class RandomComplexTest extends PHPUnit_Framework_TestCase
         $r->get();
         $r->reset()->rho(2, 5)->theta(M_PI/4, M_PI / 2);
     }
-    
+
     public function testStartingWithTrigonometricThenResetThenUseAlgebraicWithoutException()
     {
         $r = new RandomComplex();

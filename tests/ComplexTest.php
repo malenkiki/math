@@ -32,7 +32,6 @@ class ComplexTest extends PHPUnit_Framework_TestCase
         $m = new Complex(2, 3);
     }
 
-
     /**
      * @expectedException InvalidArgumentException
      */
@@ -40,7 +39,6 @@ class ComplexTest extends PHPUnit_Framework_TestCase
     {
         $z = new Complex(2, 'A');
     }
-
 
     public function testRealAndImaginaryGetters()
     {
@@ -51,7 +49,7 @@ class ComplexTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(3,$z->imaginary);
         $this->assertEquals(3,$z->im);
         $this->assertEquals(3,$z->i);
-        
+
         $z = new Complex(1, 1);
         $this->assertEquals(sqrt(2),$z->rho);
         $this->assertEquals(pi() / 4,$z->theta);
@@ -61,63 +59,60 @@ class ComplexTest extends PHPUnit_Framework_TestCase
     {
         $z = new Complex(2, 3);
         $this->assertEquals('2+3i', sprintf('%s', $z));
-        
+
         $z = new Complex(2, -3);
         $this->assertEquals('2-3i', sprintf('%s', $z));
-        
+
         $z = new Complex(-2, 3);
         $this->assertEquals('-2+3i', sprintf('%s', $z));
-        
+
         $z = new Complex(-2, -3);
         $this->assertEquals('-2-3i', sprintf('%s', $z));
-        
+
         $z = new Complex(2, 0);
         $this->assertEquals('2', sprintf('%s', $z));
-        
+
         $z = new Complex(-2, 0);
         $this->assertEquals('-2', sprintf('%s', $z));
-        
+
         $z = new Complex(0, 2);
         $this->assertEquals('2i', sprintf('%s', $z));
-        
+
         $z = new Complex(0, -2);
         $this->assertEquals('-2i', sprintf('%s', $z));
-        
+
         $z = new Complex(0, 1);
         $this->assertEquals('i', sprintf('%s', $z));
-        
+
         $z = new Complex(0, -1);
         $this->assertEquals('-i', sprintf('%s', $z));
-        
+
         $z = new Complex(2, 1);
         $this->assertEquals('2+i', sprintf('%s', $z));
-        
+
         $z = new Complex(2, -1);
         $this->assertEquals('2-i', sprintf('%s', $z));
-        
+
         $z = new Complex(-2, 1);
         $this->assertEquals('-2+i', sprintf('%s', $z));
-        
+
         $z = new Complex(-2, -1);
         $this->assertEquals('-2-i', sprintf('%s', $z));
-        
+
     }
-
-
 
     public function testComplexFromTrigonometricFormToString()
     {
         $z = new Complex(2, new Angle(M_PI / 2));
         $this->assertEquals(sprintf('%1$f(cos %2$f + i⋅sin %2$f)', 2, M_PI/2), sprintf('%s', $z));
-        
+
         $z = new Complex(2, new Angle(90, Angle::TYPE_DEG));
         $this->assertEquals(sprintf('%1$f(cos %2$f + i⋅sin %2$f)', 2, M_PI/2), sprintf('%s', $z));
-        
+
         $z = new Complex(1, new Angle(M_PI / 2));
         $this->assertEquals(sprintf('cos %1$f + i⋅sin %1$f', M_PI/2), sprintf('%s', $z));
     }
-    
-    
+
     public function testEqualTo()
     {
         $z = new Complex(2, 3);
@@ -126,7 +121,7 @@ class ComplexTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($z->equal($zz));
         $this->assertTrue($zz->equal($z));
     }
-    
+
     public function testNotEqualTo()
     {
         $z = new Complex(2, 3);
@@ -135,8 +130,6 @@ class ComplexTest extends PHPUnit_Framework_TestCase
         $this->assertFalse($z->equal($zz));
         $this->assertFalse($zz->equal($z));
     }
-
-
 
     /**
      * @expectedException InvalidArgumentException
@@ -152,7 +145,7 @@ class ComplexTest extends PHPUnit_Framework_TestCase
         $zz = new Complex(0, 1);
 
         $this->assertTrue($zz->equal($z));
-        
+
         $z = new Complex(1, pi(), Complex::TRIGONOMETRIC);
         $zz = new Complex(-1, 0);
 
@@ -166,14 +159,13 @@ class ComplexTest extends PHPUnit_Framework_TestCase
         $zz = new Complex(0, 1);
 
         $this->assertTrue($zz->equal($z));
-        
+
         $a = new Angle(180, Angle::TYPE_DEG);
         $z = new Complex(1, $a, Complex::TRIGONOMETRIC);
         $zz = new Complex(-1, 0);
 
         $this->assertTrue($zz->equal($z));
     }
-
 
     public function testCreatingComplexFromTrigonometricFormUsingAngleObjectAndWithoutThirdArgument()
     {
@@ -182,15 +174,13 @@ class ComplexTest extends PHPUnit_Framework_TestCase
         $zz = new Complex(0, 1);
 
         $this->assertTrue($zz->equal($z));
-        
+
         $a = new Angle(M_PI);
         $z = new Complex(1, $a);
         $zz = new Complex(-1, 0);
 
         $this->assertTrue($zz->equal($z));
     }
-
-
 
     public function testArgument()
     {
@@ -199,38 +189,38 @@ class ComplexTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(pi()/4, $z->theta);
         $this->assertEquals(pi()/4, $z->arg);
         $this->assertEquals(pi()/4, $z->argument);
-        
+
         $z = new Complex(1, 0);
         $this->assertEquals(0, $z->argument());
         $this->assertEquals(0, $z->theta);
         $this->assertEquals(0, $z->arg);
         $this->assertEquals(0, $z->argument);
-        
+
         $z = new Complex(0, 1);
         $this->assertEquals(pi() / 2, $z->argument());
         $this->assertEquals(pi() / 2, $z->theta);
         $this->assertEquals(pi() / 2, $z->arg);
         $this->assertEquals(pi() / 2, $z->argument);
-        
+
         $z = new Complex(-1, -1);
         $this->assertEquals(-3 * pi() / 4, $z->argument());
         $this->assertEquals(-3 * pi() / 4, $z->theta);
         $this->assertEquals(-3 * pi() / 4, $z->arg);
         $this->assertEquals(-3 * pi() / 4, $z->argument);
-        
+
         $z = new Complex(-1, 0);
         $this->assertEquals(pi(), $z->argument());
         $this->assertEquals(pi(), $z->theta);
         $this->assertEquals(pi(), $z->arg);
         $this->assertEquals(pi(), $z->argument);
-        
+
         $z = new Complex(0, -1);
         $this->assertEquals(pi() / -2, $z->argument());
         $this->assertEquals(pi() / -2, $z->theta);
         $this->assertEquals(pi() / -2, $z->arg);
         $this->assertEquals(pi() / -2, $z->argument);
     }
-    
+
     public function testModulus()
     {
         $z = new Complex(1, 1);
@@ -250,14 +240,13 @@ class ComplexTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(sqrt(5), $z->norm);
     }
 
-
     public function testConjugate()
     {
         $z = new Complex(1, 1);
         $zc = new Complex(1, -1);
         $this->assertTrue($zc->equal($z->conjugate()));
         $this->assertTrue($zc->equal($z->conjugate));
-        
+
         $z = new Complex(1, -1);
         $zc = new Complex(1, 1);
         $this->assertTrue($zc->equal($z->conjugate()));
@@ -276,7 +265,6 @@ class ComplexTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($zs->equal($z->add($r)));
     }
 
-
     public function testMultiplicationOfComplexWithComplex()
     {
         $z = new Complex(1, 2);
@@ -286,21 +274,21 @@ class ComplexTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($r, $za->multiply($z));
         $this->assertTrue($r->equal($z->multiply($za)));
         $this->assertTrue($r->equal($za->multiply($z)));
-        
+
         $za = new Complex(3, -4);
         $r = new Complex(11, 2);
         $this->assertEquals($r, $z->multiply($za));
         $this->assertEquals($r, $za->multiply($z));
         $this->assertTrue($r->equal($z->multiply($za)));
         $this->assertTrue($r->equal($za->multiply($z)));
-        
+
         $za = new Complex(-3, -4);
         $r = new Complex(5, -10);
         $this->assertEquals($r, $z->multiply($za));
         $this->assertEquals($r, $za->multiply($z));
         $this->assertTrue($r->equal($z->multiply($za)));
         $this->assertTrue($r->equal($za->multiply($z)));
-        
+
         $za = new Complex(-3, 4);
         $r = new Complex(-11, -2);
         $this->assertEquals($r, $z->multiply($za));
@@ -308,8 +296,7 @@ class ComplexTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($r->equal($z->multiply($za)));
         $this->assertTrue($r->equal($za->multiply($z)));
     }
-    
-    
+
     public function testMultiplicationOfComplexWithRealNumber()
     {
         $z = new Complex(1, 2);
@@ -317,48 +304,45 @@ class ComplexTest extends PHPUnit_Framework_TestCase
         $r = new Complex(4, 8);
         $this->assertEquals($r, $z->multiply($real));
         $this->assertTrue($r->equal($z->multiply($real)));
-        
+
         $real = -4;
         $r = new Complex(-4, -8);
         $this->assertEquals($r, $z->multiply($real));
         $this->assertTrue($r->equal($z->multiply($real)));
-        
+
         $z = new Complex(1, -2);
         $real = 4;
         $r = new Complex(4, -8);
         $this->assertEquals($r, $z->multiply($real));
         $this->assertTrue($r->equal($z->multiply($real)));
-        
+
         $real = -4;
         $r = new Complex(-4, 8);
         $this->assertEquals($r, $z->multiply($real));
         $this->assertTrue($r->equal($z->multiply($real)));
-        
-        
+
         $z = new Complex(-1, 2);
         $real = 4;
         $r = new Complex(-4, 8);
         $this->assertEquals($r, $z->multiply($real));
         $this->assertTrue($r->equal($z->multiply($real)));
-        
+
         $real = -4;
         $r = new Complex(4, -8);
         $this->assertEquals($r, $z->multiply($real));
         $this->assertTrue($r->equal($z->multiply($real)));
-        
+
         $z = new Complex(-1, -2);
         $real = 4;
         $r = new Complex(-4, -8);
         $this->assertEquals($r, $z->multiply($real));
         $this->assertTrue($r->equal($z->multiply($real)));
-        
+
         $real = -4;
         $r = new Complex(4, 8);
         $this->assertEquals($r, $z->multiply($real));
         $this->assertTrue($r->equal($z->multiply($real)));
-    }    
-
-
+    }
 
     public function testComplexNumberIsZeroOrNotShouldSuccess()
     {
@@ -383,7 +367,6 @@ class ComplexTest extends PHPUnit_Framework_TestCase
         $this->assertFalse($z->is_zero);
     }
 
-
     public function testDivideComplexNumberByComplexNumberShouldSuccess()
     {
         $z = new Complex(1, 2);
@@ -392,12 +375,12 @@ class ComplexTest extends PHPUnit_Framework_TestCase
         $must = new Complex(-0.2, 0.4);
 
         $this->assertEquals($must, $z->divide($zz));
-        
+
         $must = new Complex(-1,-2);
 
         $this->assertEquals($must, $zz->divide($z));
     }
-    
+
     public function testDivideComplexNumberByRealShouldSuccess()
     {
         $z = new Complex(1, 2);

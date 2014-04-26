@@ -34,22 +34,17 @@ class FactorialTest extends PHPUnit_Framework_TestCase
         $f = new Factorial(-6);
     }
 
-
     public function testFactorialZeroEqualsOne()
     {
         $f = new Factorial(0);
         $this->assertEquals(1, $f->result);
     }
 
-
-
     public function testFactorialOneEqualsOne()
     {
         $f = new Factorial(1);
         $this->assertEquals(1, $f->result);
     }
-
-
 
     public function testFactorialVariousValidFactorials()
     {

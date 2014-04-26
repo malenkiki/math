@@ -1,7 +1,7 @@
 <?php
 /*
  * Copyright (c) 2014 Michel Petit <petit.michel@gmail.com>
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining
  * a copy of this software and associated documentation files (the
  * "Software"), to deal in the Software without restriction, including
@@ -9,10 +9,10 @@
  * distribute, sublicense, and/or sell copies of the Software, and to
  * permit persons to whom the Software is furnished to do so, subject to
  * the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be
  * included in all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -46,7 +46,6 @@ class StatsTest extends PHPUnit_Framework_TestCase
         $s = new Stats(array(1,4,7,5,'height'));
     }
 
-
     /**
      * @expectedException \InvalidArgumentException
      */
@@ -54,7 +53,6 @@ class StatsTest extends PHPUnit_Framework_TestCase
     {
         $s = new Stats(1, 2, 3);
     }
-
 
     /**
      * @expectedException \RuntimeException
@@ -64,7 +62,6 @@ class StatsTest extends PHPUnit_Framework_TestCase
         $s = new Stats();
         $s->merge(array(1,4,7,5,'height'));
     }
-
 
     public function testCountingValuesInsideCollectionShouldSuccess()
     {
@@ -76,7 +73,6 @@ class StatsTest extends PHPUnit_Framework_TestCase
         $this->assertCount(5, $s);
     }
 
-
     public function testComputingArithmeticMeanShouldSuccess()
     {
         $s = new Stats(array(1, 2, 3, 4));
@@ -84,14 +80,13 @@ class StatsTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(2.5, $s->arithmetic_mean);
         $this->assertEquals(2.5, $s->mean());
         $this->assertEquals(2.5, $s->mean);
-        
+
         $s = new Stats(array(1, 2, 4, 8, 16));
         $this->assertEquals(6.2, $s->arithmeticMean());
         $this->assertEquals(6.2, $s->arithmetic_mean);
         $this->assertEquals(6.2, $s->mean());
         $this->assertEquals(6.2, $s->mean);
     }
-
 
     public function testComputeHarmonicMeanShouldSuccess()
     {
@@ -108,7 +103,7 @@ class StatsTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(1/2, $s->geometricMean());
         $this->assertEquals(1/2, $s->geometric_mean);
         $this->assertEquals(1/2, $s->G);
-        
+
         $s = new Stats(array(2, 8));
         $this->assertEquals(4, $s->geometricMean());
         $this->assertEquals(4, $s->geometric_mean);
@@ -130,7 +125,6 @@ class StatsTest extends PHPUnit_Framework_TestCase
     {
         $this->markTestIncomplete();
     }
-
 
     public function testGettingHeronianMeanShouldSuccess()
     {
@@ -160,7 +154,6 @@ class StatsTest extends PHPUnit_Framework_TestCase
         $this->markTestIncomplete();
     }
 
-
     public function testEqualityOfLehmerMeanWithOtherMeans()
     {
         $s = new Stats(array(2,5));
@@ -170,7 +163,6 @@ class StatsTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($s->contraharmonic_mean, $s->lehmerMean(2));
     }
 
-
     /**
      * @expectedException \RuntimeException
      */
@@ -179,8 +171,7 @@ class StatsTest extends PHPUnit_Framework_TestCase
         $s = new Stats(array(-2, 7));
         $s->heronianMean();
     }
-    
-    
+
     /**
      * @expectedException \RuntimeException
      */
@@ -190,7 +181,6 @@ class StatsTest extends PHPUnit_Framework_TestCase
         $s->heronianMean();
     }
 
-    
     /**
      * @expectedException \RuntimeException
      */
@@ -199,7 +189,6 @@ class StatsTest extends PHPUnit_Framework_TestCase
         $s = new Stats(array(2));
         $s->heronianMean();
     }
-
 
     /**
      *@expectedException \InvalidArgumentException
@@ -232,12 +221,12 @@ class StatsTest extends PHPUnit_Framework_TestCase
     {
         $this->markTestIncomplete();
     }
-    
+
     public function testGettingPercentilShouldSucess()
     {
         $this->markTestIncomplete();
     }
-    
+
     public function testGettingRangeShouldSuccess()
     {
         $s = new Stats(array(1,2,3,4,3,7,2));
@@ -270,7 +259,7 @@ class StatsTest extends PHPUnit_Framework_TestCase
         $this->assertEquals((float) 0.816, round($s->stddev, 3));
         $this->assertEquals((float) 0.816, round($s->stdev, 3));
     }
-    
+
     public function testGettingSampleVarianceShouldSuccess()
     {
         $s = new Stats(array(1,2,3));
@@ -278,7 +267,6 @@ class StatsTest extends PHPUnit_Framework_TestCase
         $this->assertEquals((float) 1, $s->sample_variance);
         $this->assertEquals((float) 1, $s->s2);
     }
-    
 
     /**
      * @expectedException \RuntimeException
@@ -288,7 +276,6 @@ class StatsTest extends PHPUnit_Framework_TestCase
         $s = new Stats(array(5));
         $s->sample_variance;
     }
-
 
     public function testComputingCovarianceShouldSuccess()
     {
@@ -310,7 +297,7 @@ class StatsTest extends PHPUnit_Framework_TestCase
         $s = new Stats(array(1,2,3,4,5));
         $this->assertEquals((float) -1.3, $s->kurtosis());
         $this->assertEquals((float) -1.3, $s->kurtosis);
-        
+
         $s = new Stats(array(1,2,3,4,500, 6));
         $this->assertEquals((float) 1.199, round($s->kurtosis(), 3));
         $this->assertEquals((float) 1.199, round($s->kurtosis, 3));
@@ -322,13 +309,12 @@ class StatsTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($s->isPlatykurtic());
         $this->assertFalse($s->isLeptokurtic());
         $this->assertFalse($s->isMesokurtic());
-        
+
         $s = new Stats(array(1,2,3,4,500, 6));
         $this->assertFalse($s->isPlatykurtic());
         $this->assertTrue($s->isLeptokurtic());
         $this->assertFalse($s->isMesokurtic());
     }
-
 
     public function testGettingQuartileShouldSuccess()
     {
@@ -341,7 +327,7 @@ class StatsTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(37, $s->quartile(3));
         $this->assertEquals(37, $s->third_quartile);
         $this->assertEquals(37, $s->last_quartile);
-        
+
         $s = new Stats(array(1, 15, 11, 19, 20, 24, 28, 34, 37, 47, 50, 57));
         $this->assertEquals(15, $s->quartile(1));
         $this->assertEquals(15, $s->first_quartile);
@@ -394,7 +380,7 @@ class StatsTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($s->left_tailed);
         $this->assertTrue($s->skewed_to_the_left);
     }
-    
+
     public function testIfSkewIsPositiveShouldSuccess()
     {
         $s = new Stats(array(1, 11, 15, 19, 20, 24, 28, 34, 37, 47, 50, 57));

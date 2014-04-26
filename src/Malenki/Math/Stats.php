@@ -1,7 +1,7 @@
 <?php
 /*
  * Copyright (c) 2014 Michel Petit <petit.michel@gmail.com>
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining
  * a copy of this software and associated documentation files (the
  * "Software"), to deal in the Software without restriction, including
@@ -9,10 +9,10 @@
  * distribute, sublicense, and/or sell copies of the Software, and to
  * permit persons to whom the Software is furnished to do so, subject to
  * the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be
  * included in all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -21,7 +21,6 @@
  * OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-
 
 namespace Malenki\Math;
 
@@ -42,117 +41,104 @@ class Stats implements \Countable
     protected $float_median = null;
     protected $float_skew = null;
 
-
     public function __get($name)
     {
-        if(in_array($name, array('harmonic_mean', 'subcontrary_mean', 'H')))
-        {
+        if (in_array($name, array('harmonic_mean', 'subcontrary_mean', 'H'))) {
             return $this->harmonicMean();
         }
-        
-        if(in_array($name, array('geometric_mean', 'G')))
-        {
+
+        if (in_array($name, array('geometric_mean', 'G'))) {
             return $this->geometricMean();
         }
-        
-        if(in_array($name, array('arithmetic_mean', 'mean', 'A', 'mu')))
-        {
+
+        if (in_array($name, array('arithmetic_mean', 'mean', 'A', 'mu'))) {
             return $this->arithmeticMean();
         }
-        
-        if(in_array($name, array('root_mean_square', 'rms', 'quadratic_mean', 'Q')))
-        {
+
+        if (in_array($name, array('root_mean_square', 'rms', 'quadratic_mean', 'Q'))) {
             return $this->rootMeanSquare();
         }
-        
-        if(in_array($name, array('heronian_mean', 'heronian')))
-        {
+
+        if (in_array($name, array('heronian_mean', 'heronian'))) {
             return $this->heronianMean();
         }
-        
-        if(in_array($name, array('contraharmonic_mean', 'contraharmonic')))
-        {
+
+        if (in_array($name, array('contraharmonic_mean', 'contraharmonic'))) {
             return $this->contraharmonicMean();
         }
-        
-        
-        if(in_array($name, array('midrange', 'midextreme', 'mid_range', 'mid_extreme')))
-        {
+
+        if (in_array($name, array('midrange', 'midextreme', 'mid_range', 'mid_extreme'))) {
             return $this->midrange();
         }
 
-        if($name == 'range')
-        {
+        if ($name == 'range') {
             return $this->range();
         }
-        
-        if(in_array($name, array('sum', 'median', 'array', 'min', 'max')))
-        {
+
+        if (in_array($name, array('sum', 'median', 'array', 'min', 'max'))) {
             return $this->$name();
         }
-        
-        
-        if(in_array($name, array('variance', 'var', 'population_variance')))
-        {
+
+        if (in_array($name, array('variance', 'var', 'population_variance'))) {
             return $this->variance();
         }
-        
-        if(in_array($name, array('stdev', 'stddev', 'standard_deviation', 'sigma')))
-        {
+
+        if (in_array($name, array('stdev', 'stddev', 'standard_deviation', 'sigma'))) {
             return $this->standardDeviation();
         }
-        
-        if(in_array($name, array('sample_variance', 's2')))
-        {
+
+        if (in_array($name, array('sample_variance', 's2'))) {
             return $this->sampleVariance();
         }
-        
-        if($name == 'kurtosis')
-        {
+
+        if ($name == 'kurtosis') {
             return $this->kurtosis();
         }
-        
-        if($name == 'is_platykurtic')
-        {
+
+        if ($name == 'is_platykurtic') {
             return $this->isPlatykurtic();
         }
-        
-        if($name == 'is_leptokurtic')
-        {
+
+        if ($name == 'is_leptokurtic') {
             return $this->isLeptokurtic();
         }
-        
-        if($name == 'is_mesokurtic')
-        {
+
+        if ($name == 'is_mesokurtic') {
             return $this->isMesokurtic();
         }
 
-        if(preg_match('/(first|second|third|last)_quartile/', $name))
-        {
+        if (preg_match('/(first|second|third|last)_quartile/', $name)) {
             $n = 1;
 
-            if(preg_match('/^first/', $name))
-            {
+            if (preg_match('/^first/', $name)) {
                 $n = 1;
             }
-            if(preg_match('/^second/', $name))
-            {
+            if (preg_match('/^second/', $name)) {
                 $n = 2;
             }
-            if(preg_match('/^(third|last)/', $name))
-            {
+            if (preg_match('/^(third|last)/', $name)) {
                 $n = 3;
             }
 
             return $this->quartile($n);
         }
-        if(in_array($name, array('interquartile_range', 'interquartile', 'iqr', 'IQR')))
+
+        if(
+            in_array(
+                $name,
+                array(
+                    'interquartile_range',
+                    'interquartile',
+                    'iqr',
+                    'IQR'
+                )
+            )
+        )
         {
             return $this->interquartileRange();
         }
-        
-        if($name == 'skew' || $name == 'skewness')
-        {
+
+        if ($name == 'skew' || $name == 'skewness') {
             return $this->$name();
         }
 
@@ -178,11 +164,11 @@ class Stats implements \Countable
             in_array(
                 $name,
                 array(
-                    'is_right_skewed', 
-                    'right_skewed', 
-                    'is_positive_skew', 
-                    'positive_skew', 
-                    'is_right_tailed', 
+                    'is_right_skewed',
+                    'right_skewed',
+                    'is_positive_skew',
+                    'positive_skew',
+                    'is_right_tailed',
                     'right_tailed',
                     'skewed_to_the_right'
                 )
@@ -192,29 +178,48 @@ class Stats implements \Countable
             return $this->isRightSkewed();
         }
 
-
-        if(in_array($name, array('frequency', 'freq')))
-        {
+        if (in_array($name, array('frequency', 'freq'))) {
             return $this->frequency();
         }
 
-        if(in_array($name, array('coefficient_of_variation', 'cv')))
-        {
+        if (in_array($name, array('coefficient_of_variation', 'cv'))) {
             return $this->coefficientOfVariation();
         }
 
-        if(in_array($name, array('coefficient_of_dispersion', 'dispersion_index', 'coefficient_of_dispersion', 'variance_to_mean_ratio', 'vmr', 'VMR', 'D')))
+        if(
+            in_array(
+                $name,
+                array(
+                    'coefficient_of_dispersion',
+                    'dispersion_index',
+                    'coefficient_of_dispersion',
+                    'variance_to_mean_ratio',
+                    'vmr',
+                    'VMR',
+                    'D'
+                )
+            )
+        )
         {
             return $this->indexOfDispersion();
         }
-        
-        if(in_array($name, array('pearsons_rho', 'ppmcc', 'pcc', 'pearson_product_moment_correlation_coefficient')))
+
+        if(
+            in_array(
+                $name,
+                array(
+                    'pearsons_rho',
+                    'ppmcc',
+                    'pcc',
+                    'pearson_product_moment_correlation_coefficient'
+                )
+            )
+        )
         {
             return $this->pearsonsR();
         }
 
     }
-
 
     public function __construct($arr = array())
     {
@@ -223,13 +228,11 @@ class Stats implements \Countable
 
     public function get($idx)
     {
-        if(!is_integer($idx))
-        {
+        if (!is_integer($idx)) {
             throw new \InvalidArgumentException('Index must be an integer');
         }
 
-        if($idx < 0)
-        {
+        if ($idx < 0) {
             throw new \InvalidArgumentException('Index must be null or positive integer!');
         }
 
@@ -246,7 +249,6 @@ class Stats implements \Countable
         return min($this->arr);
     }
 
-
     public function max()
     {
         return max($this->arr);
@@ -254,8 +256,7 @@ class Stats implements \Countable
 
     public function count()
     {
-        if(is_null($this->int_count))
-        {
+        if (is_null($this->int_count)) {
             $this->int_count = count($this->arr);
         }
 
@@ -269,10 +270,8 @@ class Stats implements \Countable
 
     public function allPositive()
     {
-        for($i = 0; $i < count($this); $i++)
-        {
-            if($this->arr[$i] < 0)
-            {
+        for ($i = 0; $i < count($this); $i++) {
+            if ($this->arr[$i] < 0) {
                 return false;
             }
         }
@@ -280,10 +279,8 @@ class Stats implements \Countable
         return true;
     }
 
-
     protected function clear()
     {
-        //sort($this->arr, SORT_NUMERIC);
         $this->int_count = null;
         $this->float_harmonic_mean = null;
         $this->float_geometric_mean = null;
@@ -300,15 +297,12 @@ class Stats implements \Countable
 
     public function merge($arr)
     {
-        if(!is_array($arr))
-        {
+        if (!is_array($arr)) {
             throw new \InvalidArgumentException('Merging new values must be done with array!');
         }
 
-        foreach($arr as $k => $v)
-        {
-            if(!is_numeric($v))
-            {
+        foreach ($arr as $k => $v) {
+            if (!is_numeric($v)) {
                 throw new \RuntimeException('Array to merge contains non numeric values!');
             }
 
@@ -321,11 +315,9 @@ class Stats implements \Countable
         return $this;
     }
 
-
     public function add($num)
     {
-        if(!is_numeric($num))
-        {
+        if (!is_numeric($num)) {
             throw new \InvalidArgumentException('Only numeric values are allowed into statistical collection.');
         }
         $this->arr[] = (double) $num;
@@ -334,11 +326,9 @@ class Stats implements \Countable
         return $this;
     }
 
-
     public function range()
     {
-        if(is_null($this->float_range))
-        {
+        if (is_null($this->float_range)) {
             $this->float_range = max($this->arr) - min($this->arr);
         }
 
@@ -347,8 +337,7 @@ class Stats implements \Countable
 
     public function arithmeticMean()
     {
-        if(is_null($this->float_arithmetic_mean))
-        {
+        if (is_null($this->float_arithmetic_mean)) {
             $this->float_arithmetic_mean = array_sum($this->arr) / count($this);
         }
 
@@ -360,15 +349,12 @@ class Stats implements \Countable
         return $this->arithmeticMean();
     }
 
-
     public function harmonicMean()
     {
-        if(is_null($this->float_harmonic_mean))
-        {
+        if (is_null($this->float_harmonic_mean)) {
             $arr = array();
 
-            foreach($this->arr as $v)
-            {
+            foreach ($this->arr as $v) {
                 $arr[] = 1 / $v;
             }
 
@@ -378,11 +364,9 @@ class Stats implements \Countable
         return $this->float_harmonic_mean;
     }
 
-
     public function geometricMean()
     {
-        if(is_null($this->float_geometric_mean))
-        {
+        if (is_null($this->float_geometric_mean)) {
             $this->float_geometric_mean = pow(
                 array_product($this->arr),
                 1 / count($this)
@@ -392,14 +376,12 @@ class Stats implements \Countable
         return $this->float_geometric_mean;
     }
 
-
     public function rootMeanSquare()
     {
-        if(is_null($this->float_root_mean_square))
-        {
+        if (is_null($this->float_root_mean_square)) {
             $s = new self(
                 array_map(
-                    function($n){
+                    function ($n) {
                         return $n * $n;
                     },
                     $this->arr
@@ -422,23 +404,19 @@ class Stats implements \Countable
         return $this->rootMeanSquare();
     }
 
-
     public function generalizedMean($p)
     {
-        if($p <= 0)
-        {
+        if ($p <= 0) {
             throw new \InvalidArgumentException('Generalized mean takes p as non-zero positive real number.');
         }
 
-        if(!$this->allPositive())
-        {
+        if (!$this->allPositive()) {
             throw new \RuntimeException('Power mean use only collection of positive numbers!');
         }
 
         $arr = array();
 
-        for($i = 0; $i < count($this); $i++)
-        {
+        for ($i = 0; $i < count($this); $i++) {
             $arr[] = pow($this->arr[$i], $p);
         }
 
@@ -450,47 +428,38 @@ class Stats implements \Countable
         return $this->generalizedMean($p);
     }
 
-
-
     public function heronianMean()
     {
-        if(count($this) != 2)
-        {
+        if (count($this) != 2) {
             throw new \RuntimeException('Heronian mean use only 2 numbers!');
         }
 
-        if(!$this->allPositive())
-        {
+        if (!$this->allPositive()) {
             throw new \RuntimeException('Heronian mean is only possible on positive real numbers');
         }
 
         return ($this->arr[0] + sqrt(array_product($this->arr)) + $this->arr[1]) / 3;
     }
 
-
     public function heronian()
     {
         return $this->heronianMean();
     }
 
-
     public function lehmerMean($p)
     {
-        if(!is_numeric($p))
-        {
+        if (!is_numeric($p)) {
             throw new \InvalidArgumentException('P must be a real number');
         }
 
-        if(!$this->allPositive())
-        {
+        if (!$this->allPositive()) {
             throw new \RuntimeException('Lehmer mean is only possible on positive real numbers');
         }
 
         $top = 0;
         $bottom = 0;
 
-        foreach($this->arr as $v)
-        {
+        foreach ($this->arr as $v) {
             $top += pow($v, $p);
             $bottom += pow($v, $p - 1);
         }
@@ -507,7 +476,7 @@ class Stats implements \Countable
     {
         return $this->lehmerMean(2);
     }
-    
+
     public function contraharmonic()
     {
         return $this->lehmerMean(2);
@@ -529,19 +498,16 @@ class Stats implements \Countable
 
     public function variance()
     {
-        if($this->isEmpty())
-        {
+        if ($this->isEmpty()) {
             throw new \RuntimeException('Cannot compute variance on void collection');
         }
 
-        if(is_null($this->float_variance))
-        {
+        if (is_null($this->float_variance)) {
             $this->float_variance = $this->centralMoment(2);
         }
 
         return $this->float_variance;
     }
-
 
     public function populationVariance()
     {
@@ -550,13 +516,11 @@ class Stats implements \Countable
 
     public function covariance($data, $is_sample = false)
     {
-        if(!is_array($data) && !($data instanceof Stats))
-        {
+        if (!is_array($data) && !($data instanceof Stats)) {
             throw new \InvalidArgumentException('Covariance must be compute using array or Stats instance');
         }
 
-        if(is_array($data))
-        {
+        if (is_array($data)) {
             $data = new self($data);
         }
 
@@ -564,8 +528,7 @@ class Stats implements \Countable
 
         $sum = 0;
 
-        for($i = 0; $i < count($this); $i++)
-        {
+        for ($i = 0; $i < count($this); $i++) {
             $sum += $this->get($i) * $data->get($i);
         }
 
@@ -579,12 +542,10 @@ class Stats implements \Countable
         return $this->covariance($data);
     }
 
-
     public function sampleCovariance($data)
     {
         return $this->covariance($data, true);
     }
-
 
     public function standardDeviation()
     {
@@ -606,20 +567,16 @@ class Stats implements \Countable
         return $this->standardDeviation();
     }
 
-
     public function sampleVariance()
     {
-        if(count($this) <= 1)
-        {
+        if (count($this) <= 1) {
             throw new \RuntimeException('Cannot compute sample variance, sample must have at least 2 elements');
         }
 
-        if(is_null($this->float_sample_variance))
-        {
+        if (is_null($this->float_sample_variance)) {
             $arr = array();
-            
-            for($i = 0; $i < count($this); $i++)
-            {
+
+            for ($i = 0; $i < count($this); $i++) {
                 $arr[] = pow($this->arr[$i] - $this->mean(), 2);
             }
 
@@ -638,8 +595,7 @@ class Stats implements \Countable
     {
         $arr = array();
 
-        for($i = 0; $i < count($this); $i++)
-        {
+        for ($i = 0; $i < count($this); $i++) {
             $arr[] = pow($this->arr[$i] - $this->mean(), $k);
         }
 
@@ -653,8 +609,7 @@ class Stats implements \Countable
 
     public function kurtosis()
     {
-        if(is_null($this->float_kurtosis))
-        {
+        if (is_null($this->float_kurtosis)) {
             $this->float_kurtosis = ($this->moment(4) / pow($this->moment(2), 2)) - 3;
         }
 
@@ -681,20 +636,15 @@ class Stats implements \Countable
         $arr = $this->arr;
         sort($arr, SORT_NUMERIC);
 
-        if($n == 1 || $n == 3)
-        {
+        if ($n == 1 || $n == 3) {
             return $arr[floor($n * count($this) / 4) - 1];
-        }
-        else
-        {
+        } else {
             //odd
-            if(count($this) & 1)
-            {
+            if (count($this) & 1) {
                 return $arr[floor(count($this) / 2)];
             }
             //even
-            else
-            {
+            else {
                 $s = new self();
                 $s->add($arr[(count($this)/2) - 1]);
                 $s->add($arr[count($this)/2]);
@@ -705,16 +655,14 @@ class Stats implements \Countable
         }
     }
 
-
     public function median()
     {
-        if(is_null($this->float_median))
-        {
+        if (is_null($this->float_median)) {
             $this->float_median = $this->quartile(2);
         }
+
         return $this->float_median;
     }
-
 
     public function interquartileRange()
     {
@@ -728,8 +676,7 @@ class Stats implements \Countable
 
     public function skewness()
     {
-        if(is_null($this->float_skew))
-        {
+        if (is_null($this->float_skew)) {
             $this->float_skew = $this->centralMoment(3) / pow($this->centralMoment(2), 3/2);
         }
 
@@ -751,21 +698,16 @@ class Stats implements \Countable
         return $this->skewness() > 0;
     }
 
-
     public function frequency()
     {
         $arr = array();
 
-        foreach($this->arr as $n)
-        {
+        foreach ($this->arr as $n) {
             $idx = "$n";
 
-            if(isset($arr[$idx]))
-            {
+            if (isset($arr[$idx])) {
                 $arr[$idx]++;
-            }
-            else
-            {
+            } else {
                 $arr[$idx] = 1;
             }
         }
@@ -791,13 +733,11 @@ class Stats implements \Countable
     public function pearsonsR($data)
     {
         //TODO: complete and test it
-        if(!is_array($data) && !($data instanceof Stats))
-        {
+        if (!is_array($data) && !($data instanceof Stats)) {
             throw new \InvalidArgumentException('PPMCC must be compute using array or Stats instance');
         }
 
-        if(is_array($data))
-        {
+        if (is_array($data)) {
             $data = new self($data);
         }
 

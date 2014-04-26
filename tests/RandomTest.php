@@ -41,7 +41,6 @@ class RandomTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(11, count($r->getMany(11)));
     }
 
-
     public function testGettingManyDoubleItemsSuccess()
     {
         $r = new Random();
@@ -68,8 +67,6 @@ class RandomTest extends PHPUnit_Framework_TestCase
         $r->getMany(1);
     }
 
-
-
     public function testGettingManyIntegerItemsWithoutReplacementSuccess()
     {
         $r = new Random(0, 9);
@@ -83,8 +80,6 @@ class RandomTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(9, count(array_unique($r->getManyWithoutReplacement(9), SORT_NUMERIC)));
         $this->assertEquals(10, count(array_unique($r->getManyWithoutReplacement(10), SORT_NUMERIC)));
     }
-
-
 
     public function testGettingManyDoubleItemsWithoutReplacementSuccess()
     {
@@ -100,8 +95,6 @@ class RandomTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(10, count(array_unique($r->getManyWithoutReplacement(10), SORT_NUMERIC)));
     }
 
-
-
     /**
      * @expectedException OutOfRangeException
      */
@@ -110,9 +103,6 @@ class RandomTest extends PHPUnit_Framework_TestCase
         $r = new Random(0, 9);
         $r->getManyWithoutReplacement(11);
     }
-    
-
-
 
     /**
      * @expectedException InvalidArgumentException

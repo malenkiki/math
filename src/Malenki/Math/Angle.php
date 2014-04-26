@@ -1,7 +1,7 @@
 <?php
 /*
  * Copyright (c) 2014 Michel Petit <petit.michel@gmail.com>
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining
  * a copy of this software and associated documentation files (the
  * "Software"), to deal in the Software without restriction, including
@@ -9,10 +9,10 @@
  * distribute, sublicense, and/or sell copies of the Software, and to
  * permit persons to whom the Software is furnished to do so, subject to
  * the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be
  * included in all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -22,9 +22,7 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-
 namespace Malenki\Math;
-
 
 /**
  * Angle deals with degrees, radians, grades and turns.
@@ -40,7 +38,7 @@ namespace Malenki\Math;
  *  - `TYPE_DEG` for degrees,
  *  - `TYPE_GON` for grades,
  *  - `TYPE_TURN` for turns.
- * 
+ *
  * When Angle is created, you can compare it with another to know if they are complementary or supplementary.
  *
  * For current angle, you can convert it to other units.
@@ -55,8 +53,8 @@ namespace Malenki\Math;
  * @property-read $turn Get number of turns
  * @property-read $dms Get Degrees/Minutes/Second object
  * @property-read $type Original type used to create Angle, the type returned by get()
- * @todo use http://en.wikipedia.org/wiki/Angle to have other ideas of units. 
- * @author Michel Petit <petit.michel@gmail.com> 
+ * @todo use http://en.wikipedia.org/wiki/Angle to have other ideas of units.
+ * @author Michel Petit <petit.michel@gmail.com>
  * @license MIT
  */
 class Angle
@@ -67,52 +65,45 @@ class Angle
     const TYPE_TURN = 'trn';
 
     /**
-     * Radians internal value. 
-     * 
+     * Radians internal value.
+     *
      * @var float
      * @access protected
      */
     protected $float_rad = 0;
 
-
     /**
-     * Stored original value if other than radians. 
-     * 
+     * Stored original value if other than radians.
+     *
      * @var mixed
      * @access protected
      */
     protected $original = null;
 
-
-
     /**
      * Method to have magick getters.
      *
-     * @param string $name 
+     * @param  string $name
      * @access public
      * @return mixed
      */
     public function __get($name)
     {
-        if(in_array($name, array('rad', 'deg', 'gon', 'turn', 'dms')))
-        {
+        if (in_array($name, array('rad', 'deg', 'gon', 'turn', 'dms'))) {
             return $this->$name();
         }
 
-        if($name == 'type')
-        {
+        if ($name == 'type') {
             return $this->original->type;
         }
     }
 
-
-
     /**
-     * Create new Angle, from radians by default, or with second argument, can 
-     * be degrees, grades or turns too. 
-     * 
-     * @param float $float_angle Value of the angle, in radians if second argument is not given
-     * @param string $str_type One of the class' constants. Optional.
+     * Create new Angle, from radians by default, or with second argument, can
+     * be degrees, grades or turns too.
+     *
+     * @param  float  $float_angle Value of the angle, in radians if second argument is not given
+     * @param  string $str_type    One of the class' constants. Optional.
      * @access public
      * @return void
      */
@@ -122,20 +113,13 @@ class Angle
         $this->original->value = $float_angle;
         $this->original->type = $str_type;
 
-        if($str_type == self::TYPE_DEG)
-        {
+        if ($str_type == self::TYPE_DEG) {
             $this->float_rad = deg2rad($float_angle);
-        }
-        elseif($str_type == self::TYPE_GON)
-        {
+        } elseif ($str_type == self::TYPE_GON) {
             $this->float_rad = $float_angle * pi() / 200;
-        }
-        elseif($str_type == self::TYPE_TURN)
-        {
+        } elseif ($str_type == self::TYPE_TURN) {
             $this->float_rad = $float_angle * 2 * pi();
-        }
-        else
-        {
+        } else {
             $this->float_rad = $float_angle;
         }
     }
@@ -143,51 +127,46 @@ class Angle
 
 
     /**
-     * Gets angle's value as gon (grade). 
-     * 
+     * Gets angle's value as gon (grade).
+     *
      * @access public
      * @return float
      */
     public function gon()
     {
-        if($this->original->type == self::TYPE_GON)
-        {
+        if ($this->original->type == self::TYPE_GON) {
             return $this->original->value;
         }
 
         return $this->float_rad * 200 / pi();
     }
 
-
-
     /**
-     * Gets angle's value as degrees. 
-     * 
+     * Gets angle's value as degrees.
+     *
      * @access public
      * @return float
      */
     public function deg()
     {
-        if($this->original->type == self::TYPE_DEG)
-        {
+        if ($this->original->type == self::TYPE_DEG) {
             return $this->original->value;
         }
 
         return rad2deg($this->float_rad);
     }
-    
-    
-    
+
+
+
     /**
-     * gets angles as radians 
-     * 
+     * gets angles as radians
+     *
      * @access public
      * @return float
      */
     public function rad()
     {
-        if($this->original->type == self::TYPE_RAD)
-        {
+        if ($this->original->type == self::TYPE_RAD) {
             return $this->original->value;
         }
 
@@ -197,8 +176,8 @@ class Angle
 
 
     /**
-     * Gets angle's value, as it was given at instenciation time. 
-     * 
+     * Gets angle's value, as it was given at instenciation time.
+     *
      * @access public
      * @return float
      */
@@ -207,25 +186,20 @@ class Angle
         return $this->original->value;
     }
 
-
-
     /**
-     * Gets number of turns 
-     * 
+     * Gets number of turns
+     *
      * @access public
      * @return float
      */
     public function turn()
     {
-        if($this->original->type == self::TYPE_TURN)
-        {
+        if ($this->original->type == self::TYPE_TURN) {
             return $this->original->value;
         }
 
         return $this->float_rad / (2 * pi());
     }
-
-
 
     /**
      * Gets angle as a "Degrees/Minutes/seconds" object.
@@ -236,7 +210,7 @@ class Angle
      *  - `m` for minutes,
      *  - `s` for seconds,
      *  - `str` for the DMS string (`34°56′23″`)
-     * 
+     *
      * @access public
      * @return stdClass
      */
@@ -244,14 +218,14 @@ class Angle
     {
         $float = abs($this->deg());
 
-        $prov = function ($float)
-        {
+        $prov = function ($float) {
             $whole_part = (integer) $float;
             $fractional_part = $float - $whole_part;
 
             $out = new \stdClass();
             $out->whole = $whole_part;
             $out->fractional = $fractional_part * 60;
+
             return $out;
         };
 
@@ -260,19 +234,17 @@ class Angle
         $prov_3 = $prov($prov_2->fractional);
 
         $dms = new \stdClass();
-        $dms->d = $prov_1->whole; 
-        $dms->m = $prov_2->whole; 
+        $dms->d = $prov_1->whole;
+        $dms->m = $prov_2->whole;
         $dms->s = $prov_3->whole;
         $dms->str = sprintf('%d°%d′%d″', $dms->d, $dms->m, $dms->s);
 
         return $dms;
     }
 
-
-
     /**
-     * Checks whether current angle is right (90°), even if there are several turns. 
-     * 
+     * Checks whether current angle is right (90°), even if there are several turns.
+     *
      * @access public
      * @return boolean
      */
@@ -281,11 +253,9 @@ class Angle
         return in_array(abs($this->turn()) - (integer) abs($this->turn()), array(1/4, 3/4));
     }
 
-    
-    
     /**
-     * Checks whether current angle is straight (180°), even if there are several turns. 
-     * 
+     * Checks whether current angle is straight (180°), even if there are several turns.
+     *
      * @access public
      * @return boolean
      */
@@ -294,12 +264,9 @@ class Angle
         return abs($this->turn()) - (integer) abs($this->turn()) == 0.5;
     }
 
-
-
-
     /**
-     * Checks whether angle does at least one complete turn (360° × n). 
-     * 
+     * Checks whether angle does at least one complete turn (360° × n).
+     *
      * @access public
      * @return boolean
      */
@@ -308,12 +275,10 @@ class Angle
         return fmod(abs($this->turn()), 1) == 0;
     }
 
-
-
     /**
      * Tests current angle with another to know if there are complementary together
-     * 
-     * @param Angle $angle 
+     *
+     * @param  Angle   $angle
      * @access public
      * @return boolean
      */
@@ -323,13 +288,11 @@ class Angle
 
         return $out->isRight();
     }
-    
-
 
     /**
      * Test if current angle is supplementary with another.
-     * 
-     * @param Angle $angle 
+     *
+     * @param  Angle   $angle
      * @access public
      * @return boolean
      */

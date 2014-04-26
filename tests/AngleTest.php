@@ -32,7 +32,6 @@ class AngleTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($a instanceof Malenki\Math\Angle);
     }
 
-
     public function testOutputAsDegreesMinutesSecond()
     {
         $a = new Angle(34.53, Angle::TYPE_DEG);
@@ -43,84 +42,75 @@ class AngleTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('34°31′48″', $dms->str);
     }
 
-
     public function testOtherAngleIsComplementaryWithActual()
     {
         $a = new Angle(pi() / 4);
         $this->assertTrue($a->isComplementary($a));
-        
+
         $a = new Angle(pi() / 8);
         $b = new Angle(3 * pi() / 8);
         $this->assertTrue($a->isComplementary($b));
         $this->assertTrue($b->isComplementary($a));
-        
-        
+
         $a = new Angle(45, Angle::TYPE_DEG);
         $this->assertTrue($a->isComplementary($a));
-        
+
         $a = new Angle(15, Angle::TYPE_DEG);
         $b = new Angle(75, Angle::TYPE_DEG);
         $this->assertTrue($a->isComplementary($b));
         $this->assertTrue($b->isComplementary($a));
     }
 
-
     public function testOtherAngleIsSupplementaryWithActual()
     {
         $a = new Angle(pi() / 2);
         $this->assertTrue($a->isSupplementary($a));
-        
+
         $a = new Angle(pi() / 4);
         $b = new Angle(3 * pi() / 4);
         $this->assertTrue($a->isSupplementary($b));
         $this->assertTrue($b->isSupplementary($a));
-        
 
     }
-
-
 
     public function testAngleIsRight()
     {
         $a = new Angle(pi()/2);
         $this->assertTrue($a->isRight());
-        
+
         $a = new Angle(5*pi()/2);
         $this->assertTrue($a->isRight());
-        
+
         $a = new Angle(3*pi()/2);
         $this->assertTrue($a->isRight());
-        
+
         $a = new Angle(90, Angle::TYPE_DEG);
         $this->assertTrue($a->isRight());
-        
+
         $a = new Angle(450, Angle::TYPE_DEG);
         $this->assertTrue($a->isRight());
-        
+
         $a = new Angle(-1 * pi()/2);
         $this->assertTrue($a->isRight());
-        
+
         $a = new Angle(-5*pi()/2);
         $this->assertTrue($a->isRight());
-        
+
         $a = new Angle(-3*pi()/2);
         $this->assertTrue($a->isRight());
-        
+
         $a = new Angle(-90, Angle::TYPE_DEG);
         $this->assertTrue($a->isRight());
-        
+
         $a = new Angle(-450, Angle::TYPE_DEG);
         $this->assertTrue($a->isRight());
     }
-    
-    
-    
+
     public function testAngleIsNotRight()
     {
         $a = new Angle(pi());
         $this->assertFalse($a->isRight());
     }
-
 
     public function testAngleIsStraight()
     {
@@ -129,69 +119,62 @@ class AngleTest extends PHPUnit_Framework_TestCase
 
         $a = new Angle(3*pi());
         $this->assertTrue($a->isStraight());
-        
+
         $a = new Angle(180, Angle::TYPE_DEG);
         $this->assertTrue($a->isStraight());
-        
+
         $a = new Angle(540, Angle::TYPE_DEG);
         $this->assertTrue($a->isStraight());
-        
+
         $a = new Angle(-1*pi());
         $this->assertTrue($a->isStraight());
 
         $a = new Angle(-3*pi());
         $this->assertTrue($a->isStraight());
-        
+
         $a = new Angle(-180, Angle::TYPE_DEG);
         $this->assertTrue($a->isStraight());
-        
+
         $a = new Angle(-540, Angle::TYPE_DEG);
         $this->assertTrue($a->isStraight());
     }
-
 
     public function testAngleIsNotStraight()
     {
         $a = new Angle(pi() / 3);
         $this->assertFalse($a->isStraight());
-        
+
         $a = new Angle(-70, Angle::TYPE_DEG);
         $this->assertFalse($a->isStraight());
-        
+
         $a = new Angle(pi() / 4);
         $this->assertFalse($a->isStraight());
-        
+
     }
-
-
 
     public function testAngleIsPerigon()
     {
         $a = new Angle(2*pi());
         $this->assertTrue($a->isPerigon());
-        
+
         $a = new Angle(4*pi());
         $this->assertTrue($a->isPerigon());
-        
+
         $a = new Angle(-2*pi());
         $this->assertTrue($a->isPerigon());
-        
+
         $a = new Angle(-4*pi());
         $this->assertTrue($a->isPerigon());
     }
-
 
     public function testAngleIsNotPerigon()
     {
         $a = new Angle(pi());
         $this->assertFalse($a->isPerigon());
-        
+
         $a = new Angle(3 * pi());
         $this->assertFalse($a->isPerigon());
     }
-
-
-
 
     public function testCreateFromDegreesToGetOthers()
     {
@@ -206,39 +189,38 @@ class AngleTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(pi() / 4, $a->rad);
         $this->assertEquals(1 / 8, $a->turn);
         $this->assertEquals(50, $a->gon);
-        
+
         $a = new Angle(90, Angle::TYPE_DEG);
         $this->assertEquals(90, $a->deg);
         $this->assertEquals(pi() / 2, $a->rad);
         $this->assertEquals(1 / 4, $a->turn);
         $this->assertEquals(100, $a->gon);
-        
+
         $a = new Angle(180, Angle::TYPE_DEG);
         $this->assertEquals(180, $a->deg);
         $this->assertEquals(pi(), $a->rad);
         $this->assertEquals(1 / 2, $a->turn);
         $this->assertEquals(200, $a->gon);
-        
+
         $a = new Angle(270, Angle::TYPE_DEG);
         $this->assertEquals(270, $a->deg);
         $this->assertEquals(3 * pi() / 2, $a->rad);
         $this->assertEquals(3/4, $a->turn);
         $this->assertEquals(300, $a->gon);
-         
+
         $a = new Angle(360, Angle::TYPE_DEG);
         $this->assertEquals(360, $a->deg);
         $this->assertEquals(2 * pi(), $a->rad);
         $this->assertEquals(1, $a->turn);
         $this->assertEquals(400, $a->gon);
-        
+
         $a = new Angle(720, Angle::TYPE_DEG);
         $this->assertEquals(720, $a->deg);
         $this->assertEquals(4 * pi(), $a->rad);
         $this->assertEquals(2, $a->turn);
         $this->assertEquals(800, $a->gon);
     }
-    
-    
+
     public function testCreateFromRadiansToGetOthers()
     {
         $a = new Angle(0, Angle::TYPE_RAD);
@@ -252,31 +234,31 @@ class AngleTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(pi() / 4, $a->rad);
         $this->assertEquals(1 / 8, $a->turn);
         $this->assertEquals(50, $a->gon);
-        
+
         $a = new Angle(pi() / 2, Angle::TYPE_RAD);
         $this->assertEquals(90, $a->deg);
         $this->assertEquals(pi() / 2, $a->rad);
         $this->assertEquals(1 / 4, $a->turn);
         $this->assertEquals(100, $a->gon);
-        
+
         $a = new Angle(pi(), Angle::TYPE_RAD);
         $this->assertEquals(180, $a->deg);
         $this->assertEquals(pi(), $a->rad);
         $this->assertEquals(1 / 2, $a->turn);
         $this->assertEquals(200, $a->gon);
-        
+
         $a = new Angle(3 * pi() / 2, Angle::TYPE_RAD);
         $this->assertEquals(270, $a->deg);
         $this->assertEquals(3 * pi() / 2, $a->rad);
         $this->assertEquals(3/4, $a->turn);
         $this->assertEquals(300, $a->gon);
-         
+
         $a = new Angle(2 * pi(), Angle::TYPE_RAD);
         $this->assertEquals(360, $a->deg);
         $this->assertEquals(2 * pi(), $a->rad);
         $this->assertEquals(1, $a->turn);
         $this->assertEquals(400, $a->gon);
-        
+
         $a = new Angle(4 * pi(), Angle::TYPE_RAD);
         $this->assertEquals(720, $a->deg);
         $this->assertEquals(4 * pi(), $a->rad);
