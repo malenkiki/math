@@ -279,6 +279,19 @@ class Stats implements \Countable
         return true;
     }
 
+    public function allInteger()
+    {
+        for ($i = 0; $i < count($this); $i++) {
+            $n = $this->arr[$i];
+
+            if (abs($n) - floor(abs($n)) != 0) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
     protected function clear()
     {
         $this->int_count = null;
@@ -333,6 +346,14 @@ class Stats implements \Countable
         }
 
         return $this->float_range;
+    }
+
+    public function mode()
+    {
+        if($this->allInteger())
+        {
+            //todo
+        }
     }
 
     public function arithmeticMean()

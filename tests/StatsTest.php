@@ -73,6 +73,23 @@ class StatsTest extends PHPUnit_Framework_TestCase
         $this->assertCount(5, $s);
     }
 
+    public function testIfAllValuesArePositiveOrNotShouldSuccess()
+    {
+        $s = new Stats(array(1,3,5,3.0,5,6,3.2));
+        $this->assertTrue($s->allPositive());
+        $s = new Stats(array(1,3,5,-2,3,-6));
+        $this->assertFalse($s->allPositive());
+    }
+
+
+    public function testIfAllValuesAreIntegerOrNotShouldSuccess()
+    {
+        $s = new Stats(array(1,3,5,3.0,6));
+        $this->assertTrue($s->allInteger());
+        $s = new Stats(array(1,3,5.2,3,6));
+        $this->assertFalse($s->allInteger());
+    }
+
     public function testComputingArithmeticMeanShouldSuccess()
     {
         $s = new Stats(array(1, 2, 3, 4));
