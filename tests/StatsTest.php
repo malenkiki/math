@@ -234,9 +234,58 @@ class StatsTest extends PHPUnit_Framework_TestCase
         $s->generalizedMean(3);
     }
 
-    public function testGettingModeShouldSucess()
+    public function testGettingModeFromIntegersSetShouldSuccess()
+    {
+        $s = new Stats(array(1,2,3,4,3,7,2));
+        $this->assertContains(2, $s->mode());
+        $this->assertContains(3, $s->mode());
+        $this->assertNotContains(7, $s->mode());
+        
+        $s = new Stats(array(1,2,3,4,5,7,2));
+        $this->assertContains(2, $s->mode());
+        $this->assertNotContains(7, $s->mode());
+    }
+    
+    public function testGettingModeFromFloatsSetShouldSuccess()
     {
         $this->markTestIncomplete();
+    }
+
+    public function testIfModeIfBimodalShouldSuccess()
+    {
+        $s = new Stats(array(1,2,3,4,3,7,2));
+        $this->assertTrue($s->isBimodal());
+        $this->assertTrue($s->is_bimodal);
+        $this->assertTrue($s->bimodal);
+        
+        $s = new Stats(array(1,2,3,4,3,7,2,4));
+        $this->assertFalse($s->isBimodal());
+        $this->assertFalse($s->is_bimodal);
+        $this->assertFalse($s->bimodal);
+        
+        $s = new Stats(array(1,2,3,4,5,7,2));
+        $this->assertFalse($s->isBimodal());
+        $this->assertFalse($s->is_bimodal);
+        $this->assertFalse($s->bimodal);
+    }
+
+
+    public function testIfModeIfMultimodalShouldSuccess()
+    {
+        $s = new Stats(array(1,2,3,4,3,7,2,4));
+        $this->assertTrue($s->isMultimodal());
+        $this->assertTrue($s->is_multimodal);
+        $this->assertTrue($s->multimodal);
+        
+        $s = new Stats(array(1,2,3,4,3,7,2));
+        $this->assertFalse($s->isMultimodal());
+        $this->assertFalse($s->is_multimodal);
+        $this->assertFalse($s->multimodal);
+        
+        $s = new Stats(array(1,2,3,4,5,7,2));
+        $this->assertFalse($s->isMultimodal());
+        $this->assertFalse($s->is_multimodal);
+        $this->assertFalse($s->multimodal);
     }
 
     public function testGettingPercentilShouldSucess()

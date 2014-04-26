@@ -40,9 +40,18 @@ class Stats implements \Countable
     protected $float_kurtosis = null;
     protected $float_median = null;
     protected $float_skew = null;
+    protected $arr_mode = null;
 
     public function __get($name)
     {
+        if (in_array($name, array('is_bimodal', 'bimodal'))) {
+            return $this->isBimodal();
+        }
+
+        if (in_array($name, array('is_multimodal', 'multimodal'))) {
+            return $this->isMultimodal();
+        }
+
         if (in_array($name, array('harmonic_mean', 'subcontrary_mean', 'H'))) {
             return $this->harmonicMean();
         }
@@ -306,6 +315,7 @@ class Stats implements \Countable
         $this->float_kurtosis = null;
         $this->float_median = null;
         $this->float_skew = null;
+        $this->arr_mode = null;
     }
 
     public function merge($arr)
@@ -348,12 +358,47 @@ class Stats implements \Countable
         return $this->float_range;
     }
 
+    /**
+     * @todo Implement mode for continuous set.
+     */
     public function mode()
     {
-        if($this->allInteger())
+        if(is_null($this->arr_mode))
         {
-            //todo
+            if($this->allInteger())
+            {
+                $arr = $this->frequency();
+                $max = max($arr);
+                $arr_out = array();
+
+                foreach($arr as $k => $v)
+                {
+                    if($v == $max)
+                    {
+                        $arr_out[] = (double) $k;
+                    }
+                }
+
+                $this->arr_mode = $arr_out;
+            }
+            else
+            {
+                throw new \RuntimeException('Mode for continuous set of values is not implemented yet.');
+            }
         }
+
+        return $this->arr_mode;
+    }
+
+
+    public function isBimodal()
+    {
+        return count($this->mode()) == 2;
+    }
+
+    public function isMultimodal()
+    {
+        return count($this->mode()) > 2;
     }
 
     public function arithmeticMean()
