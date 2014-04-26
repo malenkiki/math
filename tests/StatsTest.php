@@ -240,18 +240,40 @@ class StatsTest extends PHPUnit_Framework_TestCase
         $this->assertContains(2, $s->mode());
         $this->assertContains(3, $s->mode());
         $this->assertNotContains(7, $s->mode());
+        $this->assertContains(2, $s->mode);
+        $this->assertContains(3, $s->mode);
+        $this->assertNotContains(7, $s->mode);
         
         $s = new Stats(array(1,2,3,4,5,7,2));
         $this->assertContains(2, $s->mode());
         $this->assertNotContains(7, $s->mode());
+        $this->assertContains(2, $s->mode);
+        $this->assertNotContains(7, $s->mode);
     }
     
     public function testGettingModeFromFloatsSetShouldSuccess()
     {
         $this->markTestIncomplete();
     }
+    public function testIfModeIsUnimodalShouldSuccess()
+    {
+        $s = new Stats(array(1,2,3,4,3,7,2));
+        $this->assertFalse($s->isUnimodal());
+        $this->assertFalse($s->is_unimodal);
+        $this->assertFalse($s->unimodal);
+        
+        $s = new Stats(array(1,2,3,4,3,7,2,4));
+        $this->assertFalse($s->isUnimodal());
+        $this->assertFalse($s->is_unimodal);
+        $this->assertFalse($s->unimodal);
+        
+        $s = new Stats(array(1,2,3,4,5,7,2));
+        $this->assertTrue($s->isUnimodal());
+        $this->assertTrue($s->is_unimodal);
+        $this->assertTrue($s->unimodal);
+    }
 
-    public function testIfModeIfBimodalShouldSuccess()
+    public function testIfModeIsBimodalShouldSuccess()
     {
         $s = new Stats(array(1,2,3,4,3,7,2));
         $this->assertTrue($s->isBimodal());
@@ -270,7 +292,7 @@ class StatsTest extends PHPUnit_Framework_TestCase
     }
 
 
-    public function testIfModeIfMultimodalShouldSuccess()
+    public function testIfModeIsMultimodalShouldSuccess()
     {
         $s = new Stats(array(1,2,3,4,3,7,2,4));
         $this->assertTrue($s->isMultimodal());

@@ -44,6 +44,10 @@ class Stats implements \Countable
 
     public function __get($name)
     {
+        if (in_array($name, array('is_unimodal', 'unimodal'))) {
+            return $this->isUnimodal();
+        }
+
         if (in_array($name, array('is_bimodal', 'bimodal'))) {
             return $this->isBimodal();
         }
@@ -84,7 +88,7 @@ class Stats implements \Countable
             return $this->range();
         }
 
-        if (in_array($name, array('sum', 'median', 'array', 'min', 'max'))) {
+        if (in_array($name, array('sum', 'median', 'array', 'min', 'max', 'mode'))) {
             return $this->$name();
         }
 
@@ -359,37 +363,38 @@ class Stats implements \Countable
     }
 
     /**
-     * @todo Implement mode for continuous set.
+     * @todo Implement mode for continuous distribution, see http://en.wikipedia.org/wiki/Mode_(statistics)#Mode_of_a_sample
      */
-    public function mode()
+    public function mode($inteval = null)
     {
-        if(is_null($this->arr_mode))
-        {
-            if($this->allInteger())
-            {
+        if (is_null($this->arr_mode)) {
+            if ($this->allInteger()) {
                 $arr = $this->frequency();
                 $max = max($arr);
                 $arr_out = array();
 
-                foreach($arr as $k => $v)
-                {
-                    if($v == $max)
-                    {
+                foreach ($arr as $k => $v) {
+                    if ($v == $max) {
                         $arr_out[] = (double) $k;
                     }
                 }
 
                 $this->arr_mode = $arr_out;
-            }
-            else
-            {
-                throw new \RuntimeException('Mode for continuous set of values is not implemented yet.');
+            } else {
+                if (is_null($interval) || $interval <= 0) {
+                    throw new \InvalidArgumentException('Interval for continuous distribution must be a valid positive number.');
+                }
+                throw new \RuntimeException('Mode for continuous distribution is not implemented yet.');
             }
         }
 
         return $this->arr_mode;
     }
 
+    public function isUnimodal()
+    {
+        return count($this->mode()) == 1;
+    }
 
     public function isBimodal()
     {
