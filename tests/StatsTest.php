@@ -162,10 +162,24 @@ class StatsTest extends PHPUnit_Framework_TestCase
         $this->markTestIncomplete();
     }
 
+    /**
+     * @expectedException \RuntimeException
+     */
     public function testGettingLehmerMeanWithNegativeNumbersShouldFail()
     {
-        $this->markTestIncomplete();
+        $s = new Stats(array(2,4,-3,5));
+        $s->lehmerMean(3);
     }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     */
+    public function testGettingLehmerMeanWithBadParameterShouldFail()
+    {
+        $s = new Stats(array(2,4,3,5));
+        $s->lehmerMean('foo');
+    }
+    
     public function testGettingContraharmonicMeanShouldSucess()
     {
         $this->markTestIncomplete();
@@ -308,11 +322,6 @@ class StatsTest extends PHPUnit_Framework_TestCase
         $this->assertFalse($s->isMultimodal());
         $this->assertFalse($s->is_multimodal);
         $this->assertFalse($s->multimodal);
-    }
-
-    public function testGettingPercentilShouldSucess()
-    {
-        $this->markTestIncomplete();
     }
 
     public function testGettingRangeShouldSuccess()
