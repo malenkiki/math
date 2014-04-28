@@ -86,11 +86,11 @@ class Stats implements \Countable
             return $this->midrange();
         }
 
-        if ($name == 'range') {
-            return $this->range();
+        if ($name == 'relative_frequency') {
+            return $this->relativeFrequency();
         }
 
-        if (in_array($name, array('sum', 'median', 'array', 'min', 'max', 'mode', 'f'))) {
+        if (in_array($name, array('sum', 'median', 'array', 'min', 'max', 'mode', 'f', 'range'))) {
             return $this->$name();
         }
 
@@ -796,7 +796,7 @@ class Stats implements \Countable
 
 
     /**
-     * Like frequency, but divide each but total amount. 
+     * Relative frequency, like frequency, but divide each but total amount. 
      * 
      * @access public
      * @return array
@@ -817,6 +817,11 @@ class Stats implements \Countable
         }
 
         return $this->arr_f;
+    }
+
+    public function relativeFrequency()
+    {
+        return $this->f();
     }
 
     public function coefficientOfVariation()
