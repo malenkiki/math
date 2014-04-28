@@ -562,6 +562,16 @@ class StatsTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(1, array_sum($s->relative_frequency));
     }
 
+    public function testGettingCumulativeFrequencyShouldSuccess()
+    {
+        $s = new Stats(array(1,3,1,5,3,3));
+        $this->assertEquals(array('1' => 2, '3' => 5, '5' => 6), $s->cumulativeFrequency());
+        $this->assertEquals(array('1' => 2, '3' => 5, '5' => 6), $s->cumulative_frequency);
+        $s = new Stats(array(1,2,2,3,3,3,5,5,5,5,5,6,6,6,6,6,6,9,9,9,9,9,9,9,9,9,4,4,4,4));
+        $this->assertEquals(array('1' => 1, '2' => 3, '3' => 6, '5' => 11, '6' => 17, '9' => 26, '4' => 30), $s->cumulativeFrequency());
+        $this->assertEquals(array('1' => 1, '2' => 3, '3' => 6, '5' => 11, '6' => 17, '9' => 26, '4' => 30), $s->cumulative_frequency);
+    }
+
     public function testGettingCoefficientOfVariationShouldSuccess()
     {
         $this->markTestIncomplete();

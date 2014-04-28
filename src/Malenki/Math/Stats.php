@@ -43,6 +43,7 @@ class Stats implements \Countable
     protected $arr_mode = null;
     protected $arr_f = null;
     protected $arr_frequency = null;
+    protected $arr_cumulative_frequency = null;
 
     public function __get($name)
     {
@@ -88,6 +89,10 @@ class Stats implements \Countable
 
         if ($name == 'relative_frequency') {
             return $this->relativeFrequency();
+        }
+
+        if ($name == 'cumulative_frequency') {
+            return $this->cumulativeFrequency();
         }
 
         if (in_array($name, array('sum', 'median', 'array', 'min', 'max', 'mode', 'f', 'range'))) {
@@ -826,6 +831,22 @@ class Stats implements \Countable
         }
 
         return $this->arr_frequency;
+    }
+
+    public function cumulativeFrequency()
+    {
+        if(is_null($this->arr_cumulative_frequency)){
+            $this->arr_cumulative_frequency = $this->frequency();
+            $prev = 0;
+
+            foreach($this->arr_cumulative_frequency as $k => $v){
+                $prev += $v;
+                $this->arr_cumulative_frequency[$k] = $prev;
+            }
+
+        }
+
+        return $this->arr_cumulative_frequency;
     }
 
 
