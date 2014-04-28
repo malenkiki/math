@@ -437,6 +437,48 @@ class StatsTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(22, $s->interquartile_range);
     }
 
+    public function testGettingPercentileShouldSuccess()
+    {
+        $s = new Stats(array(1,2,3,4,5,6,7));
+        $this->assertEquals(1, $s->percentile(0));
+        $this->assertEquals(1, $s->percentile(1));
+        $this->assertEquals(1, $s->percentile(14));
+        $this->assertEquals(2, $s->percentile(15));
+        $this->assertEquals(2, $s->percentile(28));
+        $this->assertEquals(3, $s->percentile(29));
+        $this->assertEquals(3, $s->percentile(42));
+        $this->assertEquals(4, $s->percentile(43));
+        $this->assertEquals(4, $s->percentile(57));
+        $this->assertEquals(5, $s->percentile(58));
+        $this->assertEquals(5, $s->percentile(71));
+        $this->assertEquals(6, $s->percentile(72));
+        $this->assertEquals(6, $s->percentile(85));
+        $this->assertEquals(7, $s->percentile(86));
+        $this->assertEquals(7, $s->percentile(99.999999));
+        $this->assertEquals(7, $s->percentile(100));
+        $this->assertEquals($s->median, $s->percentile(57));
+    }
+
+    /**
+     * @expectedException \OutOfRangeException
+     */
+    public function testGettingPercentileLessThanZeroShouldFail()
+    {
+        $s = new Stats(array(1,2,3,4,5,6,7));
+        $s->percentile(-6);
+    }
+
+
+    /**
+     * @expectedException \OutOfRangeException
+     */
+    public function testGettingPercentileGreaterThanHundredShouldFail()
+    {
+        $s = new Stats(array(1,2,3,4,5,6,7));
+        $s->percentile(101);
+    }
+
+
     public function testGettingSkewnessShouldSuccess()
     {
         $s = new Stats(array(1, 11, 15, 19, 20, 24, 28, 34, 37, 47, 50, 57));

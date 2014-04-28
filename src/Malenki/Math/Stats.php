@@ -748,6 +748,40 @@ class Stats implements \Countable
     {
         return $this->interquartileRange();
     }
+    
+    public function percentile($n)
+    {
+        if($n > 100 || $n < 0) {
+            throw new \OutOfRangeException('Percent must be number between 0 and 100.');
+        }
+
+        $arr = $this->arr;
+        sort($arr, SORT_NUMERIC);
+
+        if($n == 100)
+        {
+            return end($arr);
+        }
+
+        if ($n != 50) {
+            return $arr[floor($n * count($this) / 100)];
+        } else {
+            //odd
+            if (count($this) & 1) {
+                return $arr[floor(count($this) / 2)];
+            }
+            //even
+            else {
+                $s = new self();
+                $s->add($arr[(count($this)/2) - 1]);
+                $s->add($arr[count($this)/2]);
+
+                return $s->mean;
+
+            }
+        }
+    }
+
 
     public function skewness()
     {
