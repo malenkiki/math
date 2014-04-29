@@ -23,7 +23,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
 use Malenki\Math\Matrix;
-use Malenki\Math\Complex;
+use Malenki\Math\Number\Complex;
 
 class MatrixTest extends PHPUnit_Framework_TestCase
 {
@@ -271,10 +271,10 @@ class MatrixTest extends PHPUnit_Framework_TestCase
         $m->populate(array(1, 2, 3, 4));
 
         $z = new Matrix(2, 2);
-        $z->populate(array(1, new Malenki\Math\Complex(2, 1), 3, 4));
+        $z->populate(array(1, new Complex(2, 1), 3, 4));
 
         $r = new Matrix(2, 2);
-        $r->populate(array(2, new Malenki\Math\Complex(4, 1), 6, 8));
+        $r->populate(array(2, new Complex(4, 1), 6, 8));
 
         $this->assertEquals($r, $m->add($z));
         $this->assertEquals($r, $z->add($m));
@@ -293,7 +293,7 @@ class MatrixTest extends PHPUnit_Framework_TestCase
         $this->assertEquals("1  20   3\n4   5  60", sprintf('%s', $m));
 
         $m = new Matrix(2, 3);
-        $m->populate(array(1, new Malenki\Math\Complex(2, 1), 3, 4, 5, 60));
+        $m->populate(array(1, new Complex(2, 1), 3, 4, 5, 60));
 
         $this->assertEquals("1  2+i   3\n4    5  60", sprintf('%s', $m));
     }

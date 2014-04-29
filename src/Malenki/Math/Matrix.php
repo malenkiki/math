@@ -23,7 +23,7 @@
  */
 
 namespace Malenki\Math;
-
+use \Malenki\Math\Number\Complex;
 /**
  * Matrix basic implementation.
  *
@@ -317,11 +317,11 @@ class Matrix
             return true;
         }
 
-        if ($matrix instanceof \Malenki\Math\Complex) {
+        if ($matrix instanceof Complex) {
             return true;
         }
 
-        if ($matrix instanceof \Malenki\Math\Matrix) {
+        if ($matrix instanceof Matrix) {
             return $this->size->cols == $matrix->rows;
         }
 
@@ -356,7 +356,7 @@ class Matrix
      */
     public function add($matrix)
     {
-        if (!($matrix instanceof \Malenki\Math\Matrix)) {
+        if (!($matrix instanceof Matrix)) {
             throw new \InvalidArgumentException('Given argument must be an instance of \Malenki\Math\Matrix');
         }
 
@@ -401,7 +401,7 @@ class Matrix
             throw new \RuntimeException('Invalid number or matrix has not right number of rows.');
         }
 
-        if ($mix instanceof \Malenki\Math\Matrix) {
+        if ($mix instanceof Matrix) {
             $out = new self($this->size->rows, $mix->cols);
 
             for ($r = 0; $r < $this->size->rows; $r++) {

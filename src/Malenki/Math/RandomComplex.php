@@ -23,6 +23,7 @@
  */
 
 namespace Malenki\Math;
+use \Malenki\Math\Number\Complex;
 
 /**
  * Random generator of Complex Number.
