@@ -488,6 +488,27 @@ var_dump($s->last_quartile);
 var_dump($s->mediane);
 ```
 
+Getting mode(s):
+```php
+$s = new Stats(array(1,2,3,2,4,1,5));
+var_dump($s->mode); // returned array has 2 values
+
+$s = new Stats(array(1,3,2,4,1,5));
+var_dump($s->mode); // returned array has 1 value
+```
+
+Frequencies, relative frequencies and cumulative frequencies:
+
+```php
+var_dump($s->frequency);
+var_dump($s->relative_frequency);
+var_dump($s->cumulative_frequency);
+// or methods
+var_dump($s->frequency());
+var_dump($s->relativeFrequency());
+var_dump($s->cumulativeFrequency());
+```
+
 Kurtosis and its tests are available:
 
 ```php
