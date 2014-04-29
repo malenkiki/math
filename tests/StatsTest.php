@@ -131,6 +131,16 @@ class StatsTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(6.2, $s->mean);
     }
 
+    public function testCenteringValuesShouldSuccess()
+    {
+        $s = new Stats(array(6,8,4,5,3,4));
+        $this->assertEquals(array((float)1,(float)3,(float)-1,(float)0,(float)-2,(float)-1), $s->center());
+        $s = new Stats(array(8,12,9,11,6,8));
+        $this->assertEquals(array((float)-1,(float)3,(float)0,(float)2,(float)-3,(float)-1), $s->center);
+        $s = new Stats(array(13,9,11,8,7,12));
+        $this->assertEquals(array((float)3,(float)-1,(float)1,(float)-2,(float)-3,(float)2), $s->center);
+    }
+
     public function testComputeHarmonicMeanShouldSuccess()
     {
         $s = new Stats(array(1, 2, 4));

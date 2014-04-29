@@ -99,7 +99,7 @@ class Stats implements \Countable
             return $this->squareSum();
         }
 
-        if (in_array($name, array('sum', 'median', 'array', 'min', 'max', 'mode', 'f', 'range'))) {
+        if (in_array($name, array('sum', 'center', 'median', 'array', 'min', 'max', 'mode', 'f', 'range'))) {
             return $this->$name();
         }
 
@@ -448,6 +448,17 @@ class Stats implements \Countable
     public function mean()
     {
         return $this->arithmeticMean();
+    }
+
+    public function center()
+    {
+        $arr = array();
+
+        foreach($this->arr as $v){
+            $arr[] = $v - $this->arithmeticMean();
+        }
+
+        return $arr;
     }
 
     public function harmonicMean()
