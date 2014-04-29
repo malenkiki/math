@@ -35,15 +35,15 @@ class Anova implements \Countable
 
     public function __get($name)
     {
-        if(in_array('degrees_of_freedom', 'dof')){
+        if(in_array($name, array('degrees_of_freedom', 'dof'))){
             return $this->dof();
         }
         
-        if(in_array('within_group_degrees_of_freedom', 'wgdof')){
+        if(in_array($name, array('within_group_degrees_of_freedom', 'wgdof'))){
             return $this->wgdof();
         }
 
-        if(in_array('f_ratio', 'f')){
+        if(in_array($name, array('f_ratio', 'f'))){
             return $this->fRatio();
         }
     }
