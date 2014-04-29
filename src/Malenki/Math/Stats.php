@@ -329,6 +329,7 @@ class Stats implements \Countable
         $this->arr_mode = null;
         $this->arr_frequency = null;
         $this->arr_f = null;
+        $this->arr_cumulative_frequency = null;
     }
 
     public function merge($arr)
