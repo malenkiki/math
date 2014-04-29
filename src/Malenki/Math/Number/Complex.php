@@ -23,7 +23,7 @@
  */
 
 namespace Malenki\Math\Number;
-use \Malenki\Math\Angle;
+use \Malenki\Math\Unit\Angle;
 
 /**
  * Complex number

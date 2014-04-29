@@ -22,14 +22,14 @@ OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-use Malenki\Math\Angle;
+use Malenki\Math\Unit\Angle;
 
 class AngleTest extends PHPUnit_Framework_TestCase
 {
     public function testInstanciateOK()
     {
         $a = new Angle(pi()/2);
-        $this->assertTrue($a instanceof Malenki\Math\Angle);
+        $this->assertInstanceOf('\Malenki\Math\Unit\Angle', $a);
     }
 
     public function testOutputAsDegreesMinutesSecond()

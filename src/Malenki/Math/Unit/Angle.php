@@ -22,7 +22,7 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-namespace Malenki\Math;
+namespace Malenki\Math\Unit;
 
 /**
  * Angle deals with degrees, radians, grades and turns.

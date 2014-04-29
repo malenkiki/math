@@ -23,7 +23,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
 use Malenki\Math\Number\Complex;
-use Malenki\Math\Angle;
+use Malenki\Math\Unit\Angle;
 
 class ComplexTest extends PHPUnit_Framework_TestCase
 {
