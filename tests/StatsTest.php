@@ -574,7 +574,16 @@ class StatsTest extends PHPUnit_Framework_TestCase
 
     public function testGettingCoefficientOfVariationShouldSuccess()
     {
-        $this->markTestIncomplete();
+        $s = new Stats(array(1,2,5,3,7,4,3,6));
+        $this->assertEquals((float)0.490, (float) round($s->coefficientOfVariation(), 3));
+        $this->assertEquals((float)0.490, (float) round($s->cv(), 3));
+        $this->assertEquals((float)0.490, (float) round($s->coefficient_of_variation, 3));
+        $this->assertEquals((float)0.490, (float) round($s->cv, 3));
+        $s = new Stats(range(1,9));
+        $this->assertEquals((float)0.516, (float) round($s->coefficientOfVariation(), 3));
+        $this->assertEquals((float)0.516, (float) round($s->cv(), 3));
+        $this->assertEquals((float)0.516, (float) round($s->coefficient_of_variation, 3));
+        $this->assertEquals((float)0.516, (float) round($s->cv, 3));
     }
 
     public function testGettingCoefficientOfDispersionShouldSuccess()
