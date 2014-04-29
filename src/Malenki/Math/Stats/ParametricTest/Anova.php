@@ -90,13 +90,14 @@ class Anova implements \Countable
 
     public function withinGroupDegreesOfFreedom()
     {
+        //TODO: I am not sure…
         if(is_null($this->int_wgdof)){
             $arr = array();
             foreach($this->arr_samples as $s){
                 $arr[] = count($s) - 1;
             }
 
-            $this->int_wgdof = array_product($arr);
+            $this->int_wgdof = array_sum($arr);
         }
 
         return $this->int_wgdof;

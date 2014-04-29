@@ -54,4 +54,43 @@ class AnovaTest extends PHPUnit_Framework_TestCase
         $a = new Anova();
         $a->add(1);
     }
+
+    public function testGettingDofShouldSuccess()
+    {
+        $a = new Anova();
+        $a->add(array(6, 8, 4, 5, 3, 4));
+        $a->add(array(8, 12, 9, 11, 6, 8));
+        $a->add(array(13, 9, 11, 8, 7, 12));
+
+        $this->assertEquals(2, $a->degreesOfFreedom());
+        $this->assertEquals(2, $a->degrees_of_freedom);
+        $this->assertEquals(2, $a->dof());
+        $this->assertEquals(2, $a->dof);
+    }
+
+    public function testGettingWithinGroupDofShouldSuccess()
+    {
+        $a = new Anova();
+        $a->add(array(6, 8, 4, 5, 3, 4));
+        $a->add(array(8, 12, 9, 11, 6, 8));
+        $a->add(array(13, 9, 11, 8, 7, 12));
+
+        $this->assertEquals(15, $a->withinGroupDegreesOfFreedom());
+        $this->assertEquals(15, $a->within_group_degrees_of_freedom);
+        $this->assertEquals(15, $a->wgdof());
+        $this->assertEquals(15, $a->wgdof);
+    }
+
+    public function testGettingAnovaShouldSuccess()
+    {
+        $a = new Anova();
+        $a->add(array(6, 8, 4, 5, 3, 4));
+        $a->add(array(8, 12, 9, 11, 6, 8));
+        $a->add(array(13, 9, 11, 8, 7, 12));
+
+        $this->assertEquals((float) 9.3, (float) round($a->f(), 1));
+        $this->assertEquals((float) 9.3, (float) round($a->fRatio(), 1));
+        $this->assertEquals((float) 9.3, (float) round($a->f, 1));
+        $this->assertEquals((float) 9.3, (float) round($a->f_ratio, 1));
+    }
 }
