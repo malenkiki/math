@@ -4,7 +4,7 @@
 
 Library to deal with some mathematical stuff.
 
-Implemented or partially implemented mathematical concepts are: **Complex number**, **Matrix**, **Normal distribution**, **Random**, **Angle**, **Random Complex** and **Descriptive Statistics**.
+Implemented or partially implemented mathematical concepts are: **Complex number**, **Matrix**, **Normal distribution**, **Random**, **Angle**, **Random Complex**, **Descriptive Statistics** and **Parametric test (only Anova for some times)**.
 
 ## Install
 
@@ -525,6 +525,40 @@ var_dump($s->kurtosis());
 var_dump($s->isPlatykurtic());
 var_dump($s->isLeptokurtic());
 var_dump($s->isMesokurtic());
+```
+## Parametric Tests
+
+### Anova
+
+One example is better than long blahblah:
+
+```php
+use Malenki\Math\Stats\ParametricTest\Anova;
+$a = new Anova();
+$a->add(array(6, 8, 4, 5, 3, 4));
+$a->add(array(8, 12, 9, 11, 6, 8));
+$a->add(array(13, 9, 11, 8, 7, 12));
+
+// degrees of freedom
+echo $a->degrees_of_freedom;
+echo $a->dof;
+echo $a->degreesOfFreedom();
+echo $a->dof();
+
+// Within group degrees of freedom
+echo $a->within_group_degrees_of_freedom;
+echo $a->dof;
+echo $a->WithinGroupDegreesOfFreedom();
+echo $a->wgdof();
+
+echo $a->f;
+//or
+echo $a->f_ratio;
+//or
+echo $a->f();
+//or
+echo $a->fRatio();
+// should be around 9.3
 ```
 
 Dev in progress, more informations soon here on into source code!
