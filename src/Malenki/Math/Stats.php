@@ -95,6 +95,10 @@ class Stats implements \Countable
             return $this->cumulativeFrequency();
         }
 
+        if ($name == 'square_sum' || $name == 'sum2') {
+            return $this->squareSum();
+        }
+
         if (in_array($name, array('sum', 'median', 'array', 'min', 'max', 'mode', 'f', 'range'))) {
             return $this->$name();
         }
@@ -262,6 +266,22 @@ class Stats implements \Countable
     public function sum()
     {
         return array_sum($this->arr);
+    }
+
+    public function powerSum($p)
+    {
+        $arr = $this->arr;
+
+        foreach($arr as $k => $v) {
+            $arr[$k] = pow($v, $p);
+        }
+
+        return array_sum($arr);
+    }
+
+    public function squareSum()
+    {
+        return $this->powerSum(2);
     }
 
     public function min()

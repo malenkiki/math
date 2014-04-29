@@ -90,6 +90,32 @@ class StatsTest extends PHPUnit_Framework_TestCase
         $this->assertFalse($s->allInteger());
     }
 
+    public function testGettingSumOfSampleShouldSuccess()
+    {
+        $s = new Stats(array(1,1,3,2,3));
+        $this->assertEquals(10, $s->sum());
+        $this->assertEquals(10, $s->sum);
+    }
+
+    public function testGettingSquareSumOfSampleShouldSuccess()
+    {
+        $s = new Stats(array(1,1,3,2,3));
+        $this->assertEquals(24, $s->squareSum());
+        $this->assertEquals(24, $s->square_sum);
+        $this->assertEquals(24, $s->sum2);
+        
+        $s = new Stats(array(1,1,-3,-2,3));
+        $this->assertEquals(24, $s->squareSum());
+        $this->assertEquals(24, $s->square_sum);
+        $this->assertEquals(24, $s->sum2);
+    }
+
+    public function testGettingPowerSumOfSampleShouldSuccess()
+    {
+        $s = new Stats(array(1,1,-3,-2,3));
+        $this->assertEquals(-6, $s->powerSum(3));
+    }
+
     public function testComputingArithmeticMeanShouldSuccess()
     {
         $s = new Stats(array(1, 2, 3, 4));
