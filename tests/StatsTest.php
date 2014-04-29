@@ -22,20 +22,20 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-use Malenki\Math\Stats;
+use Malenki\Math\Stats\Stats;
 
 class StatsTest extends PHPUnit_Framework_TestCase
 {
     public function testInstanciateWithoutArgShouldSuccess()
     {
         $s = new Stats();
-        $this->assertInstanceOf('Malenki\Math\Stats', $s);
+        $this->assertInstanceOf('Malenki\Math\Stats\Stats', $s);
     }
 
     public function testInstanciateWithArgShouldSuccess()
     {
         $s = new Stats(array(1,4,7,5,8));
-        $this->assertInstanceOf('Malenki\Math\Stats', $s);
+        $this->assertInstanceOf('Malenki\Math\Stats\Stats', $s);
     }
 
     /**
