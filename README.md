@@ -22,7 +22,7 @@ You can get this lib by downloading the [ZIP archive](https://github.com/malenki
 You can use angles as **deg**, **gon**, **rad** or **turn**. By default, radians is used.
 
 ```php
-use \Malenki\Math\Angle;
+use \Malenki\Math\Unit\Angle;
 
 $a = new Angle(pi()/2);
 var_dump($a->deg); // get degrees
@@ -34,7 +34,7 @@ var_dump($a->turn); // get turns
 You can get DMS style too:
 
 ```php
-use \Malenki\Math\Angle;
+use \Malenki\Math\Unit\Angle;
 
 $a = new Angle(34.53, Angle::TYPE_DEG);
 var_dump($a->dms); // get DMS object
@@ -44,7 +44,7 @@ var_dump($a->dms->str); // get DMS string '34°31′48″'
 You can test whether current angle is **right**, **straight** or **perigon**:
 
 ```php
-use \Malenki\Math\Angle;
+use \Malenki\Math\Unit\Angle;
 
 $a = new Angle(pi() / 2);
 var_dump($a->isRight()); // should return TRUE
@@ -62,7 +62,7 @@ var_dump($d->isRight()); // should return TRUE
 You can test current angle with another to know is they are **complementary** or **supplementary**:
 
 ```php
-use \Malenki\Math\Angle;
+use \Malenki\Math\Unit\Angle;
 
 $a = new Angle(M_PI / 3);
 $b = new Angle(M_PI / 6);
@@ -138,7 +138,7 @@ if($m->multiplyAllow($n))
 You can multiply matrix with a scalar too, or a complex number:
 
 ```php
-use \Malenki\Math\Complex;
+use \Malenki\Math\Number\Complex;
 
 $z = new Complex(2, -3);
 $n->multiply(2);
@@ -210,7 +210,7 @@ echo $c;
 Using complex is like a child game: instanciate it with real part and imaginary part. That’s all!
 
 ```php
-use \Malenki\Math\Complex;
+use \Malenki\Math\Number\Complex;
 
 $z = new Complex(2, -3);
 ```
@@ -218,8 +218,8 @@ $z = new Complex(2, -3);
 But you can create complex number using __rho__ and __theta__ values, theta can be simple float or **Angle object**:
 
 ```php
-use \Malenki\Math\Complex;
-use \Malenki\Math\Angle;
+use \Malenki\Math\Number\Complex;
+use \Malenki\Math\Unit\Angle;
 
 $z = new Complex(1, pi(), Complex::TRIGONOMETRIC);
 // or
@@ -230,8 +230,8 @@ $z = new Complex(1, $a); // 3rd argument is useless if Angle is used as second a
 Complex number object acts like string too, remembering its original form:
 
 ```php
-use \Malenki\Math\Complex;
-use \Malenki\Math\Angle;
+use \Malenki\Math\Number\Complex;
+use \Malenki\Math\Unit\Angle;
 
 $z = new Complex(2, -3);
 echo $z; // print "2-3i"
@@ -242,7 +242,7 @@ echo $zz; // print "cos 4.712389 + i⋅sin 4.712389"
 You have some magic getters:
 
 ```php
-use \Malenki\Math\Complex;
+use \Malenki\Math\Number\Complex;
 
 $z = new Complex(1,2);
 var_dump($z->real); // real part
@@ -258,7 +258,7 @@ var_dump($z->theta); // argument (angle)
 You can do addition, multiplication:
 
 ```php
-use \Malenki\Math\Complex;
+use \Malenki\Math\Number\Complex;
 
 $z = new Complex(1,2);
 $zz = new Complex(2,3);
@@ -269,7 +269,7 @@ echo $z->multiply($zz); // give another complex number
 Get negative and conjugate is simple too:
 
 ```php
-use \Malenki\Math\Complex;
+use \Malenki\Math\Number\Complex;
 
 $z = new Complex(1,2);
 echo $z->conjugate();
