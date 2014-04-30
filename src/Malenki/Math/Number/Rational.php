@@ -49,4 +49,8 @@ class Rational
         }
     }
 
+    public function __toString()
+    {
+        return sprintf('%d/%d', $this->numerator, $this->denominator);
+    }
 }
