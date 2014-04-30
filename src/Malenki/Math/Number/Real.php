@@ -77,4 +77,9 @@ class Real
     {
         return !$this->hasDecimal();
     }
+
+    public function __toString()
+    {
+        return (string) $this->value;
+    }
 }

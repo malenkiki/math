@@ -63,4 +63,12 @@ class RealTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($i->isInteger());
     }
 
+
+    public function testStringContextShouldSuccess()
+    {
+        $i = new Real(2.56);
+        $d = new Real(0.56);
+        $this->assertEquals('2.56', "$i");
+        $this->assertEquals('0.56', "$d");
+    }
 }
