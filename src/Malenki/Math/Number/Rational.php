@@ -23,7 +23,7 @@
  */
 
 namespace Malenki\Math\Number;
-
+use \Malenki\Math\Number\Integer;
 
 class Rational
 {
@@ -34,7 +34,7 @@ class Rational
     {
         if(in_array($name, array('numerator', 'denominator'))){
             $prop = 'int_' . $name;
-            return $this->$prop;
+            return new Integer($this->$prop);
         }
     }
 
@@ -47,10 +47,13 @@ class Rational
         if($denominator == 0){
             throw new \InvalidArgumentException('Denominator cannot be zero!');
         }
+
+        $this->int_numerator = $numerator;
+        $this->int_denominator = $denominator;
     }
 
     public function __toString()
     {
-        return sprintf('%d/%d', $this->numerator, $this->denominator);
+        return sprintf('%d/%d', $this->int_numerator, $this->int_denominator);
     }
 }
