@@ -26,4 +26,9 @@ namespace Malenki\Math\Number;
 
 class Real
 {
+    const PI = M_PI;
+    const E = M_E;
+    const EULER = M_EULER;
+    const SQRT2 = M_SQRT2;
+
 }
