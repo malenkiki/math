@@ -359,4 +359,10 @@ class MatrixTest extends PHPUnit_Framework_TestCase
 
         $m->trace();
     }
+
+
+    public function testGettigExponentialMatrixShouldSuccess()
+    {
+        $this->markTestIncomplete();
+    }
 }

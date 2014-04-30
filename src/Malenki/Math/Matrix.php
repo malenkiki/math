@@ -327,6 +327,39 @@ class Matrix
         return false;
     }
 
+    public function exponential()
+    {
+        //TODO: implement it!
+        if(!$this->isSquare()){
+            throw new \RuntimeException('Computing exponential of non diagonal Matrix is not yet implemented');
+        }
+
+
+        $int_size = min((array) $this->size);
+
+        $out = new self($this->size->rows, $this->size->cols);
+
+        if($int_size > 0){
+            for($i = 0; $i < $int_size; $i++){
+                $arr_row = $this->getRow($i);
+
+                if($arr_row[$i] != 0){
+                    $arr_row[$i] = exp($arr_row[$i]);
+                }
+
+                $out->addRow($arr_row);
+            }
+        }
+
+        return $out;
+
+    }
+
+    public function exp()
+    {
+        return $this->exponential();
+    }
+
     /**
      * Tests whether the current matrix is the same as the given one.
      *
