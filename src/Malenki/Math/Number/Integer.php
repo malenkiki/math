@@ -50,4 +50,9 @@ class Integer
     {
         return !$this->isOdd();
     }
+
+    public function __toString()
+    {
+        return (string) $this->value;
+    }
 }

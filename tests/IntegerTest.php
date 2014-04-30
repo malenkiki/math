@@ -55,4 +55,10 @@ class IntegerTest extends PHPUnit_Framework_TestCase
         $i = new Integer(8);
         $this->assertFalse($i->isOdd());
     }
+
+    public function testStringContextShouldSuccess()
+    {
+        $i = new Integer(5);
+        $this->assertEquals('5', "$i");
+    }
 }
