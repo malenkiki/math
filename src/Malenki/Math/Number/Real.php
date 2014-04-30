@@ -31,4 +31,50 @@ class Real
     const EULER = M_EULER;
     const SQRT2 = M_SQRT2;
 
+    protected $value = 0.0;
+
+    public function __get($name)
+    {
+        if($name == 'pi'){
+            return new self(self::PI);
+        }
+        
+        if($name == 'e'){
+            return new self(self::E);
+        }
+        
+        if($name == 'euler'){
+            return new self(self::EULER);
+        }
+    }
+
+
+    public function __construct($num)
+    {
+        if(is_numeric($num)){
+            $this->value = (double) $num;
+        }
+    }
+
+    public function isZero()
+    {
+        return $this->value == 0;
+    }
+
+    public function decimal()
+    {
+        $sign = $this->value < 0 ? -1 : 1;
+
+        return new self($sign * (abs($this->value) - floor(abs($this->value))));
+    }
+
+    public function hasDecimal()
+    {
+        return !$this->decimal()->isZero();
+    }
+
+    public function isInteger()
+    {
+        return !$this->hasDecimal();
+    }
 }
