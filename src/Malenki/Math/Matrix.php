@@ -94,8 +94,12 @@ class Matrix
             return $this->arr;
         }
 
-        if ($name == 'is_square') {
+        if ($name == 'is_square' || $name == 'square') {
             return $this->isSquare();
+        }
+
+        if ($name == 'is_diagonal' || $name == 'diagonal') {
+            return $this->isDiagonal();
         }
 
         if (in_array($name, array('cofactor', 'adjugate', 'inverse', 'det', 'trace', 'determinant', 'transpose'))) {
@@ -286,6 +290,41 @@ class Matrix
     public function isSquare()
     {
         return $this->size->cols == $this->size->rows;
+    }
+
+    
+    /**
+     * Tests whether the current matrix is diagonal or not. 
+     * 
+     * @access public
+     * @return boolean
+     */
+    public function isDiagonal()
+    {
+        $int_size = min((array) $this->size);
+
+        if($int_size > 0){
+            for($i = 0; $i < $int_size; $i++){
+                $arr_row = $this->getRow($i);
+
+                if($arr_row[$i] != 0){
+                    unset($arr_row[$i]);
+
+                    foreach($arr_row as $v){
+                        if($v != 0){
+                            return false;
+                        }
+                    }
+
+                } else {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        return false;
     }
 
     /**

@@ -104,6 +104,48 @@ class MatrixTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($r, $m->subMatrix(2, 2));
     }
 
+    public function testIfSquareMatrixIsDiagonalOrNotShouldSuccess()
+    {
+        $m = new Matrix(2, 2);
+        $m->populate(array(2, 0, 0, 8));
+        $this->assertTrue($m->isDiagonal());
+        $this->assertTrue($m->is_diagonal);
+        $this->assertTrue($m->diagonal);
+        
+        $m = new Matrix(2, 2);
+        $m->populate(array(2, 4, 6, 8));
+        $this->assertFalse($m->isDiagonal());
+        $this->assertFalse($m->is_diagonal);
+        $this->assertFalse($m->diagonal);
+    }
+
+    public function testIfNonSquareMatrixIsDiagonalOrNotShouldSuccess()
+    {
+        $m = new Matrix(2, 3);
+        $m->populate(array(2, 0, 0, 0, 8, 0));
+        $this->assertTrue($m->isDiagonal());
+        $this->assertTrue($m->is_diagonal);
+        $this->assertTrue($m->diagonal);
+
+        $m = new Matrix(3, 2);
+        $m->populate(array(2, 0, 0, 1, 0, 0));
+        $this->assertTrue($m->isDiagonal());
+        $this->assertTrue($m->is_diagonal);
+        $this->assertTrue($m->diagonal);
+        
+        $m = new Matrix(2, 3);
+        $m->populate(array(2, 0, 2, 0, 8, 0));
+        $this->assertFalse($m->isDiagonal());
+        $this->assertFalse($m->is_diagonal);
+        $this->assertFalse($m->diagonal);
+
+        $m = new Matrix(3, 2);
+        $m->populate(array(2, 0, 1, 0, 0, 4));
+        $this->assertFalse($m->isDiagonal());
+        $this->assertFalse($m->is_diagonal);
+        $this->assertFalse($m->diagonal);
+    }
+        
     public function testMultiplyMatrixWithScalarOrComplexNumber()
     {
         $m = new Matrix(2, 2);
