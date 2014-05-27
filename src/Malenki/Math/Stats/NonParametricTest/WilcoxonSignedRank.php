@@ -68,8 +68,6 @@ class WilcoxonSignedRank implements \Countable
 
     protected function clear()
     {
-        $this->int_dof = null;
-        $this->int_wgdof = null;
-        $this->float_f_ratio = null;
+        //TODO
     }
 }
