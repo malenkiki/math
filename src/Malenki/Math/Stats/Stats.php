@@ -47,6 +47,10 @@ class Stats implements \Countable
 
     public function __get($name)
     {
+        if($name == 'array'){
+            return $this->arr;
+        }
+
         if (in_array($name, array('is_unimodal', 'unimodal'))) {
             return $this->isUnimodal();
         }
@@ -99,7 +103,7 @@ class Stats implements \Countable
             return $this->squareSum();
         }
 
-        if (in_array($name, array('sum', 'center', 'median', 'array', 'min', 'max', 'mode', 'f', 'range'))) {
+        if (in_array($name, array('sum', 'center', 'median', 'min', 'max', 'mode', 'f', 'range'))) {
             return $this->$name();
         }
 
