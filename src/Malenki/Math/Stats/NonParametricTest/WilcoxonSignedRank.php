@@ -28,6 +28,8 @@ use \Malenki\Math\Stats\Stats;
 class WilcoxonSignedRank implements \Countable
 {
     protected $arr_samples = array();
+    protected $arr_sign = array();
+    protected $arr_abs = array();
 
 
     public function add($s)
@@ -69,5 +71,53 @@ class WilcoxonSignedRank implements \Countable
     protected function clear()
     {
         //TODO
+    }
+
+    protected function compute()
+    {
+        $arr_1 = $this->arr_samples[0]->array;
+        $arr_2 = $this->arr_samples[1]->array;
+        $arr_sign = array();
+
+        foreach($arr_1 as $k => $v){
+            $diff = $v - $arr_2[$k];
+
+            if($diff == 0){
+                $arr_sign[$k] = 0;
+            } elseif($diff > 0){
+                $arr_sign[$k] = 1;
+            } else {
+                $arr_sign[$k] = -1;
+            }
+
+            $this->arr_abs[$k] = abs($diff);
+        }
+
+        asort($this->arr_abs);
+
+        foreach($arr_sign as $k => $v){
+            $this->arr_sign[] = $arr_sign[$k];
+        }
+
+        $this->arr_abs = array_values($this->arr_abs);
+
+    }
+
+    public function signs()
+    {
+        if(count($this->arr_sign) == 0){
+            $this->compute();
+        }
+
+        return $this->arr_sign;
+    }
+
+    public function absoluteValues()
+    {
+        if(count($this->arr_abs) == 0){
+            $this->compute();
+        }
+
+        return $this->arr_abs;
     }
 }
