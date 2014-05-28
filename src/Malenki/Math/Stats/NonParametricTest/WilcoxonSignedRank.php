@@ -25,11 +25,12 @@
 namespace Malenki\Math\Stats\NonParametricTest;
 use \Malenki\Math\Stats\Stats;
 
-class WilcoxonSignedRank implements \Countable
+class WilcoxonSignedRank
 {
     protected $arr_samples = array();
     protected $arr_sign = array();
     protected $arr_abs = array();
+    protected $arr_ranks = array();
 
 
     public function add($s)
@@ -59,6 +60,7 @@ class WilcoxonSignedRank implements \Countable
 
         $this->arr_samples[] = $s;
         $this->clear();
+
         return $this;
     }
 
@@ -66,6 +68,8 @@ class WilcoxonSignedRank implements \Countable
     {
         $this->add($sampleOne);
         $this->add($sampleTwo);
+
+        return $this;
     }
 
     protected function clear()
@@ -95,12 +99,37 @@ class WilcoxonSignedRank implements \Countable
 
         asort($this->arr_abs);
 
-        foreach($arr_sign as $k => $v){
+        foreach($this->arr_abs as $k => $v){
             $this->arr_sign[] = $arr_sign[$k];
         }
 
         $this->arr_abs = array_values($this->arr_abs);
+    }
 
+
+    protected function computeRanks()
+    {
+        $int_size = count($this->arr_abs);
+
+        $prev = null;
+        $stats = null;
+
+        for($i = 0; $i < $int_size; $i++){
+            $c = $this->arr_abs[$i];
+            
+            if($c == $prev){
+                if(is_null($stats)){
+                    $stats = new \Malenki\Math\Stats();
+                    $stats->add($prev);
+                } else {
+                    $stats->add($c);
+                }
+            } else {
+
+            }
+
+            $prev = $c;
+        }
     }
 
     public function signs()
@@ -111,6 +140,8 @@ class WilcoxonSignedRank implements \Countable
 
         return $this->arr_sign;
     }
+
+
 
     public function absoluteValues()
     {
