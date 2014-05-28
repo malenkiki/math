@@ -84,7 +84,7 @@ class WilcoxonSignedRank
         $arr_sign = array();
 
         foreach($arr_1 as $k => $v){
-            $diff = $v - $arr_2[$k];
+            $diff = $arr_2[$k] - $v;
 
             if($diff == 0){
                 $arr_sign[$k] = 0;

@@ -90,8 +90,8 @@ class WilcoxonSignedRankTest extends PHPUnit_Framework_TestCase
     public function testGettingASignsShouldSuccess()
     {
         $w = new WilcoxonSignedRank();
-        $w->add(array(125, 115, 130, 140, 140, 115, 140, 125, 140, 135));
         $w->add(array(110, 122, 125, 120, 140, 124, 123, 137, 135, 145));
+        $w->add(array(125, 115, 130, 140, 140, 115, 140, 125, 140, 135));
         $should = array(0, 1, 1, -1, -1, -1, -1, 1, 1, 1);
         $this->assertEquals($should, $w->signs());
     }
@@ -100,8 +100,8 @@ class WilcoxonSignedRankTest extends PHPUnit_Framework_TestCase
     public function testGettingAbsoluteValuesShouldSuccess()
     {
         $w = new WilcoxonSignedRank();
-        $w->add(array(125, 115, 130, 140, 140, 115, 140, 125, 140, 135));
         $w->add(array(110, 122, 125, 120, 140, 124, 123, 137, 135, 145));
+        $w->add(array(125, 115, 130, 140, 140, 115, 140, 125, 140, 135));
         $should = array(0, 5, 5, 7, 9, 10, 12, 15, 17, 20);
         $this->assertEquals($should, $w->absoluteValues());
     }
@@ -109,8 +109,8 @@ class WilcoxonSignedRankTest extends PHPUnit_Framework_TestCase
     public function testGettingRanksShouldSuccess()
     {
         $w = new WilcoxonSignedRank();
-        $w->add(array(125, 115, 130, 140, 140, 115, 140, 125, 140, 135));
         $w->add(array(110, 122, 125, 120, 140, 124, 123, 137, 135, 145));
+        $w->add(array(125, 115, 130, 140, 140, 115, 140, 125, 140, 135));
         $should = array(0, 1.5, 1.5, 3, 4, 5, 6, 7, 8, 9);
         $this->assertEquals($should, $w->ranks());
         
