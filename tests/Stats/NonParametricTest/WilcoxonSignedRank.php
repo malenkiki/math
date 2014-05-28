@@ -95,4 +95,14 @@ class WilcoxonSignedRankTest extends PHPUnit_Framework_TestCase
         $should = array(0, 1, 1, -1, -1, -1, -1, 1, 1, 1);
         $this->assertEquals($should, $w->signs());
     }
+
+
+    public function testGettingAbsoluteValuesShouldSuccess()
+    {
+        $w = new WilcoxonSignedRank();
+        $w->add(array(125, 115, 130, 140, 140, 115, 140, 125, 140, 135));
+        $w->add(array(110, 122, 125, 120, 140, 124, 123, 137, 135, 145));
+        $should = array(0, 5, 5, 7, 9, 10, 12, 15, 17, 20);
+        $this->assertEquals($should, $w->absoluteValues());
+    }
 }
