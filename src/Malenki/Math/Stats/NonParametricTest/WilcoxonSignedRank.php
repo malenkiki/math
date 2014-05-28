@@ -104,6 +104,7 @@ class WilcoxonSignedRank
         }
 
         $this->arr_abs = array_values($this->arr_abs);
+        $this->computeRanks();
     }
 
 
@@ -117,18 +118,34 @@ class WilcoxonSignedRank
         for($i = 0; $i < $int_size; $i++){
             $c = $this->arr_abs[$i];
             
-            if($c == $prev){
-                if(is_null($stats)){
-                    $stats = new \Malenki\Math\Stats();
-                    $stats->add($prev);
-                } else {
-                    $stats->add($c);
-                }
-            } else {
+            if($c === $prev){
 
+                if(is_null($stats)){
+                    $stats = new \Malenki\Math\Stats\Stats();
+                    $stats->add($i - 1);
+                }
+             
+                $stats->add($i);
+                
+            } else {
+                if(!is_null($stats)){
+                    for($j = ($i - count($stats)); $j < $i; $j++){
+                        $this->arr_ranks[$j] = $stats->mean;
+                    }
+                    $stats = null;
+                }
+
+                $this->arr_ranks[$i] = $i;
             }
 
             $prev = $c;
+        }
+
+
+        if(!is_null($stats)){
+            for($j = ($int_size - count($stats)); $j < $int_size; $j++){
+                $this->arr_ranks[$j] = $stats->mean;
+            }
         }
     }
 
@@ -150,5 +167,16 @@ class WilcoxonSignedRank
         }
 
         return $this->arr_abs;
+    }
+
+
+
+    public function ranks()
+    {
+        if(count($this->arr_ranks) == 0){
+            $this->compute();
+        }
+
+        return $this->arr_ranks;
     }
 }

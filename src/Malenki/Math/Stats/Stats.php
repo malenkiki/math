@@ -379,7 +379,9 @@ class Stats implements \Countable
     public function add($num)
     {
         if (!is_numeric($num)) {
-            throw new \InvalidArgumentException('Only numeric values are allowed into statistical collection.');
+            throw new \InvalidArgumentException(
+                'Only numeric values are allowed into statistical collection.'
+            );
         }
         $this->arr[] = (double) $num;
         $this->clear();
