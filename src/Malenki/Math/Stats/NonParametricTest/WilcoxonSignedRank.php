@@ -34,6 +34,7 @@ class WilcoxonSignedRank implements \Countable
     protected $arr_ranks = array();
     protected $arr_signed_ranks = array();
     protected $int_nr = null;
+    protected $float_sigma = null;
 
 
     public function add($s)
@@ -222,5 +223,24 @@ class WilcoxonSignedRank implements \Countable
     public function w()
     {
         return abs(array_sum($this->signedRanks()));
+    }
+
+    public function sigma(){
+        if(is_null($this->float_sigma)){
+            if(count($this) < 10){
+                throw new \RuntimeException(
+                    sprintf(
+                        'Resulting size of %d available ranks is too small to'
+                        .' converge to a normal distribution. Cannot compute '
+                        .'sigma!',
+                        count($this)
+                    )
+                );
+            }
+            $n = $this->nr();
+            $this->float_sigma = sqrt(($n * ($n + 1) * (2 * $n + 1)) / 6);
+        }
+
+        return $this->float_sigma;
     }
 }

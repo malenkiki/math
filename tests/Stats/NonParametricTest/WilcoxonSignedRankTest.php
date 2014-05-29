@@ -317,4 +317,35 @@ class WilcoxonSignedRankTest extends PHPUnit_Framework_TestCase
         $should = array(-1, 3, 3, -3);
         $this->assertEquals(2, $w->w());
     }
+
+
+    public function testGettingSigmaShouldSuccess()
+    {
+        // example taken from http://vassarstats.net/textbook/ch12a.html
+        $w = new WilcoxonSignedRank();
+        $w->add(
+            array(
+                78, 24, 62, 48, 68, 56, 25, 44, 56, 40, 68, 36, 68, 20, 58, 32
+            )
+        );
+        $w->add(
+            array(
+                78, 24, 64, 45, 64, 52, 30, 50, 64, 50, 78, 22, 84, 40, 90, 72
+            )
+        );
+        $this->assertEquals((float) 31.86, (float) round($w->sigma(), 2));
+    }
+    
+
+
+    /**
+     * @expectedException \RuntimeException
+     */
+    public function testGettingSigmaWithTooSmallRankSizeShouldFail()
+    {
+        $w = new WilcoxonSignedRank();
+        $w->add(array(126, 115, 122, 116));
+        $w->add(array(125, 122, 115, 123));
+        $w->sigma();
+    }
 }
