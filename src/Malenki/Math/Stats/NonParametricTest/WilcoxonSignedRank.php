@@ -28,9 +28,10 @@ use \Malenki\Math\Stats\Stats;
 class WilcoxonSignedRank
 {
     protected $arr_samples = array();
-    protected $arr_sign = array();
+    protected $arr_signs = array();
     protected $arr_abs = array();
     protected $arr_ranks = array();
+    protected $arr_signed_ranks = array();
 
 
     public function add($s)
@@ -100,7 +101,7 @@ class WilcoxonSignedRank
         asort($this->arr_abs);
 
         foreach($this->arr_abs as $k => $v){
-            $this->arr_sign[] = $arr_sign[$k];
+            $this->arr_signs[] = $arr_sign[$k];
         }
 
         $this->arr_abs = array_values($this->arr_abs);
@@ -114,10 +115,14 @@ class WilcoxonSignedRank
 
         $prev = null;
         $stats = null;
+        $i = 1;
+        foreach($this->arr_abs as $k => $c){
+            //$c = $this->arr_abs[$i];
+            if($c == 0){
+                $this->arr_ranks[$k] = 0;
+                continue;
+            }
 
-        for($i = 0; $i < $int_size; $i++){
-            $c = $this->arr_abs[$i];
-            
             if($c === $prev){
 
                 if(is_null($stats)){
@@ -131,31 +136,38 @@ class WilcoxonSignedRank
                 if(!is_null($stats)){
                     for($j = ($i - count($stats)); $j < $i; $j++){
                         $this->arr_ranks[$j] = $stats->mean;
+                        $this->arr_signed_ranks[$j] = $stats->mean * $this->arr_signs[$j];
                     }
                     $stats = null;
                 }
 
-                $this->arr_ranks[$i] = $i;
+                $this->arr_ranks[$k] = $i;
+                $this->arr_signed_ranks[$k] = $i * $this->arr_signs[$k];
             }
 
             $prev = $c;
+            $i++;
         }
 
 
         if(!is_null($stats)){
             for($j = ($int_size - count($stats)); $j < $int_size; $j++){
                 $this->arr_ranks[$j] = $stats->mean;
+                $this->arr_signed_ranks[$j] = $stats->mean * $this->arr_signs[$j];
             }
         }
+
+        $this->arr_ranks = array_filter($this->arr_ranks);
+        $this->arr_signed_ranks = array_filter($this->arr_signed_ranks);
     }
 
     public function signs()
     {
-        if(count($this->arr_sign) == 0){
+        if(count($this->arr_signs) == 0){
             $this->compute();
         }
 
-        return $this->arr_sign;
+        return $this->arr_signs;
     }
 
 
