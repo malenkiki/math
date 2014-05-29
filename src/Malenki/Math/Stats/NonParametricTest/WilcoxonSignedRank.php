@@ -29,6 +29,7 @@ class WilcoxonSignedRank implements \Countable
 {
     protected $arr_samples = array();
     protected $arr_signs = array();
+    protected $arr_diff = array();
     protected $arr_abs = array();
     protected $arr_ranks = array();
     protected $arr_signed_ranks = array();
@@ -81,31 +82,27 @@ class WilcoxonSignedRank implements \Countable
 
     protected function compute()
     {
+        $arr_sort = array();
         $arr_1 = $this->arr_samples[0]->array;
         $arr_2 = $this->arr_samples[1]->array;
-        $arr_sign = array();
 
         foreach($arr_1 as $k => $v){
             $diff = $arr_2[$k] - $v;
 
-            if($diff == 0){
-                $arr_sign[$k] = 0;
-            } elseif($diff > 0){
-                $arr_sign[$k] = 1;
-            } else {
-                $arr_sign[$k] = -1;
-            }
-
+            $this->arr_diff[$k] = $diff; 
             $this->arr_abs[$k] = abs($diff);
         }
 
-        asort($this->arr_abs);
+        asort($this->arr_abs, SORT_NUMERIC);
 
         foreach($this->arr_abs as $k => $v){
-            $this->arr_signs[] = $arr_sign[$k];
+            $this->arr_signs[] = $v != 0 ? $this->arr_diff[$k] / $v : 0;
+            $arr_sort[$k] = $this->arr_diff[$k];
         }
 
         $this->arr_abs = array_values($this->arr_abs);
+        $this->arr_diff = array_values($arr_sort);
+
         $this->computeRanks();
     }
 
