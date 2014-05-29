@@ -141,4 +141,41 @@ class WilcoxonSignedRankTest extends PHPUnit_Framework_TestCase
         $should = array(1, 2.5, 2.5, 4);
         $this->assertEquals($should, $w->ranks());
     }
+    
+    
+    public function testGettingSignedRanksShouldSuccess()
+    {
+        $w = new WilcoxonSignedRank();
+        $w->add(array(110, 122, 125, 120, 140, 124, 123, 137, 135, 145));
+        $w->add(array(125, 115, 130, 140, 140, 115, 140, 125, 140, 135));
+        // idx having 0 as abs value are not included, in this case, one value 
+        // equals 0 so this is at the start, with index 0, so resulting array 
+        // must start its keys at 1
+        $should = array(
+            1 => 1.5,
+            2 => 1.5,
+            3 => -3,
+            4 => -4,
+            5 => -5,
+            6 => -6,
+            7 => 7,
+            8 => 8,
+            9 => 9
+        );
+        $this->assertEquals($should, $w->signedRanks());
+        
+        $w = new WilcoxonSignedRank();
+        $w->add(array(126, 115, 122, 116));
+        $w->add(array(125, 122, 115, 123));
+        $should = array(-1, 3, 3, -3);
+        $this->assertEquals($should, $w->signedRanks());
+        
+        $this->markTestIncomplete();
+        // Still bogus, but i want dev other part before correct this
+        $w = new WilcoxonSignedRank();
+        $w->add(array(126, 115, 122, 100));
+        $w->add(array(125, 122, 115, 123));
+        $should = array(-1, 2.5, -2.5, 4);
+        $this->assertEquals($should, $w->signedRanks());
+    }
 }

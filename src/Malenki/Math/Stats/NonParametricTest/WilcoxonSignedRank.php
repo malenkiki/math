@@ -191,4 +191,15 @@ class WilcoxonSignedRank
 
         return $this->arr_ranks;
     }
+
+
+
+    public function signedRanks()
+    {
+        if(count($this->arr_signed_ranks) == 0){
+            $this->compute();
+        }
+
+        return $this->arr_signed_ranks;
+    }
 }
