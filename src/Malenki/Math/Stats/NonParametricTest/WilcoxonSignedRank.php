@@ -217,4 +217,9 @@ class WilcoxonSignedRank implements \Countable
     {
         return $this->nr();
     }
+
+    public function w()
+    {
+        return abs(array_sum($this->signedRanks()));
+    }
 }
