@@ -132,16 +132,18 @@ class WilcoxonSignedRank implements \Countable
                 
             } else {
                 if(!is_null($stats)){
-                    for($j = ($i - count($stats)); $j < $i; $j++){
-                        $this->arr_ranks[$j] = $stats->mean;
-                        $this->arr_signed_ranks[$j] = $stats->mean * $this->arr_signs[$j];
+                    foreach($this->arr_ranks as $ri => $rv){
+                        if(in_array($rv, $stats->array)){
+                            $this->arr_ranks[$ri] = $stats->mean;
+                            $this->arr_signed_ranks[$ri] = $stats->mean * $this->arr_signs[$ri];
+                        }
                     }
                     $stats = null;
                 }
-
-                $this->arr_ranks[$k] = $i;
-                $this->arr_signed_ranks[$k] = $i * $this->arr_signs[$k];
             }
+
+            $this->arr_ranks[$k] = $i;
+            $this->arr_signed_ranks[$k] = $i * $this->arr_signs[$k];
 
             $prev = $c;
             $i++;
@@ -149,9 +151,11 @@ class WilcoxonSignedRank implements \Countable
 
 
         if(!is_null($stats)){
-            for($j = ($int_size - count($stats)); $j < $int_size; $j++){
-                $this->arr_ranks[$j] = $stats->mean;
-                $this->arr_signed_ranks[$j] = $stats->mean * $this->arr_signs[$j];
+            foreach($this->arr_ranks as $ri => $rv){
+                if(in_array($rv, $stats->array)){
+                    $this->arr_ranks[$ri] = $stats->mean;
+                    $this->arr_signed_ranks[$ri] = $stats->mean * $this->arr_signs[$ri];
+                }
             }
         }
 
