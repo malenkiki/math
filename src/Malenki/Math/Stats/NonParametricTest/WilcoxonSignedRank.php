@@ -25,13 +25,14 @@
 namespace Malenki\Math\Stats\NonParametricTest;
 use \Malenki\Math\Stats\Stats;
 
-class WilcoxonSignedRank
+class WilcoxonSignedRank implements \Countable
 {
     protected $arr_samples = array();
     protected $arr_signs = array();
     protected $arr_abs = array();
     protected $arr_ranks = array();
     protected $arr_signed_ranks = array();
+    protected $int_nr = null;
 
 
     public function add($s)
@@ -201,5 +202,19 @@ class WilcoxonSignedRank
         }
 
         return $this->arr_signed_ranks;
+    }
+
+    public function nr()
+    {
+        if(is_null($this->int_nr)){
+            $this->int_nr = count($this->signedRanks());
+        }
+
+        return $this->int_nr;
+    }
+
+    public function count()
+    {
+        return $this->nr();
     }
 }
