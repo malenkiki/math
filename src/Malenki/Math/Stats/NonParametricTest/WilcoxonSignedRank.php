@@ -25,6 +25,9 @@
 namespace Malenki\Math\Stats\NonParametricTest;
 use \Malenki\Math\Stats\Stats;
 
+/**
+ * @todo include reject or not H0 using tables defined in http://vassarstats.net/textbook/ch12a.html ?
+ */
 class WilcoxonSignedRank implements \Countable
 {
     protected $arr_samples = array();
