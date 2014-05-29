@@ -348,4 +348,34 @@ class WilcoxonSignedRankTest extends PHPUnit_Framework_TestCase
         $w->add(array(125, 122, 115, 123));
         $w->sigma();
     }
+
+    public function testGettingZScoreShouldSuccess()
+    {
+        // example taken from http://vassarstats.net/textbook/ch12a.html
+        $w = new WilcoxonSignedRank();
+        $w->add(
+            array(
+                78, 24, 62, 48, 68, 56, 25, 44, 56, 40, 68, 36, 68, 20, 58, 32
+            )
+        );
+        $w->add(
+            array(
+                78, 24, 64, 45, 64, 52, 30, 50, 64, 50, 78, 22, 84, 40, 90, 72
+            )
+        );
+        $this->assertEquals((float) 2.09, (float) round($w->z(), 2));
+    }
+
+    
+    
+    /**
+     * @expectedException \RuntimeException
+     */
+    public function testGettingZScoreShouldFail()
+    {
+        $w = new WilcoxonSignedRank();
+        $w->add(array(110, 122, 125, 120, 140, 124, 123, 137, 135, 145));
+        $w->add(array(125, 115, 130, 140, 140, 115, 140, 125, 140, 135));
+        $w->z();
+    }
 }
