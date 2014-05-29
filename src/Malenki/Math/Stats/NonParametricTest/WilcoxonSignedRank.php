@@ -82,7 +82,14 @@ class WilcoxonSignedRank implements \Countable
 
     protected function clear()
     {
-        //TODO
+        $this->arr_signs = array();
+        $this->arr_diff = array();
+        $this->arr_abs = array();
+        $this->arr_ranks = array();
+        $this->arr_signed_ranks = array();
+        $this->int_nr = null;
+        $this->float_sigma = null;
+        $this->float_z = null;
     }
 
     protected function compute()
