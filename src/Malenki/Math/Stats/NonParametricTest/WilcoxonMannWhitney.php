@@ -27,6 +27,44 @@ use \Malenki\Math\Stats\Stats;
 
 class WilcoxonMannWhitney implements \Countable
 {
+    protected $arr_samples = array();
+
+    public function add($s)
+    {
+        if(count($this->arr_samples) == 2){
+            throw new \RuntimeException(
+                'Wilcoxon-Mann-Whitney Test does not use more than two samples!'
+            );
+        }
+
+        if(is_array($s)){
+            $s = new Stats($s);
+        } elseif(!($s instanceof Stats))
+        {
+            throw new \InvalidArgumentException(
+                'Added sample to Wilcoxon-Mann-Whitney test must be array or Stats instance'
+            );
+        }
+
+        $this->arr_samples[] = $s;
+        $this->clear();
+
+        return $this;
+    }
+
+    public function set($sampleOne, $sampleTwo)
+    {
+        $this->add($sampleOne);
+        $this->add($sampleTwo);
+
+        return $this;
+    }
+
+    public function clear()
+    {
+        //TODO
+    }
+
     public function count()
     {
         return 0;

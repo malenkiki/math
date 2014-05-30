@@ -35,4 +35,47 @@ class WilcoxonMannWhitneyTest extends PHPUnit_Framework_TestCase
             $w
         );
     }
+    
+    public function testAddingTwoSamplesShouldSuccess()
+    {
+        $w = new WilcoxonMannWhitney();
+        $w->add(new Stats(array(1, 2, 3)));
+        $this->assertInstanceOf(
+            '\Malenki\Math\Stats\NonParametricTest\WilcoxonMannWhitney',
+            $w->add(new Stats(array(6, 3, 4)))
+        );
+        
+        $w = new WilcoxonMannWhitney();
+        $this->assertInstanceOf(
+            '\Malenki\Math\Stats\NonParametricTest\WilcoxonMannWhitney',
+            $w->add(array(6, 3, 4))->add(array(7, 5, 9))
+        );
+        
+        
+        $w = new WilcoxonMannWhitney();
+        $this->assertInstanceOf(
+            '\Malenki\Math\Stats\NonParametricTest\WilcoxonMannWhitney',
+            $w->set(array(6, 3, 4), array(7, 5, 9))
+        );
+        
+        $w = new WilcoxonMannWhitney();
+        $this->assertInstanceOf(
+            '\Malenki\Math\Stats\NonParametricTest\WilcoxonMannWhitney',
+            $w->set(new Stats(array(6, 3, 4)), new Stats(array(7, 5, 9)))
+        );
+    }
+
+
+
+    /**
+     * @expectedException \RuntimeException
+     */
+    public function testAddingMoreThanTwoSamplesShouldFail()
+    {
+        $w = new WilcoxonMannWhitney();
+        $w->add(new Stats(array(1, 2, 3)));
+        $w->add(new Stats(array(1, 2, 3)));
+        $w->add(new Stats(array(1, 2, 3)));
+    }
+
 }
