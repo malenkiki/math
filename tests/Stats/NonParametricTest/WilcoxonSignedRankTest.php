@@ -378,4 +378,35 @@ class WilcoxonSignedRankTest extends PHPUnit_Framework_TestCase
         $w->add(array(125, 115, 130, 140, 140, 115, 140, 125, 140, 135));
         $w->z();
     }
+    
+    /**
+     * @expectedException \RuntimeException
+     */
+    public function testGettingWWithout2SamplesShouldFail()
+    {
+        $w = new WilcoxonSignedRank();
+        $w->add(array(110, 122, 125, 120, 140, 124, 123, 137, 135, 145));
+        $w->w();
+    }
+
+
+    public function testSettingSamplesByMagicSettersShouldSuccess()
+    {
+        $w = new WilcoxonSignedRank();
+        $w->sample_one = array(110, 122, 125, 120, 140, 124, 123, 137, 135, 145);
+        $w->sample_two = array(125, 115, 130, 140, 140, 115, 140, 125, 140, 135);
+        $this->assertEquals(9, $w->w());
+        
+        $w = new WilcoxonSignedRank();
+        $w->sample_1 = array(110, 122, 125, 120, 140, 124, 123, 137, 135, 145);
+        $w->sample_2 = array(125, 115, 130, 140, 140, 115, 140, 125, 140, 135);
+        $this->assertEquals(9, $w->w());
+        
+        $w = new WilcoxonSignedRank();
+        $w->sample_a = array(110, 122, 125, 120, 140, 124, 123, 137, 135, 145);
+        $w->sample_b = array(125, 115, 130, 140, 140, 115, 140, 125, 140, 135);
+        $this->assertEquals(9, $w->w());
+    }
+    
+
 }

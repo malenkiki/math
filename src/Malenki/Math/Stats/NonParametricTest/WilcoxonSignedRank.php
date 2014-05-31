@@ -41,6 +41,43 @@ class WilcoxonSignedRank implements \Countable
     protected $float_z = null;
 
 
+    public function __set($name, $value)
+    {
+        if(
+            in_array(
+                $name, 
+                array(
+                    'sample_one',
+                    'sample_two',
+                    'sample_1',
+                    'sample_2',
+                    'sample_a',
+                    'sample_b',
+                )
+            )
+        )
+        {
+            if(is_array($value)){
+                $value = new Stats($value);
+            } elseif(!($value instanceof Stats))
+            {
+                throw new \InvalidArgumentException(
+                    'Added sample to Wilcoxon Signed-Rank test must be array or Stats instance'
+                );
+            }
+
+            if(preg_match('/_(1|one|a)$/',$name)){
+                $this->arr_samples[0] = $value;
+            } else {
+                $this->arr_samples[1] = $value;
+            }
+
+            $this->clear();
+        }
+    }
+
+
+
     public function add($s)
     {
         if(count($this->arr_samples) == 2){
@@ -94,6 +131,12 @@ class WilcoxonSignedRank implements \Countable
 
     protected function compute()
     {
+        if(count($this->arr_samples) != 2){
+            throw new \RuntimeException(
+                'You must add exactly 2 samples before use Wilcoxon Signed-Rank Test!'
+            );
+        }
+
         $arr_sort = array();
         $arr_1 = $this->arr_samples[0]->array;
         $arr_2 = $this->arr_samples[1]->array;
