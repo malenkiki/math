@@ -41,6 +41,27 @@ class WilcoxonSignedRank implements \Countable
     protected $float_z = null;
 
 
+
+    public function __get($name)
+    {
+        if(
+            in_array(
+                $name, 
+                array('signs', 'ranks', 'nr', 'count', 'w', 'sigma', 'z')
+            )
+        ){
+            return $this->$name();
+        } elseif($name == 'W'){
+            return $this->w();
+        } elseif($name == 'absolute_values'){
+            return $this->absoluteValues();
+        } elseif($name == 'signed_ranks'){
+            return $this->signedRanks();
+        }
+    }
+
+
+
     public function __set($name, $value)
     {
         if(
@@ -109,10 +130,10 @@ class WilcoxonSignedRank implements \Countable
         return $this;
     }
 
-    public function set($sampleOne, $sampleTwo)
+    public function set($sample_one, $sample_two)
     {
-        $this->add($sampleOne);
-        $this->add($sampleTwo);
+        $this->add($sample_one);
+        $this->add($sample_two);
 
         return $this;
     }

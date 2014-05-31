@@ -94,6 +94,7 @@ class WilcoxonSignedRankTest extends PHPUnit_Framework_TestCase
         $w->add(array(125, 115, 130, 140, 140, 115, 140, 125, 140, 135));
         $should = array(0, 1, 1, -1, -1, -1, -1, 1, 1, 1);
         $this->assertEquals($should, $w->signs());
+        $this->assertEquals($should, $w->signs);
         
         // example taken from http://vassarstats.net/textbook/ch12a.html
         $w = new WilcoxonSignedRank();
@@ -101,6 +102,7 @@ class WilcoxonSignedRankTest extends PHPUnit_Framework_TestCase
         $w->add(array(78, 24, 64, 45, 64, 52, 30, 50, 64, 50, 78, 22, 84, 40, 90, 72));
         $should = array(0, 0, 1, -1, -1, -1, 1, 1, 1, 1, 1, -1, 1, 1, 1, 1);
         $this->assertEquals($should, $w->signs());
+        $this->assertEquals($should, $w->signs);
     }
 
 
@@ -111,6 +113,7 @@ class WilcoxonSignedRankTest extends PHPUnit_Framework_TestCase
         $w->add(array(125, 115, 130, 140, 140, 115, 140, 125, 140, 135));
         $should = array(0, 5, 5, 7, 9, 10, 12, 15, 17, 20);
         $this->assertEquals($should, $w->absoluteValues());
+        $this->assertEquals($should, $w->absolute_values);
         
         // example taken from http://vassarstats.net/textbook/ch12a.html
         $w = new WilcoxonSignedRank();
@@ -118,6 +121,7 @@ class WilcoxonSignedRankTest extends PHPUnit_Framework_TestCase
         $w->add(array(78, 24, 64, 45, 64, 52, 30, 50, 64, 50, 78, 22, 84, 40, 90, 72));
         $should = array(0, 0, 2, 3, 4, 4, 5, 6, 8, 10, 10, 14, 16, 20, 32, 40);
         $this->assertEquals($should, $w->absoluteValues());
+        $this->assertEquals($should, $w->absolute_values);
     }
 
     
@@ -141,6 +145,7 @@ class WilcoxonSignedRankTest extends PHPUnit_Framework_TestCase
             9 => 9
         );
         $this->assertEquals($should, $w->ranks());
+        $this->assertEquals($should, $w->ranks);
         
         // example taken from http://vassarstats.net/textbook/ch12a.html
         $w = new WilcoxonSignedRank();
@@ -171,6 +176,7 @@ class WilcoxonSignedRankTest extends PHPUnit_Framework_TestCase
             15 => 14
         );
         $this->assertEquals($should, $w->ranks());
+        $this->assertEquals($should, $w->ranks);
 
 
         $w = new WilcoxonSignedRank();
@@ -178,12 +184,14 @@ class WilcoxonSignedRankTest extends PHPUnit_Framework_TestCase
         $w->add(array(125, 122, 115, 123));
         $should = array(1, 3, 3, 3);
         $this->assertEquals($should, $w->ranks());
+        $this->assertEquals($should, $w->ranks);
         
         $w = new WilcoxonSignedRank();
         $w->add(array(126, 115, 122, 100));
         $w->add(array(125, 122, 115, 123));
         $should = array(1, 2.5, 2.5, 4);
         $this->assertEquals($should, $w->ranks());
+        $this->assertEquals($should, $w->ranks);
     }
     
     
@@ -207,6 +215,7 @@ class WilcoxonSignedRankTest extends PHPUnit_Framework_TestCase
             9 => 9
         );
         $this->assertEquals($should, $w->signedRanks());
+        $this->assertEquals($should, $w->signed_ranks);
         
         // example taken from http://vassarstats.net/textbook/ch12a.html
         $w = new WilcoxonSignedRank();
@@ -237,18 +246,21 @@ class WilcoxonSignedRankTest extends PHPUnit_Framework_TestCase
             15 => 14
         );
         $this->assertEquals($should, $w->signedRanks());
+        $this->assertEquals($should, $w->signed_ranks);
 
         $w = new WilcoxonSignedRank();
         $w->add(array(126, 115, 122, 116));
         $w->add(array(125, 122, 115, 123));
         $should = array(-1, 3, 3, -3);
         $this->assertEquals($should, $w->signedRanks());
+        $this->assertEquals($should, $w->signed_ranks);
         
         $w = new WilcoxonSignedRank();
         $w->add(array(126, 115, 122, 100));
         $w->add(array(125, 122, 115, 123));
         $should = array(-1, -2.5, 2.5, 4);
         $this->assertEquals($should, $w->signedRanks());
+        $this->assertEquals($should, $w->signed_ranks);
     }
     
     
@@ -258,6 +270,10 @@ class WilcoxonSignedRankTest extends PHPUnit_Framework_TestCase
         $w->add(array(110, 122, 125, 120, 140, 124, 123, 137, 135, 145));
         $w->add(array(125, 115, 130, 140, 140, 115, 140, 125, 140, 135));
         $this->assertEquals(9, $w->nr());
+        $this->assertEquals(9, $w->nr);
+        $this->assertEquals(9, $w->count());
+        $this->assertEquals(9, $w->count);
+        $this->assertEquals(9, count($w));
         $this->assertCount(9, $w);
         
         // example taken from http://vassarstats.net/textbook/ch12a.html
@@ -295,6 +311,8 @@ class WilcoxonSignedRankTest extends PHPUnit_Framework_TestCase
         $w->add(array(110, 122, 125, 120, 140, 124, 123, 137, 135, 145));
         $w->add(array(125, 115, 130, 140, 140, 115, 140, 125, 140, 135));
         $this->assertEquals(9, $w->w());
+        $this->assertEquals(9, $w->w);
+        $this->assertEquals(9, $w->W);
         
         // example taken from http://vassarstats.net/textbook/ch12a.html
         $w = new WilcoxonSignedRank();
@@ -309,6 +327,8 @@ class WilcoxonSignedRankTest extends PHPUnit_Framework_TestCase
             )
         );
         $this->assertEquals(67, $w->w());
+        $this->assertEquals(67, $w->w);
+        $this->assertEquals(67, $w->W);
         
         
         $w = new WilcoxonSignedRank();
@@ -316,6 +336,8 @@ class WilcoxonSignedRankTest extends PHPUnit_Framework_TestCase
         $w->add(array(125, 122, 115, 123));
         $should = array(-1, 3, 3, -3);
         $this->assertEquals(2, $w->w());
+        $this->assertEquals(2, $w->w);
+        $this->assertEquals(2, $w->W);
     }
 
 
@@ -334,6 +356,7 @@ class WilcoxonSignedRankTest extends PHPUnit_Framework_TestCase
             )
         );
         $this->assertEquals((float) 31.86, (float) round($w->sigma(), 2));
+        $this->assertEquals((float) 31.86, (float) round($w->sigma, 2));
     }
     
 
@@ -364,6 +387,7 @@ class WilcoxonSignedRankTest extends PHPUnit_Framework_TestCase
             )
         );
         $this->assertEquals((float) 2.09, (float) round($w->z(), 2));
+        $this->assertEquals((float) 2.09, (float) round($w->z, 2));
     }
 
     
