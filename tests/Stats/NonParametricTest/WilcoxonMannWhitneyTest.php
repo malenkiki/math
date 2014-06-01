@@ -78,4 +78,19 @@ class WilcoxonMannWhitneyTest extends PHPUnit_Framework_TestCase
         $w->add(new Stats(array(1, 2, 3)));
     }
 
+    public function testGettingU1AndU2ValuesShouldSuccess()
+    {
+        $w = new WilcoxonMannWhitney();
+        $w->add(array(1, 4.5, 4.5, 6, 7, 8, 9.5, 11.5, 13.5, 15, 16.5, 18));
+        $w->add(array(2, 3, 9.5, 11.5, 13.5, 16.5, 19, 20, 21, 22));
+
+        $this->assertEquals(37, $w->u2());
+        $this->assertEquals(37, $w->u2);
+        $this->assertEquals(83, $w->u1());
+        $this->assertEquals(83, $w->u1);
+
+        $this->assertEquals(37, $w->u());
+        $this->assertEquals(37, $w->u);
+
+    }
 }

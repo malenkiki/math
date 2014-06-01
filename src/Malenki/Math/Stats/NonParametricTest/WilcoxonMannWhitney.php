@@ -28,6 +28,18 @@ use \Malenki\Math\Stats\Stats;
 class WilcoxonMannWhitney implements \Countable
 {
     protected $arr_samples = array();
+    protected $u1 = null;
+    protected $u2 = null;
+    protected $u = null;
+
+
+    public function __get($name)
+    {
+        if($name == 'u1' || $name == 'u2' || $name == 'u'){
+            return $this->$name();
+        }
+    }
+
 
     public function add($s)
     {
@@ -68,5 +80,38 @@ class WilcoxonMannWhitney implements \Countable
     public function count()
     {
         return 0;
+    }
+
+    protected function compute()
+    {
+        if(is_null($this->u1) || is_null($this->u2)){
+            $n1 = count($this->arr_samples[0]);
+            $n2 = count($this->arr_samples[1]);
+            $r1 = $this->arr_samples[0]->sum;
+            $r2 = $this->arr_samples[1]->sum;
+            $this->u1 =  $n1 * $n2 + ( 0.5 * $n1 * ($n1 + 1)) - $r1;
+            $this->u2 =  $n1 * $n2 + ( 0.5 * $n2 * ($n2 + 1)) - $r2;
+            $this->u = min($this->u1(), $this->u2());
+        }
+    }
+
+    public function u1()
+    {
+        $this->compute();
+
+        return $this->u1;
+    }
+
+    public function u2()
+    {
+        $this->compute();
+
+        return $this->u2;
+    }
+
+    public function u()
+    {
+        $this->compute();
+        return $this->u;
     }
 }
