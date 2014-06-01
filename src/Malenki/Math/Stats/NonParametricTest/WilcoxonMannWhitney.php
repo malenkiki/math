@@ -25,7 +25,7 @@
 namespace Malenki\Math\Stats\NonParametricTest;
 use \Malenki\Math\Stats\Stats;
 
-class WilcoxonMannWhitney implements \Countable
+class WilcoxonMannWhitney
 {
     protected $arr_samples = array();
     protected $arr_ranks = array();
@@ -88,10 +88,6 @@ class WilcoxonMannWhitney implements \Countable
         //TODO
     }
 
-    public function count()
-    {
-        return 0;
-    }
 
     protected function compute()
     {
