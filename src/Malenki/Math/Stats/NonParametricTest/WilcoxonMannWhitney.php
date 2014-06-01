@@ -28,15 +28,26 @@ use \Malenki\Math\Stats\Stats;
 class WilcoxonMannWhitney implements \Countable
 {
     protected $arr_samples = array();
+    protected $arr_ranks = array();
     protected $u1 = null;
     protected $u2 = null;
     protected $u = null;
+    protected $sigma = null;
+    protected $mean = null;
 
 
     public function __get($name)
     {
-        if($name == 'u1' || $name == 'u2' || $name == 'u'){
+        if(in_array($name, array('u1','u2','u', 'sigma', 'mean'))){
             return $this->$name();
+        }
+
+        if($name == 'mu'){
+            return $this->mean();
+        }
+
+        if(in_array($name, array('std', 'stdev', 'stddev'))){
+            return $this->sigma();
         }
     }
 
@@ -87,12 +98,77 @@ class WilcoxonMannWhitney implements \Countable
         if(is_null($this->u1) || is_null($this->u2)){
             $n1 = count($this->arr_samples[0]);
             $n2 = count($this->arr_samples[1]);
-            $r1 = $this->arr_samples[0]->sum;
-            $r2 = $this->arr_samples[1]->sum;
+            $this->computeRanks();
+            $r1 = $this->arr_samples[0]->sum; //FIXME Not that!
+            $r2 = $this->arr_samples[1]->sum; //FIXME Not that!
             $this->u1 =  $n1 * $n2 + ( 0.5 * $n1 * ($n1 + 1)) - $r1;
             $this->u2 =  $n1 * $n2 + ( 0.5 * $n2 * ($n2 + 1)) - $r2;
             $this->u = min($this->u1(), $this->u2());
+            $this->mean = 0.5 * $n1 * $n2;
+            $this->sigma = sqrt($n1 * $n2 * ($n1 + $n2 + 1) / 12);
         }
+    }
+
+    /**
+     * @todo
+     */
+    protected function computeRanks()
+    {
+        $int_size = max(
+            count($this->arr_samples[0]),
+            count($this->arr_samples[1])
+        );
+
+        $prev = null;
+        $stats = null;
+
+        for($i = 0; $i < $int_max; $i++){
+/*
+            $x1 = $this->arr_samples[0]->get($i);
+            $x2 = $this->arr_samples[1]->get($i);
+
+            if($x1 == $prev){
+
+                if(is_null($stats)){
+                    $stats = new \Malenki\Math\Stats\Stats();
+                    $stats->add($i - 1);
+                }
+             
+                $stats->add($i);
+                
+            } else {
+                if(!is_null($stats)){
+                    foreach($this->arr_ranks as $ri => $rv){
+                        if(in_array($rv, $stats->array)){
+                            $this->arr_ranks[$ri] = $stats->mean;
+                            $this->arr_signed_ranks[$ri] = $stats->mean * $this->arr_signs[$ri];
+                        }
+                    }
+                    $stats = null;
+                }
+            }
+
+            $this->arr_ranks[$k] = $i;
+            $this->arr_signed_ranks[$k] = $i * $this->arr_signs[$k];
+
+            $prev = $c;
+            $i++;
+ */
+        }
+
+
+        /*
+        if(!is_null($stats)){
+            foreach($this->arr_ranks as $ri => $rv){
+                if(in_array($rv, $stats->array)){
+                    $this->arr_ranks[$ri] = $stats->mean;
+                    $this->arr_signed_ranks[$ri] = $stats->mean * $this->arr_signs[$ri];
+                }
+            }
+        }
+
+        $this->arr_ranks = array_filter($this->arr_ranks);
+         */
     }
 
     public function u1()
@@ -113,5 +189,19 @@ class WilcoxonMannWhitney implements \Countable
     {
         $this->compute();
         return $this->u;
+    }
+
+    public function sigma()
+    {
+        $this->compute();
+
+        return $this->sigma;
+    }
+
+    public function mean()
+    {
+        $this->compute();
+
+        return $this->mean;
     }
 }
