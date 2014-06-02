@@ -29,6 +29,11 @@ class KruskalWallis implements \Countable
 {
     protected $int_count = null;
     protected $arr_samples = array();
+    protected $arr_ranks = array();
+    protected $arr_rank_values = array();
+    protected $arr_rank_samples = array();
+    protected $arr_rank_sums = array();
+    protected $arr_rank_means = array();
     
     
     public function add($s)
@@ -66,5 +71,52 @@ class KruskalWallis implements \Countable
         }
 
         return $this->int_count;
+    }
+
+
+    protected function compute()
+    {
+        $this->computeRanks();
+    }
+
+    protected function computeRanks()
+    {
+        foreach($this->arr_samples as $k => $s){
+            $this->arr_rank_values = array_merge(
+                $this->arr_rank_values,
+                $s->array
+            );
+
+            $this->arr_rank_samples = array_merge(
+                $this->arr_rank_samples,
+                array_pad(
+                    array(),
+                    count($s),
+                    $k
+                )
+            );
+        }
+
+        array_multisort(
+            $this->arr_rank_values, 
+            SORT_ASC,
+            SORT_NUMERIC,
+            $this->arr_rank_samples
+        );
+    }
+
+
+    public function rankSum($n)
+    {
+        $this->compute();
+
+        //return $this->arr_rank_sums[$n];
+    }
+
+    public function rankMean($n)
+    {
+        $this->compute();
+
+        //return $this->arr_rank_means[$n];
     }
 }
