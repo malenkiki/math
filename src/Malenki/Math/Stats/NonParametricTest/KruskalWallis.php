@@ -34,6 +34,7 @@ class KruskalWallis implements \Countable
     protected $arr_rank_samples = array();
     protected $arr_rank_sums = array();
     protected $arr_rank_means = array();
+    protected $float_h = null;
     
     
     public function add($s)
@@ -76,7 +77,26 @@ class KruskalWallis implements \Countable
 
     protected function compute()
     {
-        $this->computeRanks();
+        if(count($this->arr_rank_values) == 0){
+            $this->computeRanks();
+
+            $arr = array();
+
+            foreach($this->arr_ranks as $idx => $r){
+                $ns = $this->arr_rank_samples[$idx];
+
+                if(!array_key_exists($ns, $arr)){
+                    $arr[$ns] = new \Malenki\Math\Stats\Stats();
+                }
+
+                $arr[$ns]->add($r);
+            }
+
+            foreach($arr as $ns => $s){
+                $this->arr_rank_sums[$ns] = $arr[$ns]->sum;
+                $this->arr_rank_means[$ns] = $arr[$ns]->mean;
+            }
+        }
     }
 
     protected function computeRanks()
@@ -103,6 +123,48 @@ class KruskalWallis implements \Countable
             SORT_NUMERIC,
             $this->arr_rank_samples
         );
+        
+        
+        $prev = null;
+        $stats = null;
+        $i = 1;
+
+        foreach($this->arr_rank_values as $k => $c){
+            if($c == $prev){
+
+                if(is_null($stats)){
+                    $stats = new \Malenki\Math\Stats\Stats();
+                    $stats->add($i - 1);
+                }
+             
+                $stats->add($i);
+                
+            } else {
+                if(!is_null($stats)){
+                    foreach($this->arr_ranks as $ri => $rv){
+                        if(in_array($rv, $stats->array)){
+                            $this->arr_ranks[$ri] = $stats->mean;
+                        }
+                    }
+                    $stats = null;
+                }
+            }
+
+            $this->arr_ranks[$k] = $i;
+
+            $prev = $c;
+            $i++;
+        }
+
+
+        if(!is_null($stats)){
+            foreach($this->arr_ranks as $ri => $rv){
+                if(in_array($rv, $stats->array)){
+                    $this->arr_ranks[$ri] = $stats->mean;
+                }
+            }
+        }
+
     }
 
 
@@ -110,13 +172,30 @@ class KruskalWallis implements \Countable
     {
         $this->compute();
 
-        //return $this->arr_rank_sums[$n];
+        return $this->arr_rank_sums[$n - 1];
     }
 
     public function rankMean($n)
     {
         $this->compute();
 
-        //return $this->arr_rank_means[$n];
+        return $this->arr_rank_means[$n - 1];
+    }
+
+    public function h()
+    {
+        $this->compute();
+
+        if(is_null($this->float_h)){
+            $tn = 0;
+            
+            foreach($this->arr_rank_sums as $ns => $sum){
+                $tn += ($sum * $sum) / count($this->arr_samples[$ns]);
+            }
+
+            $this->float_h = (12 * $tn / (count($this) * (count($this) + 1))) - 3 * (count($this) + 1);
+        }
+
+        return $this->float_h;
     }
 }

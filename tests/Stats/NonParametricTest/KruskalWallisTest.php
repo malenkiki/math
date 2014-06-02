@@ -69,7 +69,7 @@ class KruskalWallisTest extends PHPUnit_Framework_TestCase
         $this->assertCount(10, $k);
     }
 
-
+    
     public function testGettingRankSumsShouldSuccess()
     {
         // taken from http://www.brightstat.com/index.php?option=com_content&task=view&id=41&Itemid=1&limit=1&limitstart=2
@@ -79,13 +79,10 @@ class KruskalWallisTest extends PHPUnit_Framework_TestCase
         $k->add(array(70, 68, 54, 73, 81, 68));
         $k->add(array(61, 54, 59, 67, 59, 70));
 
-        //$k->rankSum(0);
-        //var_dump($k);
-        $this->markTestIncomplete();
-        $this->assignEquals(104, $k->rankSum(1));
-        $this->assignEquals(113, $k->rankSum(2));
-        $this->assignEquals(53, $k->rankSum(3));
-        $this->assignEquals(30, $k->rankSum(4));
+        $this->assertEquals(104, $k->rankSum(1));
+        $this->assertEquals(113, $k->rankSum(2));
+        $this->assertEquals(53, $k->rankSum(3));
+        $this->assertEquals(30, $k->rankSum(4));
     }
 
     public function testGettingRankMeansShouldSuccess()
@@ -97,10 +94,21 @@ class KruskalWallisTest extends PHPUnit_Framework_TestCase
         $k->add(array(70, 68, 54, 73, 81, 68));
         $k->add(array(61, 54, 59, 67, 59, 70));
 
-        $this->markTestIncomplete();
-        $this->assignEquals(17.33, $k->rankMean(1));
-        $this->assignEquals(18.83, $k->rankMean(2));
-        $this->assignEquals(8.83, $k->rankMean(3));
-        $this->assignEquals(5, $k->rankMean(4));
+        $this->assertEquals(17.33, round($k->rankMean(1), 2));
+        $this->assertEquals(18.83, round($k->rankMean(2), 2));
+        $this->assertEquals(8.83, round($k->rankMean(3), 2));
+        $this->assertEquals(5, round($k->rankMean(4)));
+    }
+
+    public function testGettingHShouldSuccess()
+    {
+        // taken from http://www.brightstat.com/index.php?option=com_content&task=view&id=41&Itemid=1&limit=1&limitstart=2
+        $k = new KruskalWallis();
+        $k->add(array(68, 93, 123, 83, 108, 122));
+        $k->add(array(119, 116, 101, 103, 113, 84));
+        $k->add(array(70, 68, 54, 73, 81, 68));
+        $k->add(array(61, 54, 59, 67, 59, 70));
+
+        $this->assertEquals(15.98, round($k->h(), 2));
     }
 }
