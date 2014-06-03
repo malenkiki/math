@@ -84,8 +84,6 @@ class WilcoxonMannWhitneyTest extends PHPUnit_Framework_TestCase
         $w->add(array(1, 4.5, 4.5, 6, 7, 8, 9.5, 11.5, 13.5, 15, 16.5, 18));
         $w->add(array(2, 3, 9.5, 11.5, 13.5, 16.5, 19, 20, 21, 22));
 
-        // Must sum rank and not data!
-        $this->markTestIncomplete();
         $this->assertEquals(37, $w->u2());
         $this->assertEquals(37, $w->u2);
         $this->assertEquals(83, $w->u1());

@@ -29,6 +29,8 @@ class WilcoxonMannWhitney
 {
     protected $arr_samples = array();
     protected $arr_ranks = array();
+    protected $arr_rank_samples = array();
+    protected $arr_rank_values = array();
     protected $u1 = null;
     protected $u2 = null;
     protected $u = null;
@@ -110,20 +112,36 @@ class WilcoxonMannWhitney
      */
     protected function computeRanks()
     {
-        $int_size = max(
-            count($this->arr_samples[0]),
-            count($this->arr_samples[1])
-        );
+        foreach($this->arr_samples as $k => $s){
+            $this->arr_rank_values = array_merge(
+                $this->arr_rank_values,
+                $s->array
+            );
 
+            $this->arr_rank_samples = array_merge(
+                $this->arr_rank_samples,
+                array_pad(
+                    array(),
+                    count($s),
+                    $k
+                )
+            );
+        }
+
+        array_multisort(
+            $this->arr_rank_values, 
+            SORT_ASC,
+            SORT_NUMERIC,
+            $this->arr_rank_samples
+        );
+        
+        
         $prev = null;
         $stats = null;
+        $i = 1;
 
-        for($i = 0; $i < $int_max; $i++){
-/*
-            $x1 = $this->arr_samples[0]->get($i);
-            $x2 = $this->arr_samples[1]->get($i);
-
-            if($x1 == $prev){
+        foreach($this->arr_rank_values as $k => $c){
+            if($c == $prev){
 
                 if(is_null($stats)){
                     $stats = new \Malenki\Math\Stats\Stats();
@@ -137,7 +155,6 @@ class WilcoxonMannWhitney
                     foreach($this->arr_ranks as $ri => $rv){
                         if(in_array($rv, $stats->array)){
                             $this->arr_ranks[$ri] = $stats->mean;
-                            $this->arr_signed_ranks[$ri] = $stats->mean * $this->arr_signs[$ri];
                         }
                     }
                     $stats = null;
@@ -145,26 +162,19 @@ class WilcoxonMannWhitney
             }
 
             $this->arr_ranks[$k] = $i;
-            $this->arr_signed_ranks[$k] = $i * $this->arr_signs[$k];
 
             $prev = $c;
             $i++;
- */
         }
 
 
-        /*
         if(!is_null($stats)){
             foreach($this->arr_ranks as $ri => $rv){
                 if(in_array($rv, $stats->array)){
                     $this->arr_ranks[$ri] = $stats->mean;
-                    $this->arr_signed_ranks[$ri] = $stats->mean * $this->arr_signs[$ri];
                 }
             }
         }
-
-        $this->arr_ranks = array_filter($this->arr_ranks);
-         */
     }
 
     public function u1()
