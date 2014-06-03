@@ -78,12 +78,39 @@ class WilcoxonMannWhitneyTest extends PHPUnit_Framework_TestCase
         $w->add(new Stats(array(1, 2, 3)));
     }
 
+
+    public function testGettingRankSumsShouldSuccess()
+    {
+        $w = new WilcoxonMannWhitney();
+        $w->add(array(135, 139, 142, 144, 158, 165, 171, 178, 244, 245, 256, 267, 268, 289));
+        $w->add(array(131, 138, 138, 141, 142, 142, 143, 145, 156, 167, 191, 230));
+
+        $this->markTestIncomplete();
+        $this->assertEquals(231, $w->sum(1));
+        $this->assertEquals(120, $w->sum(2));
+    }
+
+
+    public function testGettingRankMeansShouldSuccess()
+    {
+        $w = new WilcoxonMannWhitney();
+        $w->add(array(135, 139, 142, 144, 158, 165, 171, 178, 244, 245, 256, 267, 268, 289));
+        $w->add(array(131, 138, 138, 141, 142, 142, 143, 145, 156, 167, 191, 230));
+
+        $this->markTestIncomplete();
+        $this->assertEquals(231, $w->mean(1));
+        $this->assertEquals(120, $w->mean(2));
+    }
+
+
+
     public function testGettingU1AndU2ValuesShouldSuccess()
     {
         $w = new WilcoxonMannWhitney();
         $w->add(array(1, 4.5, 4.5, 6, 7, 8, 9.5, 11.5, 13.5, 15, 16.5, 18));
         $w->add(array(2, 3, 9.5, 11.5, 13.5, 16.5, 19, 20, 21, 22));
 
+        $this->markTestIncomplete();
         $this->assertEquals(37, $w->u2());
         $this->assertEquals(37, $w->u2);
         $this->assertEquals(83, $w->u1());

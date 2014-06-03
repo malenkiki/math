@@ -36,6 +36,12 @@ class WilcoxonMannWhitney
     protected $u = null;
     protected $sigma = null;
     protected $mean = null;
+    protected $m1 = null;
+    protected $m2 = null;
+    protected $sigma1 = null;
+    protected $sigma2 = null;
+    protected $r1 = null;
+    protected $r2 = null;
 
 
     public function __get($name)
@@ -94,16 +100,34 @@ class WilcoxonMannWhitney
     protected function compute()
     {
         if(is_null($this->u1) || is_null($this->u2)){
+            $this->computeRanks();
+
+            $s1 = new \Malenki\Math\Stats\Stats($this->arr_ranks[0]);
+            $s2 = new \Malenki\Math\Stats\Stats($this->arr_ranks[1]);
+
             $n1 = count($this->arr_samples[0]);
             $n2 = count($this->arr_samples[1]);
-            $this->computeRanks();
-            $r1 = $this->arr_samples[0]->sum; //FIXME Not that!
-            $r2 = $this->arr_samples[1]->sum; //FIXME Not that!
+
+            $r1 = $s1->sum;
+            $r2 = $s2->sum;
+            
+            $m1 = $s1->mean;
+            $m2 = $s2->mean;
+
             $this->u1 =  $n1 * $n2 + ( 0.5 * $n1 * ($n1 + 1)) - $r1;
             $this->u2 =  $n1 * $n2 + ( 0.5 * $n2 * ($n2 + 1)) - $r2;
             $this->u = min($this->u1(), $this->u2());
             $this->mean = 0.5 * $n1 * $n2;
             $this->sigma = sqrt($n1 * $n2 * ($n1 + $n2 + 1) / 12);
+
+            $this->r1 = $r1;
+            $this->r2 = $r2;
+
+            $this->m1 = $m1;
+            $this->m2 = $m2;
+
+            $this->sigma1 = $s1->sigma;
+            $this->sigma2 = $s2->sigma;
         }
     }
 
@@ -197,17 +221,59 @@ class WilcoxonMannWhitney
         return $this->u;
     }
 
-    public function sigma()
+    public function sum($int_sample)
     {
+        if(!in_array($int_sample, array(1, 2))){
+            throw new \InvalidArgumentException(
+                'Sample number for Wilcoxon-Mann-Whitney Test must be 1 or 2!'
+            );
+        }
+
         $this->compute();
 
-        return $this->sigma;
+        $str = 'r' . $int_sample;
+        return $this->$str;
     }
 
-    public function mean()
+    public function sigma($int_sample = null)
     {
+        if(!is_null($int_sample)){
+            if(!in_array($int_sample, array(1, 2))){
+                throw new \InvalidArgumentException(
+                    'Sample number for Wilcoxon-Mann-Whitney Test must be 1 or 2!'
+                );
+            }
+        }
+
         $this->compute();
 
-        return $this->mean;
+        if(is_null($int_sample)){
+            return $this->sigma;
+        } else {
+            $str = 'sigma' . $int_sample;
+            return $this->$str;
+        }
     }
+
+
+    public function mean($int_sample = null)
+    {
+        if(!is_null($int_sample)){
+            if(!in_array($int_sample, array(1, 2))){
+                throw new \InvalidArgumentException(
+                    'Sample number for Wilcoxon-Mann-Whitney Test must be 1 or 2!'
+                );
+            }
+        }
+
+        $this->compute();
+
+        if(is_null($int_sample)){
+            return $this->mean;
+        } else {
+            $str = 'm' . $int_sample;
+            return $this->$str;
+        }
+    }
+
 }
