@@ -176,7 +176,7 @@ class WilcoxonMannWhitneyTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(378, $w->sigma2);
     }
 
-    public function testGettingiCorrectedStandardDeviationShouldSuccess()
+    public function testGettingCorrectedStandardDeviationShouldSuccess()
     {
         $this->markTestIncomplete();
         $w = new WilcoxonMannWhitney();
@@ -185,5 +185,15 @@ class WilcoxonMannWhitneyTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals(377.35, round($w->sigma2_corrected(), 2));
         $this->assertEquals(377.35, round($w->sigma2_corrected, 2));
+    }
+
+    public function testGettingZShouldSuccess()
+    {
+        $w = new WilcoxonMannWhitney();
+        $w->add(array(135, 139, 142, 144, 158, 165, 171, 178, 244, 245, 256, 267, 268, 289));
+        $w->add(array(131, 138, 138, 141, 142, 142, 143, 145, 156, 167, 191, 230));
+
+        $this->assertEquals(-2.1602, round($w->z(), 4));
+        $this->assertEquals(-2.1602, round($w->z, 4));
     }
 }
