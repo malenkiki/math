@@ -102,7 +102,6 @@ class WilcoxonMannWhitneyTest extends PHPUnit_Framework_TestCase
     }
 
 
-
     public function testGettingU1AndU2ValuesShouldSuccess()
     {
         $w = new WilcoxonMannWhitney();
@@ -120,27 +119,44 @@ class WilcoxonMannWhitneyTest extends PHPUnit_Framework_TestCase
 
     public function testGettingMeanShouldSuccess()
     {
+        /*
         $w = new WilcoxonMannWhitney();
         $w->add(array(1, 4.5, 4.5, 6, 7, 8, 9.5, 11.5, 13.5, 15, 16.5, 18));
         $w->add(array(2, 3, 9.5, 11.5, 13.5, 16.5, 19, 20, 21, 22));
+         */
 
-        $this->markTestIncomplete();
-        //$this->assertEquals(, $w->mean());
-        //$this->assertEquals(, $w->mean);
-        //$this->assertEquals(, $w->mu);
+        //$this->markTestIncomplete();
+        
+        $w = new WilcoxonMannWhitney();
+        $w->add(array(135, 139, 142, 144, 158, 165, 171, 178, 244, 245, 256, 267, 268, 289));
+        $w->add(array(131, 138, 138, 141, 142, 142, 143, 145, 156, 167, 191, 230));
+
+        $this->assertEquals(84, $w->mean());
+        $this->assertEquals(84, $w->mean);
+        $this->assertEquals(84, $w->mu);
     }
 
     public function testGettingStandardDeviationShouldSuccess()
     {
+        /*
         $w = new WilcoxonMannWhitney();
         $w->add(array(1, 4.5, 4.5, 6, 7, 8, 9.5, 11.5, 13.5, 15, 16.5, 18));
         $w->add(array(2, 3, 9.5, 11.5, 13.5, 16.5, 19, 20, 21, 22));
+         */
+        
+        $w = new WilcoxonMannWhitney();
+        $w->add(array(135, 139, 142, 144, 158, 165, 171, 178, 244, 245, 256, 267, 268, 289));
+        $w->add(array(131, 138, 138, 141, 142, 142, 143, 145, 156, 167, 191, 230));
 
+        $this->assertEquals(19.44, round($w->sigma(), 2));
+        $this->assertEquals(19.44, round($w->sigma, 2));
+        $this->assertEquals(19.44, round($w->std, 2));
+        $this->assertEquals(19.44, round($w->stddev, 2));
+        $this->assertEquals(19.44, round($w->stdev, 2));
+    }
+
+    public function testGettingiCorrectedStandardDeviationShouldSuccess()
+    {
         $this->markTestIncomplete();
-        //$this->assertEquals(, $w->sigma());
-        //$this->assertEquals(, $w->sigma);
-        //$this->assertEquals(, $w->std);
-        //$this->assertEquals(, $w->stddev);
-        //$this->assertEquals(, $w->stdev);
     }
 }
