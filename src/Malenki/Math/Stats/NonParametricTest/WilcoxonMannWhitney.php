@@ -25,8 +25,9 @@
 namespace Malenki\Math\Stats\NonParametricTest;
 use \Malenki\Math\Stats\Stats;
 
-class WilcoxonMannWhitney
+class WilcoxonMannWhitney implements \Countable
 {
+    protected $int_count = null;
     protected $arr_samples = array();
     protected $arr_ranks = array();
     protected $arr_rank_samples = array();
@@ -99,6 +100,13 @@ class WilcoxonMannWhitney
     }
 
 
+    public function count()
+    {
+        $this->compute();
+
+        return $this->int_count;
+    }
+
     protected function compute()
     {
         if(is_null($this->u1) || is_null($this->u2)){
@@ -130,6 +138,7 @@ class WilcoxonMannWhitney
             $m1 = $this->arr_rank_means[0];
             $m2 = $this->arr_rank_means[1];
             
+            $this->int_count = $n1 + $n2;
             $this->u1 =  $n1 * $n2 + ( 0.5 * $n1 * ($n1 + 1)) - $r1;
             $this->u2 =  $n1 * $n2 + ( 0.5 * $n2 * ($n2 + 1)) - $r2;
             $this->u = min($this->u1(), $this->u2());

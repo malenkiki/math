@@ -78,6 +78,17 @@ class WilcoxonMannWhitneyTest extends PHPUnit_Framework_TestCase
         $w->add(new Stats(array(1, 2, 3)));
     }
 
+    public function testGettingTotalCountShouldSuccess()
+    {
+        // taken from http://www.brightstat.com/index.php?option=com_content&task=view&id=35&Itemid=52&limit=1&limitstart=1
+        $w = new WilcoxonMannWhitney();
+        $w->add(array(135, 139, 142, 144, 158, 165, 171, 178, 244, 245, 256, 267, 268, 289));
+        $w->add(array(131, 138, 138, 141, 142, 142, 143, 145, 156, 167, 191, 230));
+
+        $this->assertEquals(26, $w->count());
+        $this->assertCount(26, $w);
+    }
+
 
     public function testGettingRankSumsShouldSuccess()
     {
