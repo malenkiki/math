@@ -39,6 +39,8 @@ class WilcoxonMannWhitney
     protected $u = null;
     protected $sigma = null;
     protected $sigma_corrected = null;
+    protected $sigma2 = null;
+    protected $sigma2_corrected = null;
     protected $mean = null;
 
 
@@ -130,7 +132,9 @@ class WilcoxonMannWhitney
             $this->u2 =  $n1 * $n2 + ( 0.5 * $n2 * ($n2 + 1)) - $r2;
             $this->u = min($this->u1(), $this->u2());
             $this->mean = 0.5 * $n1 * $n2;
-            $this->sigma = sqrt($n1 * $n2 * ($n1 + $n2 + 1) / 12);
+            $this->sigma2 = $n1 * $n2 * ($n1 + $n2 + 1) / 12;
+            $this->sigma2_corrected = 0; // TODO
+            $this->sigma = sqrt($this->sigma2);
             $this->sigma_corrected = 0; // TODO
         }
     }
