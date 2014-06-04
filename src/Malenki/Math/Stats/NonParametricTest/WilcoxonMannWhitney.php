@@ -42,11 +42,13 @@ class WilcoxonMannWhitney
     protected $sigma2 = null;
     protected $sigma2_corrected = null;
     protected $mean = null;
+    protected $z = null;
+    protected $z_corrected = null;
 
 
     public function __get($name)
     {
-        if(in_array($name, array('u1','u2','u', 'sigma', 'mean'))){
+        if(in_array($name, array('u1','u2','u', 'sigma', 'mean', 'sigma2', 'z'))){
             return $this->$name();
         }
 
@@ -133,9 +135,11 @@ class WilcoxonMannWhitney
             $this->u = min($this->u1(), $this->u2());
             $this->mean = 0.5 * $n1 * $n2;
             $this->sigma2 = $n1 * $n2 * ($n1 + $n2 + 1) / 12;
-            $this->sigma2_corrected = 0; // TODO
+            //$this->sigma2_corrected = 0; // TODO
             $this->sigma = sqrt($this->sigma2);
-            $this->sigma_corrected = 0; // TODO
+            //$this->sigma_corrected = 0; // TODO
+            $this->z = ($this->u - $this->mean) / $this->sigma;
+            //$this->z_corrected = ($this->u - $this->mean) / $this->sigma_corrected; //TODO
         }
     }
 
@@ -285,4 +289,28 @@ class WilcoxonMannWhitney
         }
     }
 
+
+
+    public function sigma2()
+    {
+        $this->compute();
+
+        return $this->sigma2;
+    }
+
+
+    public function z()
+    {
+        $this->compute();
+
+        return $this->z;
+    }
+
+
+    public function z_corrected()
+    {
+        $this->compute();
+
+        return $this->z_corrected;
+    }
 }
