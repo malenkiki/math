@@ -36,6 +36,24 @@ class KruskalWallis implements \Countable
     protected $arr_rank_means = array();
     protected $float_h = null;
     
+    public function __get($name)
+    {
+        if($name == 'h'){
+            return $this->h();
+        }
+
+        if(preg_match('/^rank_sum_[0-9]+$/', $name)){
+            $idx = explode('_', $name);
+            $idx = array_pop($idx);
+            return $this->rankSum($idx);
+        }
+
+        if(preg_match('/^rank_mean_[0-9]+$/', $name)){
+            $idx = explode('_', $name);
+            $idx = array_pop($idx);
+            return $this->rankMean($idx);
+        }
+    }
     
     public function add($s)
     {

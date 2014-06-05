@@ -83,6 +83,11 @@ class KruskalWallisTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(113, $k->rankSum(2));
         $this->assertEquals(53, $k->rankSum(3));
         $this->assertEquals(30, $k->rankSum(4));
+
+        $this->assertEquals(104, $k->rank_sum_1);
+        $this->assertEquals(113, $k->rank_sum_2);
+        $this->assertEquals(53, $k->rank_sum_3);
+        $this->assertEquals(30, $k->rank_sum_4);
     }
 
 
@@ -114,6 +119,11 @@ class KruskalWallisTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(18.83, round($k->rankMean(2), 2));
         $this->assertEquals(8.83, round($k->rankMean(3), 2));
         $this->assertEquals(5, round($k->rankMean(4)));
+        
+        $this->assertEquals(17.33, round($k->rank_mean_1, 2));
+        $this->assertEquals(18.83, round($k->rank_mean_2, 2));
+        $this->assertEquals(8.83, round($k->rank_mean_3, 2));
+        $this->assertEquals(5, round($k->rank_mean_4));
     }
 
 
@@ -142,5 +152,6 @@ class KruskalWallisTest extends PHPUnit_Framework_TestCase
         $k->add(array(61, 54, 59, 67, 59, 70));
 
         $this->assertEquals(15.98, round($k->h(), 2));
+        $this->assertEquals(15.98, round($k->h, 2));
     }
 }
