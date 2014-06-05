@@ -85,6 +85,22 @@ class KruskalWallisTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(30, $k->rankSum(4));
     }
 
+
+    /**
+     *@expectedException \OutOfRangeException
+     */
+    public function testGettingRankSumsForNonExistingSampleShouldFail()
+    {
+        // taken from http://www.brightstat.com/index.php?option=com_content&task=view&id=41&Itemid=1&limit=1&limitstart=2
+        $k = new KruskalWallis();
+        $k->add(array(68, 93, 123, 83, 108, 122));
+        $k->add(array(119, 116, 101, 103, 113, 84));
+        $k->add(array(70, 68, 54, 73, 81, 68));
+        $k->add(array(61, 54, 59, 67, 59, 70));
+
+        $k->rankSum(15);
+    }
+
     public function testGettingRankMeansShouldSuccess()
     {
         // taken from http://www.brightstat.com/index.php?option=com_content&task=view&id=41&Itemid=1&limit=1&limitstart=2
@@ -98,6 +114,22 @@ class KruskalWallisTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(18.83, round($k->rankMean(2), 2));
         $this->assertEquals(8.83, round($k->rankMean(3), 2));
         $this->assertEquals(5, round($k->rankMean(4)));
+    }
+
+
+    /**
+     * @expectedException \OutOfRangeException
+     */
+    public function testGettingRankMeansUsingNonExistingSampleShouldFail()
+    {
+        // taken from http://www.brightstat.com/index.php?option=com_content&task=view&id=41&Itemid=1&limit=1&limitstart=2
+        $k = new KruskalWallis();
+        $k->add(array(68, 93, 123, 83, 108, 122));
+        $k->add(array(119, 116, 101, 103, 113, 84));
+        $k->add(array(70, 68, 54, 73, 81, 68));
+        $k->add(array(61, 54, 59, 67, 59, 70));
+
+        $k->rankMean(6);
     }
 
     public function testGettingHShouldSuccess()

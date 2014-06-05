@@ -172,12 +172,26 @@ class KruskalWallis implements \Countable
     {
         $this->compute();
 
+        if(!array_key_exists($n - 1, $this->arr_rank_sums)){
+            throw new \OutOfRangeException(
+                sprintf('Sample %d does not exist!', $n)
+            );
+        }
+
+
         return $this->arr_rank_sums[$n - 1];
     }
 
     public function rankMean($n)
     {
         $this->compute();
+
+        if(!array_key_exists($n - 1, $this->arr_rank_means)){
+            throw new \OutOfRangeException(
+                sprintf('Sample %d does not exist!', $n)
+            );
+        }
+
 
         return $this->arr_rank_means[$n - 1];
     }
