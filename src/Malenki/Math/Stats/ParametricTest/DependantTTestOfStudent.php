@@ -29,6 +29,7 @@ class DependantTTestOfStudent implements \Countable
 {
     protected $arr_samples = array();
     protected $int_count = null;
+    protected $int_dof = null;
     protected $float_t = null;
 
 
@@ -87,10 +88,21 @@ class DependantTTestOfStudent implements \Countable
         return $this->int_count;
     }
 
+
+    public function dof()
+    {
+        if(is_null($this->int_dof)){
+            $this->compute();
+        }
+
+        return $this->int_dof;
+    }
+
     public function compute()
     {
         if(is_null($this->float_t)){
             $this->int_count = count($this->arr_samples[0]);
+            $this->int_dof = $this->int_count - 1;
 
             $d = new \Malenki\MAth\Stats\Stats();
 
