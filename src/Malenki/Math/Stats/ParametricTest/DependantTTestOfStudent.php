@@ -91,6 +91,24 @@ class DependantTTestOfStudent implements \Countable
     {
         if(is_null($this->float_t)){
             $this->int_count = count($this->arr_samples[0]);
+
+            $d = new \Malenki\MAth\Stats\Stats();
+
+            for($i = 0; $i < $this->int_count; $i++){
+                $d->add(
+                    $this->arr_samples[1]->get($i)
+                    -
+                    $this->arr_samples[0]->get($i)
+                );
+            }
+
+            $diff2 = new \Malenki\MAth\Stats\Stats();
+
+            for($i = 0; $i < $this->int_count; $i++){
+                $diff2->add($d->get($i) - $d->mean);
+            }
+
+            $sigma = sqrt($diff2->sum2 / ($this->int_count - 1));
         }
     }
 }
