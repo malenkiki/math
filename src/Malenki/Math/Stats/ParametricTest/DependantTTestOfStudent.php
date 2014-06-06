@@ -30,6 +30,7 @@ class DependantTTestOfStudent implements \Countable
     protected $arr_samples = array();
     protected $int_count = null;
     protected $int_dof = null;
+    protected $float_sigma = null;
     protected $float_t = null;
 
 
@@ -97,6 +98,23 @@ class DependantTTestOfStudent implements \Countable
 
         return $this->int_dof;
     }
+    
+    public function sigma()
+    {
+        $this->compute();
+
+        return $this->float_sigma;
+    }
+
+
+    
+    public function t()
+    {
+        $this->compute();
+
+        return $this->float_t;
+    }
+
 
     public function compute()
     {
@@ -104,7 +122,7 @@ class DependantTTestOfStudent implements \Countable
             $this->int_count = count($this->arr_samples[0]);
             $this->int_dof = $this->int_count - 1;
 
-            $d = new \Malenki\MAth\Stats\Stats();
+            $d = new \Malenki\Math\Stats\Stats();
 
             for($i = 0; $i < $this->int_count; $i++){
                 $d->add(
@@ -114,13 +132,17 @@ class DependantTTestOfStudent implements \Countable
                 );
             }
 
-            $diff2 = new \Malenki\MAth\Stats\Stats();
+            $diff2 = new \Malenki\Math\Stats\Stats();
 
             for($i = 0; $i < $this->int_count; $i++){
                 $diff2->add($d->get($i) - $d->mean);
             }
 
-            $sigma = sqrt($diff2->sum2 / ($this->int_count - 1));
+            $sigma_d = sqrt($diff2->sum2 / ($this->int_count - 1));
+            $this->float_sigma = $sigma_d / sqrt($this->int_count);
+
+            //$this->float_t = $d->mean / $this->float_sigma;
+
         }
     }
 }
