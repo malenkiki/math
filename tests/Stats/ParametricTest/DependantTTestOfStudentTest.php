@@ -29,38 +29,38 @@ class DependantTTestOfStudentTest extends PHPUnit_Framework_TestCase
 {
     public function testInstanciateStudentDependantsShouldSuccess()
     {
-        $w = new DependantTTestOfStudent();
+        $t = new DependantTTestOfStudent();
         $this->assertInstanceOf(
             '\Malenki\Math\Stats\ParametricTest\DependantTTestOfStudent',
-            $w
+            $t
         );
     }
 
     public function testAddingTwoEqualSamplesShouldSuccess()
     {
-        $w = new DependantTTestOfStudent();
+        $t = new DependantTTestOfStudent();
         $this->assertInstanceOf(
             '\Malenki\Math\Stats\ParametricTest\DependantTTestOfStudent',
-            $w->add(new Stats(array(6, 3, 4)))
+            $t->add(new Stats(array(6, 3, 4)))
         );
         
-        $w = new DependantTTestOfStudent();
+        $t = new DependantTTestOfStudent();
         $this->assertInstanceOf(
             '\Malenki\Math\Stats\ParametricTest\DependantTTestOfStudent',
-            $w->add(array(6, 3, 4))->add(array(7, 5, 9))
+            $t->add(array(6, 3, 4))->add(array(7, 5, 9))
         );
         
         
-        $w = new DependantTTestOfStudent();
+        $t = new DependantTTestOfStudent();
         $this->assertInstanceOf(
             '\Malenki\Math\Stats\ParametricTest\DependantTTestOfStudent',
-            $w->set(array(6, 3, 4), array(7, 5, 9))
+            $t->set(array(6, 3, 4), array(7, 5, 9))
         );
         
-        $w = new DependantTTestOfStudent();
+        $t = new DependantTTestOfStudent();
         $this->assertInstanceOf(
             '\Malenki\Math\Stats\ParametricTest\DependantTTestOfStudent',
-            $w->set(new Stats(array(6, 3, 4)), new Stats(array(7, 5, 9)))
+            $t->set(new Stats(array(6, 3, 4)), new Stats(array(7, 5, 9)))
         );
     }
 
@@ -70,9 +70,9 @@ class DependantTTestOfStudentTest extends PHPUnit_Framework_TestCase
      */
     public function testAddingTwoNonEqualSamplesShouldFail()
     {
-        $w = new DependantTTestOfStudent();
-        $w->add(new Stats(array(1, 2, 3)));
-        $w->add(new Stats(array(1, 2, 3, 4)));
+        $t = new DependantTTestOfStudent();
+        $t->add(new Stats(array(1, 2, 3)));
+        $t->add(new Stats(array(1, 2, 3, 4)));
     }
 
     /**
@@ -80,12 +80,22 @@ class DependantTTestOfStudentTest extends PHPUnit_Framework_TestCase
      */
     public function testAddingMoreThanTwoSamplesShouldFail()
     {
-        $w = new DependantTTestOfStudent();
-        $w->add(new Stats(array(1, 2, 3)));
-        $w->add(new Stats(array(1, 2, 3)));
-        $w->add(new Stats(array(1, 2, 3)));
+        $t = new DependantTTestOfStudent();
+        $t->add(new Stats(array(1, 2, 3)));
+        $t->add(new Stats(array(1, 2, 3)));
+        $t->add(new Stats(array(1, 2, 3)));
     }
 
+
+    public function testGettingCountShouldSuccess()
+    {
+        $t = new DependantTTestOfStudent();
+        $t
+            ->add(array(6, 3, 4, 7, 8, 9, 3, 6))
+            ->add(array(6, 3, 4, 7, 8, 9, 3, 6));
+
+        $this->assertCount(8, $t);
+    }
 
     
     
