@@ -114,7 +114,7 @@ class DependantTTestOfStudent implements \Countable
     }
 
 
-    public function compute()
+    protected function compute()
     {
         if(is_null($this->float_t)){
             $this->int_count = count($this->arr_samples[0]);
