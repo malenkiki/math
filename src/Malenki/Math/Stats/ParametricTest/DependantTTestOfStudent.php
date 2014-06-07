@@ -82,9 +82,7 @@ class DependantTTestOfStudent implements \Countable
 
     public function count()
     {
-        if(is_null($this->int_count)){
-            $this->compute();
-        }
+        $this->compute();
 
         return $this->int_count;
     }
@@ -141,7 +139,10 @@ class DependantTTestOfStudent implements \Countable
             $sigma_d = sqrt($diff2->sum2 / ($this->int_count - 1));
             $this->float_sigma = $sigma_d / sqrt($this->int_count);
 
-            //$this->float_t = $d->mean / $this->float_sigma;
+            if($sigma_d == 0){
+                throw new \LogicException('The given two samples are equals! Cannot compute T-Test!');
+            }
+            $this->float_t = $d->mean / $this->float_sigma;
 
         }
     }

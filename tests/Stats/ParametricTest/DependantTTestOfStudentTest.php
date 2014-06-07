@@ -92,7 +92,7 @@ class DependantTTestOfStudentTest extends PHPUnit_Framework_TestCase
         $t = new DependantTTestOfStudent();
         $t
             ->add(array(6, 3, 4, 7, 8, 9, 3, 6))
-            ->add(array(6, 3, 4, 7, 8, 9, 3, 6));
+            ->add(array(6, 3, 4, 8, 8, 9, 3, 6));
 
         $this->assertCount(8, $t);
     }
@@ -113,10 +113,24 @@ class DependantTTestOfStudentTest extends PHPUnit_Framework_TestCase
         $t = new DependantTTestOfStudent();
         $t->add(array(24, 17, 32, 14, 16, 22, 26, 19, 19, 22, 21, 25, 16, 24, 18));
         $t->add(array(26, 24, 31, 17, 17, 25, 25, 24, 22, 23, 26, 28, 19, 23, 22));
-        $this->markTestIncomplete();
-        $this->assertEquals(-4.051, $t->t());
+        $this->assertEquals(-4.054, round($t->t(), 3));
     }
     
     
+
+    /**
+     * @expectedException \LogicException
+     */
+    public function testGettingTUsingTwoSameSamplesShouldFail()
+    {
+        $t = new DependantTTestOfStudent();
+        $t
+            ->add(array(6, 3, 4, 7, 8, 9, 3, 6))
+            ->add(array(6, 3, 4, 7, 8, 9, 3, 6));
+
+        $t->t();
+    }
+
+
 
 }
