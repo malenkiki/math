@@ -38,6 +38,8 @@ class DependantTTestOfStudent implements \Countable
     {
         if(in_array($name, array('count', 'dof', 'sigma', 't'))){
             return $this->$name();
+        } elseif(in_array($name, array('degrees_of_freedom', 'df'))){
+            return $this->degreesOfFreedom();
         }
     }
 
@@ -95,13 +97,20 @@ class DependantTTestOfStudent implements \Countable
     }
 
 
-    public function dof()
+
+    public function degreesOfFreedom()
     {
         if(is_null($this->int_dof)){
             $this->compute();
         }
 
         return $this->int_dof;
+    }
+
+
+    public function dof()
+    {
+        return $this->degreesOfFreedom();
     }
     
     public function sigma()
