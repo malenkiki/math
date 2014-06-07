@@ -547,7 +547,6 @@ echo $a->dof();
 
 // Within group degrees of freedom
 echo $a->within_group_degrees_of_freedom;
-echo $a->dof;
 echo $a->WithinGroupDegreesOfFreedom();
 echo $a->wgdof();
 
@@ -560,5 +559,29 @@ echo $a->f();
 echo $a->fRatio();
 // should be around 9.3
 ```
+
+### Dependant t-Test
+
+```php
+use Malenki\Math\Stats\ParametricTest\Anova;
+$t = new DependantTTestOfStudent();
+$t->add(array(24, 17, 32, 14, 16, 22, 26, 19, 19, 22, 21, 25, 16, 24, 18));
+$t->add(array(26, 24, 31, 17, 17, 25, 25, 24, 22, 23, 26, 28, 19, 23, 22));
+
+// Degree Of Freedom
+echo $t->dof(); // should be 14
+
+// Sigma, the standard deviation
+echo $t->sigma(); // Should be around 0.608
+
+// The t-value
+echo $t->t(); // Should be around -4.054
+```
+
+## Non Parametric Tests
+
+### Wilcoxon Signed-Ranks Test
+
+TODO
 
 Dev in progress, more informations soon here on into source code!
