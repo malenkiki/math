@@ -97,6 +97,15 @@ class DependantTTestOfStudentTest extends PHPUnit_Framework_TestCase
         $this->assertCount(8, $t);
     }
 
+    public function testGettingDegreeOfFreedomShouldSuccess()
+    {
+        $t = new DependantTTestOfStudent();
+        $t->add(array(24, 17, 32, 14, 16, 22, 26, 19, 19, 22, 21, 25, 16, 24, 18));
+        $t->add(array(26, 24, 31, 17, 17, 25, 25, 24, 22, 23, 26, 28, 19, 23, 22));
+        $this->assertEquals(14, $t->dof());
+    }
+    
+    
 
     public function testGettingSigmaShouldSuccess()
     {
