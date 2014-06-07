@@ -42,6 +42,44 @@ class DependantTTestOfStudent implements \Countable
             return $this->degreesOfFreedom();
         }
     }
+    
+    
+    public function __set($name, $value)
+    {
+        if(
+            in_array(
+                $name, 
+                array(
+                    'sample_one',
+                    'sample_two',
+                    'sample_1',
+                    'sample_2',
+                    'sample_a',
+                    'sample_b',
+                )
+            )
+        )
+        {
+            if(is_array($value)){
+                $value = new Stats($value);
+            } elseif(!($value instanceof Stats))
+            {
+                throw new \InvalidArgumentException(
+                    'Added sample to Dependant t-test of Student must be array or Stats instance'
+                );
+            }
+
+            if(preg_match('/_(1|one|a)$/',$name)){
+                $this->arr_samples[0] = $value;
+            } else {
+                $this->arr_samples[1] = $value;
+            }
+
+            $this->clear();
+        }
+    }
+
+
 
     public function add($s)
     {

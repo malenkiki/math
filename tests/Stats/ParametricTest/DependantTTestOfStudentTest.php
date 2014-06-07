@@ -87,6 +87,7 @@ class DependantTTestOfStudentTest extends PHPUnit_Framework_TestCase
     }
 
 
+
     public function testGettingCountShouldSuccess()
     {
         $t = new DependantTTestOfStudent();
@@ -149,5 +150,56 @@ class DependantTTestOfStudentTest extends PHPUnit_Framework_TestCase
     }
 
 
+    public function testSettingSamplesByMagicSettersShouldSuccess()
+    {
+        $arr1 = array(24, 17, 32, 14, 16, 22, 26, 19, 19, 22, 21, 25, 16, 24, 18);
+        $arr2 = array(26, 24, 31, 17, 17, 25, 25, 24, 22, 23, 26, 28, 19, 23, 22);
+        
+        $s1 = new Stats($arr1);
+        $s2 = new Stats($arr2);
+
+        $t = new DependantTTestOfStudent();
+        $t->sample_one = $arr1;
+        $t->sample_two = $arr2;
+        $this->assertCount(15, $t);
+        
+        $t = new DependantTTestOfStudent();
+        $t->sample_1 = $arr1;
+        $t->sample_2 = $arr2;
+        $this->assertCount(15, $t);
+        
+        $t = new DependantTTestOfStudent();
+        $t->sample_a = $arr1;
+        $t->sample_b = $arr2;
+        $this->assertCount(15, $t);
+
+
+        $t = new DependantTTestOfStudent();
+        $t->sample_one = $s1;
+        $t->sample_two = $s2;
+        $this->assertCount(15, $t);
+        
+        $t = new DependantTTestOfStudent();
+        $t->sample_1 = $s1;
+        $t->sample_2 = $s2;
+        $this->assertCount(15, $t);
+        
+        $t = new DependantTTestOfStudent();
+        $t->sample_a = $s1;
+        $t->sample_b = $s2;
+        $this->assertCount(15, $t);
+    }
+
+
+    /**
+     * @expectedException \InvalidArgumentException
+     */
+    public function testSettingBadTypeSamplesByMagicSettersShouldFail()
+    {
+        $t = new DependantTTestOfStudent();
+        $t->sample_one = (object) array(24, 17, 32, 14, 16, 22, 26, 19, 19, 22, 21, 25, 16, 24, 18);
+        $t->sample_two = (object) array(26, 24, 31, 17, 17, 25, 25, 24, 22, 23, 26, 28, 19, 23, 22);
+        $this->assertCount(15, $t);
+    }
 
 }
