@@ -1,8 +1,8 @@
 {
     "name": "malenki/math",
     "type": "library",
-    "description": "Some mathematical stuff",
-    "keywords": ["math", "probability", "statistic"],
+    "description": "Library to deal with some mathematical stuff. Implemented or partially implemented mathematical concepts are: Complex number, Matrix, Normal distribution, Random, Angle, Random Complex, Descriptive Statistics, Parametric tests (Anova, Dependant t-Test) and Non-Parametric tests (Wilcoxon Signed-rank test, Wilcoxon-Mann-Whitney test, Kruskal-Wallis).",
+    "keywords": ["math", "probability", "statistic", "t-test","Wilcoxon-Mann-Whitney", "Student", "rank", "parametric", "non parametric"],
     "homepage": "https://github.com/malenkiki/math",
     "license": "MIT",
     "authors": [

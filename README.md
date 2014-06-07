@@ -4,7 +4,7 @@
 
 Library to deal with some mathematical stuff.
 
-Implemented or partially implemented mathematical concepts are: **Complex number**, **Matrix**, **Normal distribution**, **Random**, **Angle**, **Random Complex**, **Descriptive Statistics** and **Parametric test (only Anova for some times)**.
+Implemented or partially implemented mathematical concepts are: **Complex number**, **Matrix**, **Normal distribution**, **Random**, **Angle**, **Random Complex**, **Descriptive Statistics**, **Parametric tests** (_Anova_, _Dependant t-Test_) and **Non-Parametric tests** (_Wilcoxon Signed-rank test_, _Wilcoxon-Mann-Whitney test_, _Kruskal-Wallis_).
 
 ## Install
 
