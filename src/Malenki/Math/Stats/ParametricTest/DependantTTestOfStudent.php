@@ -34,6 +34,13 @@ class DependantTTestOfStudent implements \Countable
     protected $float_t = null;
 
 
+    public function __get($name)
+    {
+        if(in_array($name, array('count', 'dof', 'sigma', 't'))){
+            return $this->$name();
+        }
+    }
+
     public function add($s)
     {
         if(count($this->arr_samples) == 2){

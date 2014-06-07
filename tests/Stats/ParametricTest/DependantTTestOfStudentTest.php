@@ -95,6 +95,9 @@ class DependantTTestOfStudentTest extends PHPUnit_Framework_TestCase
             ->add(array(6, 3, 4, 8, 8, 9, 3, 6));
 
         $this->assertCount(8, $t);
+        $this->assertEquals(8, $t->count());
+        $this->assertEquals(8, $t->count);
+        $this->assertEquals(8, count($t));
     }
 
     public function testGettingDegreeOfFreedomShouldSuccess()
@@ -103,6 +106,7 @@ class DependantTTestOfStudentTest extends PHPUnit_Framework_TestCase
         $t->add(array(24, 17, 32, 14, 16, 22, 26, 19, 19, 22, 21, 25, 16, 24, 18));
         $t->add(array(26, 24, 31, 17, 17, 25, 25, 24, 22, 23, 26, 28, 19, 23, 22));
         $this->assertEquals(14, $t->dof());
+        $this->assertEquals(14, $t->dof);
     }
     
     
@@ -113,6 +117,7 @@ class DependantTTestOfStudentTest extends PHPUnit_Framework_TestCase
         $t->add(array(24, 17, 32, 14, 16, 22, 26, 19, 19, 22, 21, 25, 16, 24, 18));
         $t->add(array(26, 24, 31, 17, 17, 25, 25, 24, 22, 23, 26, 28, 19, 23, 22));
         $this->assertEquals(0.608, round($t->sigma(), 3));
+        $this->assertEquals(0.608, round($t->sigma, 3));
     }
     
     
@@ -123,6 +128,7 @@ class DependantTTestOfStudentTest extends PHPUnit_Framework_TestCase
         $t->add(array(24, 17, 32, 14, 16, 22, 26, 19, 19, 22, 21, 25, 16, 24, 18));
         $t->add(array(26, 24, 31, 17, 17, 25, 25, 24, 22, 23, 26, 28, 19, 23, 22));
         $this->assertEquals(-4.054, round($t->t(), 3));
+        $this->assertEquals(-4.054, round($t->t, 3));
     }
     
     
