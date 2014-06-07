@@ -126,9 +126,9 @@ class DependantTTestOfStudent implements \Countable
 
             for($i = 0; $i < $this->int_count; $i++){
                 $d->add(
-                    $this->arr_samples[1]->get($i)
-                    -
                     $this->arr_samples[0]->get($i)
+                    -
+                    $this->arr_samples[1]->get($i)
                 );
             }
 
