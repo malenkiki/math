@@ -76,4 +76,34 @@ class IndependantTTestOfStudentTest extends PHPUnit_Framework_TestCase
         $t->add(new Stats(array(1, 2, 3)));
     }
 
+    public function testGettingMeanShouldSuccess()
+    {
+        $t = new Independant();
+        $t->add(array(102, 97, 104, 91, 104, 108, 93, 94, 101, 100, 89, 108, 110, 96, 99, 98, 101, 88, 104, 98, 107, 102, 104, 90, 116, 95, 99, 102, 104, 93, 100, 87));
+        $t->add(array(99, 104, 105, 95, 98, 102, 115, 102, 97, 91, 106, 108, 101, 100, 96, 95, 93, 104, 100, 107, 109, 109, 95, 97, 102, 99, 102, 104, 108, 87));
+        $this->assertEquals(-1.5, $t->mean());
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    }
 }

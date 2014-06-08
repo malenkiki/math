@@ -31,6 +31,7 @@ class Independant
     protected $int_dof = null;
     protected $float_sigma = null;
     protected $float_t = null;
+    protected $float_mean = null;
 
     public function __set($name, $value)
     {
@@ -101,5 +102,20 @@ class Independant
         $this->int_dof = null;
         $this->float_sigma = null;
         $this->float_t = null;
+    }
+
+    public function mean()
+    {
+        $this->compute();
+
+        return $this->float_mean;
+    }
+
+    protected function compute()
+    {
+        if(is_null($this->float_t)){
+            $this->float_mean = $this->arr_samples[0]->mean;
+            $this->float_mean -= $this->arr_samples[1]->mean;
+        }
     }
 }
