@@ -25,10 +25,20 @@
 namespace Malenki\Math\Stats\ParametricTest\TTest;
 use \Malenki\Math\Stats\Stats;
 
-class OneSample
+class OneSample implements \Countable
 {
     protected $sample = null;
     protected $float_sigma = null;
+    protected $float_sigma2 = null;
+    protected $float_sigma_pop = null;
+    protected $float_t = null;
+
+    public function __construct($mean = null)
+    {
+        if(!is_null($mean)){
+            $this->populationMaan($mean);
+        }
+    }
 
     public function set($s)
     {
@@ -36,7 +46,8 @@ class OneSample
             $s = new Stats($s);
         } elseif (!($s instanceof Stats)) {
             throw new \InvalidArgumentException(
-                'Added sample to Student’s t-Test For One Sample must be array or Stats instance'
+                'Added sample to Student’s t-Test For One Sample must be '
+                .'array or Stats instance'
             );
         }
 
@@ -46,8 +57,57 @@ class OneSample
         return $this;
     }
 
+    public function populationMean($mean)
+    {
+        if(!is_numeric($mean)){
+            throw new \InvalidArgumentException(
+                'Population to compare sample with must have valid mean value!'
+            );
+        }
+
+        $this->float_mean_pop = $mean;
+
+        return $this;
+    }
+
     public function clear()
     {
         $this->float_sigma = null;
+        $this->float_sigma2 = null;
+        $this->float_t = null;
+
+        return $this;
+    }
+
+
+
+    protected function compute()
+    {
+        if(is_null($this->float_t)){
+            $this->float_sigma2 = pow($this->sample->stddev, 2);
+            $this->float_sigma2 *= count($this->sample);
+            $this->float_sigma2 /= (count($this->sample) - 1);
+
+
+        }
+    }
+
+    public function count()
+    {
+        return count($this->sample);
+    }
+
+    public function sigma2()
+    {
+        $this->compute();
+
+        return $this->float_sigma2;
+    }
+
+    public function t()
+    {
+        $this->compute();
+
+        return $this->float_t;
     }
 }
