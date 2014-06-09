@@ -29,6 +29,7 @@ class Independant
 {
     protected $arr_samples = array();
     protected $int_dof = null;
+    protected $float_sigma2 = null;
     protected $float_sigma = null;
     protected $float_t = null;
     protected $float_mean = null;
@@ -111,11 +112,33 @@ class Independant
         return $this->float_mean;
     }
 
+
+    public function sigma2()
+    {
+        $this->compute();
+
+        return $this->float_sigma2;
+    }
+
     protected function compute()
     {
         if(is_null($this->float_t)){
             $this->float_mean = $this->arr_samples[0]->mean;
             $this->float_mean -= $this->arr_samples[1]->mean;
+
+            $s1 = new \Malenki\Math\Stats\Stats();
+            $s2 = new \Malenki\Math\Stats\Stats();
+
+            for($i = 0; $i < count($this->arr_samples[0]); $i++){
+                $s1->add($this->arr_samples[0]->get($i) - $this->arr_samples[0]->mean);
+            }
+
+            for($i = 0; $i < count($this->arr_samples[1]); $i++){
+                $s2->add($this->arr_samples[1]->get($i) - $this->arr_samples[1]->mean);
+            }
+
+            $this->float_sigma2 = ($s1->sum2 + $s2->sum2);
+            $this->float_sigma2 /= (count($s1) + count($s2) - 2);
         }
     }
 }
