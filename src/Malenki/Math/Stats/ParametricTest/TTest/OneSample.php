@@ -28,7 +28,7 @@ use \Malenki\Math\Stats\Stats;
 class OneSample implements \Countable
 {
     protected $sample = null;
-    protected $float_sigma = null;
+    protected $float_stddev = null;
     protected $float_sigma2 = null;
     protected $float_sigma_pop = null;
     protected $float_t = null;
@@ -72,7 +72,7 @@ class OneSample implements \Countable
 
     public function clear()
     {
-        $this->float_sigma = null;
+        $this->float_stddev = null;
         $this->float_sigma2 = null;
         $this->float_t = null;
 
@@ -88,6 +88,8 @@ class OneSample implements \Countable
             $this->float_sigma2 *= count($this->sample);
             $this->float_sigma2 /= (count($this->sample) - 1);
 
+            $this->float_stddev = $this->float_sigma2 / count($this->sample);
+            $this->float_stddev = sqrt($this->float_stddev);
 
         }
     }
@@ -102,6 +104,14 @@ class OneSample implements \Countable
         $this->compute();
 
         return $this->float_sigma2;
+    }
+
+
+    public function standardDeviation()
+    {
+        $this->compute();
+
+        return $this->float_stddev;
     }
 
     public function t()
