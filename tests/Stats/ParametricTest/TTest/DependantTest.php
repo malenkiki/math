@@ -25,7 +25,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 use Malenki\Math\Stats\ParametricTest\TTest\Dependant;
 use Malenki\Math\Stats\Stats;
 
-class DependantTTestOfStudentTest extends PHPUnit_Framework_TestCase
+class DependantTTest extends PHPUnit_Framework_TestCase
 {
     public function testInstanciateStudentDependantsShouldSuccess()
     {
