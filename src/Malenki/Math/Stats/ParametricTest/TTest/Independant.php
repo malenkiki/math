@@ -120,6 +120,14 @@ class Independant
         return $this->float_sigma2;
     }
 
+
+    public function sigma()
+    {
+        $this->compute();
+
+        return $this->float_sigma;
+    }
+
     protected function compute()
     {
         if(is_null($this->float_t)){
@@ -139,6 +147,9 @@ class Independant
 
             $this->float_sigma2 = ($s1->sum2 + $s2->sum2);
             $this->float_sigma2 /= (count($s1) + count($s2) - 2);
+
+            $this->float_sigma = sqrt($this->float_sigma2);
+            $this->float_sigma *= sqrt((1/count($s1)) + (1/count($s2)));
         }
     }
 }
