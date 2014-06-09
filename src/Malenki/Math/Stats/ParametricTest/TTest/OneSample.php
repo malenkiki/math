@@ -27,6 +27,27 @@ use \Malenki\Math\Stats\Stats;
 
 class OneSample
 {
-    protected $sample = array();
+    protected $sample = null;
+    protected $float_sigma = null;
 
+    public function set($s)
+    {
+        if (is_array($s)) {
+            $s = new Stats($s);
+        } elseif (!($s instanceof Stats)) {
+            throw new \InvalidArgumentException(
+                'Added sample to Student’s t-Test For One Sample must be array or Stats instance'
+            );
+        }
+
+        $this->sample = $s;
+        $this->clear();
+
+        return $this;
+    }
+
+    public function clear()
+    {
+        $this->float_sigma = null;
+    }
 }

@@ -35,4 +35,14 @@ class OneSampleTest extends PHPUnit_Framework_TestCase
             $t
         );
     }
+    
+    public function testSettingSampleShouldSuccess()
+    {
+        $t = new OneSample();
+        $this->assertInstanceOf(
+            '\Malenki\Math\Stats\ParametricTest\TTest\OneSample',
+            $t->set(new Stats(array(6, 3, 4, 5, 4, 4, 8, 6)))
+        );
+    }
+
 }
