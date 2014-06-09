@@ -69,7 +69,7 @@ class OneSampleTest extends PHPUnit_Framework_TestCase
     {
         $t = new OneSample();
         $t
-            ->populationMean(0.5)
+            ->populationMean(4.7)
             ->set(
                 array(
                     5, 5.5, 4.5, 5, 5, 6, 5, 5, 4.5, 5, 5, 4.5, 4.5, 5.5, 4, 5, 5, 5.5, 4.5, 5.5, 5, 5.5
@@ -83,7 +83,7 @@ class OneSampleTest extends PHPUnit_Framework_TestCase
     {
         $t = new OneSample();
         $t
-            ->populationMean(0.5)
+            ->populationMean(4.7)
             ->set(
                 array(
                     5, 5.5, 4.5, 5, 5, 6, 5, 5, 4.5, 5, 5, 4.5, 4.5, 5.5, 4, 5, 5, 5.5, 4.5, 5.5, 5, 5.5
@@ -91,5 +91,19 @@ class OneSampleTest extends PHPUnit_Framework_TestCase
             );
 
         $this->assertEquals(0.099, round($t->standardDeviation(), 3));
+    }
+
+    public function testGettingTValueShouldSuccess()
+    {
+        $t = new OneSample();
+        $t
+            ->populationMean(4.7)
+            ->set(
+                array(
+                    5, 5.5, 4.5, 5, 5, 6, 5, 5, 4.5, 5, 5, 4.5, 4.5, 5.5, 4, 5, 5, 5.5, 4.5, 5.5, 5, 5.5
+                )
+            );
+
+        $this->assertEquals(3.04, round($t->t(), 2));
     }
 }

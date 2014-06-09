@@ -91,6 +91,8 @@ class OneSample implements \Countable
             $this->float_stddev = $this->float_sigma2 / count($this->sample);
             $this->float_stddev = sqrt($this->float_stddev);
 
+            $this->float_t = $this->sample->mean - $this->float_mean_pop;
+            $this->float_t /= $this->float_stddev;
         }
     }
 
