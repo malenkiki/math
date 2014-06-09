@@ -135,6 +135,17 @@ class Independant
         return $this->float_t;
     }
 
+    public function degreeOfFreedom()
+    {
+        $this->compute();
+
+        return $this->int_dof;
+    }
+    
+    public function dof()
+    {
+        return $this->degreeOfFreedom();
+    }
 
     protected function compute()
     {
@@ -162,6 +173,8 @@ class Independant
             $this->float_t = $this->arr_samples[0]->mean;
             $this->float_t -= $this->arr_samples[1]->mean;
             $this->float_t /= $this->float_sigma;
+
+            $this->int_dof = count($s1) + count($s2) - 2;
         }
     }
 }
