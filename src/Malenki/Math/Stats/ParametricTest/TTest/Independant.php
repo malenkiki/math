@@ -128,6 +128,14 @@ class Independant
         return $this->float_sigma;
     }
 
+    public function t()
+    {
+        $this->compute();
+
+        return $this->float_t;
+    }
+
+
     protected function compute()
     {
         if(is_null($this->float_t)){
@@ -150,6 +158,10 @@ class Independant
 
             $this->float_sigma = sqrt($this->float_sigma2);
             $this->float_sigma *= sqrt((1/count($s1)) + (1/count($s2)));
+
+            $this->float_t = $this->arr_samples[0]->mean;
+            $this->float_t -= $this->arr_samples[1]->mean;
+            $this->float_t /= $this->float_sigma;
         }
     }
 }
