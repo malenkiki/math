@@ -22,44 +22,44 @@ OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-use Malenki\Math\Stats\ParametricTest\DependantTTestOfStudent;
+use Malenki\Math\Stats\ParametricTest\TTest\Dependant;
 use Malenki\Math\Stats\Stats;
 
-class DependantTTestOfStudentTest extends PHPUnit_Framework_TestCase
+class DependantTTest extends PHPUnit_Framework_TestCase
 {
     public function testInstanciateStudentDependantsShouldSuccess()
     {
-        $t = new DependantTTestOfStudent();
+        $t = new Dependant();
         $this->assertInstanceOf(
-            '\Malenki\Math\Stats\ParametricTest\DependantTTestOfStudent',
+            '\Malenki\Math\Stats\ParametricTest\TTest\Dependant',
             $t
         );
     }
 
     public function testAddingTwoEqualSamplesShouldSuccess()
     {
-        $t = new DependantTTestOfStudent();
+        $t = new Dependant();
         $this->assertInstanceOf(
-            '\Malenki\Math\Stats\ParametricTest\DependantTTestOfStudent',
+            '\Malenki\Math\Stats\ParametricTest\TTest\Dependant',
             $t->add(new Stats(array(6, 3, 4)))
         );
         
-        $t = new DependantTTestOfStudent();
+        $t = new Dependant();
         $this->assertInstanceOf(
-            '\Malenki\Math\Stats\ParametricTest\DependantTTestOfStudent',
+            '\Malenki\Math\Stats\ParametricTest\TTest\Dependant',
             $t->add(array(6, 3, 4))->add(array(7, 5, 9))
         );
         
         
-        $t = new DependantTTestOfStudent();
+        $t = new Dependant();
         $this->assertInstanceOf(
-            '\Malenki\Math\Stats\ParametricTest\DependantTTestOfStudent',
+            '\Malenki\Math\Stats\ParametricTest\TTest\Dependant',
             $t->set(array(6, 3, 4), array(7, 5, 9))
         );
         
-        $t = new DependantTTestOfStudent();
+        $t = new Dependant();
         $this->assertInstanceOf(
-            '\Malenki\Math\Stats\ParametricTest\DependantTTestOfStudent',
+            '\Malenki\Math\Stats\ParametricTest\TTest\Dependant',
             $t->set(new Stats(array(6, 3, 4)), new Stats(array(7, 5, 9)))
         );
     }
@@ -70,7 +70,7 @@ class DependantTTestOfStudentTest extends PHPUnit_Framework_TestCase
      */
     public function testAddingTwoNonEqualSamplesShouldFail()
     {
-        $t = new DependantTTestOfStudent();
+        $t = new Dependant();
         $t->add(new Stats(array(1, 2, 3)));
         $t->add(new Stats(array(1, 2, 3, 4)));
     }
@@ -80,7 +80,7 @@ class DependantTTestOfStudentTest extends PHPUnit_Framework_TestCase
      */
     public function testAddingMoreThanTwoSamplesShouldFail()
     {
-        $t = new DependantTTestOfStudent();
+        $t = new Dependant();
         $t->add(new Stats(array(1, 2, 3)));
         $t->add(new Stats(array(1, 2, 3)));
         $t->add(new Stats(array(1, 2, 3)));
@@ -90,7 +90,7 @@ class DependantTTestOfStudentTest extends PHPUnit_Framework_TestCase
 
     public function testGettingCountShouldSuccess()
     {
-        $t = new DependantTTestOfStudent();
+        $t = new Dependant();
         $t
             ->add(array(6, 3, 4, 7, 8, 9, 3, 6))
             ->add(array(6, 3, 4, 8, 8, 9, 3, 6));
@@ -103,7 +103,7 @@ class DependantTTestOfStudentTest extends PHPUnit_Framework_TestCase
 
     public function testGettingDegreeOfFreedomShouldSuccess()
     {
-        $t = new DependantTTestOfStudent();
+        $t = new Dependant();
         $t->add(array(24, 17, 32, 14, 16, 22, 26, 19, 19, 22, 21, 25, 16, 24, 18));
         $t->add(array(26, 24, 31, 17, 17, 25, 25, 24, 22, 23, 26, 28, 19, 23, 22));
         $this->assertEquals(14, $t->degreesOfFreedom());
@@ -116,7 +116,7 @@ class DependantTTestOfStudentTest extends PHPUnit_Framework_TestCase
 
     public function testGettingSigmaShouldSuccess()
     {
-        $t = new DependantTTestOfStudent();
+        $t = new Dependant();
         $t->add(array(24, 17, 32, 14, 16, 22, 26, 19, 19, 22, 21, 25, 16, 24, 18));
         $t->add(array(26, 24, 31, 17, 17, 25, 25, 24, 22, 23, 26, 28, 19, 23, 22));
         $this->assertEquals(0.608, round($t->sigma(), 3));
@@ -127,7 +127,7 @@ class DependantTTestOfStudentTest extends PHPUnit_Framework_TestCase
 
     public function testGettingTShouldSuccess()
     {
-        $t = new DependantTTestOfStudent();
+        $t = new Dependant();
         $t->add(array(24, 17, 32, 14, 16, 22, 26, 19, 19, 22, 21, 25, 16, 24, 18));
         $t->add(array(26, 24, 31, 17, 17, 25, 25, 24, 22, 23, 26, 28, 19, 23, 22));
         $this->assertEquals(-4.054, round($t->t(), 3));
@@ -141,7 +141,7 @@ class DependantTTestOfStudentTest extends PHPUnit_Framework_TestCase
      */
     public function testGettingTUsingTwoSameSamplesShouldFail()
     {
-        $t = new DependantTTestOfStudent();
+        $t = new Dependant();
         $t
             ->add(array(6, 3, 4, 7, 8, 9, 3, 6))
             ->add(array(6, 3, 4, 7, 8, 9, 3, 6));
@@ -158,33 +158,33 @@ class DependantTTestOfStudentTest extends PHPUnit_Framework_TestCase
         $s1 = new Stats($arr1);
         $s2 = new Stats($arr2);
 
-        $t = new DependantTTestOfStudent();
+        $t = new Dependant();
         $t->sample_one = $arr1;
         $t->sample_two = $arr2;
         $this->assertCount(15, $t);
         
-        $t = new DependantTTestOfStudent();
+        $t = new Dependant();
         $t->sample_1 = $arr1;
         $t->sample_2 = $arr2;
         $this->assertCount(15, $t);
         
-        $t = new DependantTTestOfStudent();
+        $t = new Dependant();
         $t->sample_a = $arr1;
         $t->sample_b = $arr2;
         $this->assertCount(15, $t);
 
 
-        $t = new DependantTTestOfStudent();
+        $t = new Dependant();
         $t->sample_one = $s1;
         $t->sample_two = $s2;
         $this->assertCount(15, $t);
         
-        $t = new DependantTTestOfStudent();
+        $t = new Dependant();
         $t->sample_1 = $s1;
         $t->sample_2 = $s2;
         $this->assertCount(15, $t);
         
-        $t = new DependantTTestOfStudent();
+        $t = new Dependant();
         $t->sample_a = $s1;
         $t->sample_b = $s2;
         $this->assertCount(15, $t);
@@ -196,7 +196,7 @@ class DependantTTestOfStudentTest extends PHPUnit_Framework_TestCase
      */
     public function testSettingBadTypeSamplesByMagicSettersShouldFail()
     {
-        $t = new DependantTTestOfStudent();
+        $t = new Dependant();
         $t->sample_one = (object) array(24, 17, 32, 14, 16, 22, 26, 19, 19, 22, 21, 25, 16, 24, 18);
         $t->sample_two = (object) array(26, 24, 31, 17, 17, 25, 25, 24, 22, 23, 26, 28, 19, 23, 22);
         $this->assertCount(15, $t);

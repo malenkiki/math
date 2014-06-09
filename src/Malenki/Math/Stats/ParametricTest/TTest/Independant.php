@@ -22,33 +22,23 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-namespace Malenki\Math\Stats\ParametricTest;
+namespace Malenki\Math\Stats\ParametricTest\TTest;
 use \Malenki\Math\Stats\Stats;
 
-class DependantTTestOfStudent implements \Countable
+class Independant
 {
     protected $arr_samples = array();
-    protected $int_count = null;
     protected $int_dof = null;
+    protected $float_sigma2 = null;
     protected $float_sigma = null;
     protected $float_t = null;
+    protected $float_mean = null;
 
-
-    public function __get($name)
-    {
-        if(in_array($name, array('count', 'dof', 'sigma', 't'))){
-            return $this->$name();
-        } elseif(in_array($name, array('degrees_of_freedom', 'df'))){
-            return $this->degreesOfFreedom();
-        }
-    }
-    
-    
     public function __set($name, $value)
     {
         if(
             in_array(
-                $name, 
+                $name,
                 array(
                     'sample_one',
                     'sample_two',
@@ -60,16 +50,15 @@ class DependantTTestOfStudent implements \Countable
             )
         )
         {
-            if(is_array($value)){
+            if (is_array($value)) {
                 $value = new Stats($value);
-            } elseif(!($value instanceof Stats))
-            {
+            } elseif (!($value instanceof Stats)) {
                 throw new \InvalidArgumentException(
                     'Added sample to Dependant t-test of Student must be array or Stats instance'
                 );
             }
 
-            if(preg_match('/_(1|one|a)$/',$name)){
+            if (preg_match('/_(1|one|a)$/',$name)) {
                 $this->arr_samples[0] = $value;
             } else {
                 $this->arr_samples[1] = $value;
@@ -79,31 +68,20 @@ class DependantTTestOfStudent implements \Countable
         }
     }
 
-
-
     public function add($s)
     {
-        if(count($this->arr_samples) == 2){
+        if (count($this->arr_samples) == 2) {
             throw new \RuntimeException(
-                'Student’s t-Test For Dependant samples does not use more than two samples!'
+                'Student’s t-Test For Independant samples does not use more than two samples!'
             );
         }
 
-        if(is_array($s)){
+        if (is_array($s)) {
             $s = new Stats($s);
-        } elseif(!($s instanceof Stats))
-        {
+        } elseif (!($s instanceof Stats)) {
             throw new \InvalidArgumentException(
-                'Added sample to Student’s t-Test For Dependant samples must be array or Stats instance'
+                'Added sample to Student’s t-Test For Independant samples must be array or Stats instance'
             );
-        }
-
-        if(count($this->arr_samples) == 1){
-            if(count($s) != count($this->arr_samples[0])){
-                throw new \RuntimeException(
-                    'Student’s t-Test For Dependant samples must use two sample having the same size.'
-                );
-            }
         }
 
         $this->arr_samples[] = $s;
@@ -120,37 +98,29 @@ class DependantTTestOfStudent implements \Countable
         return $this;
     }
 
-    protected function clear()
+    public function clear()
     {
-        //TODO
-        $this->int_count = null;
+        $this->int_dof = null;
+        $this->float_sigma = null;
+        $this->float_t = null;
     }
 
-
-    public function count()
+    public function mean()
     {
         $this->compute();
 
-        return $this->int_count;
+        return $this->float_mean;
     }
 
 
-
-    public function degreesOfFreedom()
+    public function sigma2()
     {
-        if(is_null($this->int_dof)){
-            $this->compute();
-        }
+        $this->compute();
 
-        return $this->int_dof;
+        return $this->float_sigma2;
     }
 
 
-    public function dof()
-    {
-        return $this->degreesOfFreedom();
-    }
-    
     public function sigma()
     {
         $this->compute();
@@ -158,8 +128,6 @@ class DependantTTestOfStudent implements \Countable
         return $this->float_sigma;
     }
 
-
-    
     public function t()
     {
         $this->compute();
@@ -167,37 +135,46 @@ class DependantTTestOfStudent implements \Countable
         return $this->float_t;
     }
 
+    public function degreeOfFreedom()
+    {
+        $this->compute();
+
+        return $this->int_dof;
+    }
+    
+    public function dof()
+    {
+        return $this->degreeOfFreedom();
+    }
 
     protected function compute()
     {
         if(is_null($this->float_t)){
-            $this->int_count = count($this->arr_samples[0]);
-            $this->int_dof = $this->int_count - 1;
+            $this->float_mean = $this->arr_samples[0]->mean;
+            $this->float_mean -= $this->arr_samples[1]->mean;
 
-            $d = new \Malenki\Math\Stats\Stats();
+            $s1 = new \Malenki\Math\Stats\Stats();
+            $s2 = new \Malenki\Math\Stats\Stats();
 
-            for($i = 0; $i < $this->int_count; $i++){
-                $d->add(
-                    $this->arr_samples[0]->get($i)
-                    -
-                    $this->arr_samples[1]->get($i)
-                );
+            for($i = 0; $i < count($this->arr_samples[0]); $i++){
+                $s1->add($this->arr_samples[0]->get($i) - $this->arr_samples[0]->mean);
             }
 
-            $diff2 = new \Malenki\Math\Stats\Stats();
-
-            for($i = 0; $i < $this->int_count; $i++){
-                $diff2->add($d->get($i) - $d->mean);
+            for($i = 0; $i < count($this->arr_samples[1]); $i++){
+                $s2->add($this->arr_samples[1]->get($i) - $this->arr_samples[1]->mean);
             }
 
-            $sigma_d = sqrt($diff2->sum2 / ($this->int_count - 1));
-            $this->float_sigma = $sigma_d / sqrt($this->int_count);
+            $this->float_sigma2 = ($s1->sum2 + $s2->sum2);
+            $this->float_sigma2 /= (count($s1) + count($s2) - 2);
 
-            if($sigma_d == 0){
-                throw new \LogicException('The given two samples are equals! Cannot compute T-Test!');
-            }
-            $this->float_t = $d->mean / $this->float_sigma;
+            $this->float_sigma = sqrt($this->float_sigma2);
+            $this->float_sigma *= sqrt((1/count($s1)) + (1/count($s2)));
 
+            $this->float_t = $this->arr_samples[0]->mean;
+            $this->float_t -= $this->arr_samples[1]->mean;
+            $this->float_t /= $this->float_sigma;
+
+            $this->int_dof = count($s1) + count($s2) - 2;
         }
     }
 }
