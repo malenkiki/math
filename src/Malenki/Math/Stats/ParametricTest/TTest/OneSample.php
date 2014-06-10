@@ -38,6 +38,10 @@ class OneSample implements \Countable
         if(in_array($name, array('count', 'clear', 'sigma2', 't'))){
             return $this->$name();
         }
+
+        if($name == 'variance' || $name == 'var'){
+            return $this->sigma2();
+        }
     }
 
     public function __construct($mean = null)

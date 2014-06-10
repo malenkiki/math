@@ -94,6 +94,8 @@ class OneSampleTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals(0.214, round($t->sigma2(), 3));
         $this->assertEquals(0.214, round($t->sigma2, 3));
+        $this->assertEquals(0.214, round($t->var, 3));
+        $this->assertEquals(0.214, round($t->variance, 3));
     }
 
     public function testGettingStdDevShouldSuccess()
