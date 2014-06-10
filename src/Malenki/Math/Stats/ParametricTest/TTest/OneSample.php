@@ -47,7 +47,7 @@ class OneSample implements \Countable
     public function __construct($mean = null)
     {
         if(!is_null($mean)){
-            $this->populationMaan($mean);
+            $this->populationMean($mean);
         }
     }
 
