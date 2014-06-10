@@ -65,6 +65,22 @@ class OneSampleTest extends PHPUnit_Framework_TestCase
         $t->populationMean(null);
     }
 
+    public function testGettingCountShouldSuccess()
+    {
+        $t = new OneSample();
+        $t
+            ->populationMean(4.7)
+            ->set(
+                array(
+                    5, 5.5, 4.5, 5, 5, 6, 5, 5, 4.5, 5, 5, 4.5, 4.5, 5.5, 4, 5, 5, 5.5, 4.5, 5.5, 5, 5.5
+                )
+            );
+
+        $this->assertEquals(22, $t->count());
+        $this->assertEquals(22, $t->count);
+        $this->assertCount(22, $t);
+    }
+
     public function testGettingSigma2ShouldSuccess()
     {
         $t = new OneSample();
@@ -77,6 +93,7 @@ class OneSampleTest extends PHPUnit_Framework_TestCase
             );
 
         $this->assertEquals(0.214, round($t->sigma2(), 3));
+        $this->assertEquals(0.214, round($t->sigma2, 3));
     }
 
     public function testGettingStdDevShouldSuccess()
@@ -105,5 +122,6 @@ class OneSampleTest extends PHPUnit_Framework_TestCase
             );
 
         $this->assertEquals(3.04, round($t->t(), 2));
+        $this->assertEquals(3.04, round($t->t, 2));
     }
 }

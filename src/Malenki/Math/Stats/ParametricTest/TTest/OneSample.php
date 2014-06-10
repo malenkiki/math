@@ -33,6 +33,13 @@ class OneSample implements \Countable
     protected $float_sigma_pop = null;
     protected $float_t = null;
 
+    public function __get($name)
+    {
+        if(in_array($name, array('count', 'clear', 'sigma2', 't'))){
+            return $this->$name();
+        }
+    }
+
     public function __construct($mean = null)
     {
         if(!is_null($mean)){
