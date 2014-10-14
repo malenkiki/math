@@ -145,6 +145,20 @@ class MatrixTest extends PHPUnit_Framework_TestCase
         $this->assertFalse($m->is_diagonal);
         $this->assertFalse($m->diagonal);
     }
+
+
+    /**
+     * @expectedException \RuntimeException
+     */
+    public function testAddingTwoMatrixHavingDifferentSizeShouldFail()
+    {
+        $m = new Matrix(2, 3);
+        $m->populate(array(2, 0, 0, 0, 8, 0));
+        $n = new Matrix(2, 2);
+        $n->populate(array(2, 0, 0, 0));
+
+        $m->add($n);
+    }
         
     public function testMultiplyMatrixWithScalarOrComplexNumber()
     {
@@ -352,7 +366,7 @@ class MatrixTest extends PHPUnit_Framework_TestCase
     /**
      * @expectedException \RuntimeException
      */
-    public function testGettingTraceiFromNonSquareMatrixShouldFail()
+    public function testGettingTraceFromNonSquareMatrixShouldFail()
     {
         $m = new Matrix(2, 3);
         $m->populate(array(1, 2, 3, 4, 5, 6));
