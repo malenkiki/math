@@ -389,7 +389,7 @@ You can do a lot of stats about data, like **mean**, **variance**, **standard de
 You can put all values at once while instanciating:
 
 ```php
-use \Malenki\Math\Stats;
+use \Malenki\Math\Stats\Stats;
 $s = new Stats(array(1,2,4,2,6,4));
 ```
 
@@ -403,7 +403,7 @@ $s->add(5); // to add one by one value
 Counting values is as easy to use `count()`:
 
 ```php
-use \Malenki\Math\Stats;
+use \Malenki\Math\Stats\Stats;
 $s = new Stats(array(1,2,4,2,6,4));
 var_dump(count($s));
 ```
@@ -411,7 +411,7 @@ var_dump(count($s));
 Many means are avaialble too:
 
 ```php
-use \Malenki\Math\Stats;
+use \Malenki\Math\Stats\Stats;
 $s = new Stats(array(1,2,4,2,6,4));
 
 // arithmetic mean
@@ -443,7 +443,7 @@ var_dump($s->Q);
 Variance, population or sample are available with standard deviation too:
 
 ```php
-use \Malenki\Math\Stats;
+use \Malenki\Math\Stats\Stats;
 $s = new Stats(array(1,2,4,2,6,4));
 
 // Variance (population)
@@ -467,7 +467,7 @@ var_dump($s->sigma);
 Quartiles and median:
 
 ```php
-use \Malenki\Math\Stats;
+use \Malenki\Math\Stats\Stats;
 $s = new Stats(array(1,2,4,2,6,4));
 
 
@@ -512,7 +512,7 @@ var_dump($s->cumulativeFrequency());
 Kurtosis and its tests are available:
 
 ```php
-use \Malenki\Math\Stats;
+use \Malenki\Math\Stats\Stats;
 $s = new Stats(array(1,2,4,2,6,4));
 
 var_dump($s->kurtosis);
