@@ -67,8 +67,8 @@ class Random
         $this->range = new \stdClass();
 
         if (is_integer($int_min) && is_integer($int_max) && $int_min < $int_max) {
-            if ($int_max > getrandmax()) {
-                throw new \OutOfRangeException('On this system, you cannot exceed %d integer value.', getrandmax());
+            if ($int_max > mt_getrandmax()) {
+                throw new \OutOfRangeException(sprintf('On this system, you cannot exceed %d integer value.', mt_getrandmax()));
             }
             $this->range->as_integer = true;
             $this->range->min = $int_min;
@@ -94,9 +94,9 @@ class Random
     public function get()
     {
         if ($this->range->as_integer) {
-            return rand($this->range->min, $this->range->max);
+            return mt_rand($this->range->min, $this->range->max);
         } else {
-            return rand(0, getrandmax()) / getrandmax();
+            return mt_rand(0, mt_getrandmax()) / mt_getrandmax();
         }
     }
 
