@@ -284,7 +284,7 @@ You can play with graph for given mean and standard deviation, or you can genera
 Some examples to understand:
 
 ```php
-use \Malenki\Math\NormalDistribution;
+use \Malenki\Math\Stats\NormalDistribution;
 
 // Normal Distribution with mean equals to 2 and has standard deviation of 0.3
 $nd = new NormalDistribution(2, 0.3);
@@ -293,7 +293,7 @@ $nd = new NormalDistribution(2, 0.3);
 $nd->f(3);
 
 // you can generate fake sample following the current normal distribution:
-$md->samples(100); // 100 elements into an array
+$nd->samples(100); // 100 elements into an array
 ```
 
 ## Factorial

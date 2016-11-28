@@ -24,6 +24,8 @@
 
 namespace Malenki\Math\Stats;
 
+use Malenki\Math\Random;
+
 /**
  * Normal Distribution.
  *
