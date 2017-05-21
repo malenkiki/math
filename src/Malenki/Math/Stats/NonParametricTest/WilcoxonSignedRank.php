@@ -178,7 +178,6 @@ class WilcoxonSignedRank implements \Countable
 
         $this->arr_abs = array_values($this->arr_abs);
         $this->arr_diff = array_values($arr_sort);
-
         $this->computeRanks();
     }
 
