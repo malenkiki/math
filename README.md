@@ -266,7 +266,7 @@ echo $z->add($zz); // give new complex nulber
 echo $z->multiply($zz); // give another complex number
 ```
 
-Get negative and conjugate is simple too:
+Getting negative, conjugate and inverse is simple too:
 
 ```php
 use \Malenki\Math\Number\Complex;
@@ -274,6 +274,7 @@ use \Malenki\Math\Number\Complex;
 $z = new Complex(1,2);
 echo $z->conjugate();
 echo $z->negative();
+echo $z->inverse();
 ```
 
 

@@ -352,6 +352,22 @@ class Complex
 
 
     /**
+     * Gives the inverse of the current complex number.
+     * 
+     * @param float $denom
+     * @access public
+     * @return Complex
+     */
+    public function inverse() {
+        if($this->is_zero) 
+            throw new \InvalidArgumentException('Cannot inverse a zero.');
+
+		$denom = pow($this->float_r,2) + pow($this->float_i,2);
+		return new self($this->float_r / $denom, -$this->float_i / $denom);
+	}
+
+    
+    /**
      * In string context, display complex number as algebraic form or trigonometric form.
      *
      * In string context, display complex number into the form `a+ib` if it has
