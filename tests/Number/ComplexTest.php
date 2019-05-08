@@ -412,4 +412,24 @@ class ComplexTest extends PHPUnit_Framework_TestCase
         $z = new Complex(1, 2);
         $z->divide(0);
     }
+
+    public function testInverse()
+    {
+        $z = new Complex(1,2);
+        $one = new Complex(1,0);
+
+        $inverse1 = $one->divide($z);
+        $inverse2 = $z->inverse();
+
+        $this->assertEquals($inverse1, $inverse2);
+    }
+
+     /**
+     * @expectedException \InvalidArgumentException
+     */
+    public function testInverseOfZeroShouldFail()
+    {
+        $z = new Complex(0,0);
+        $z->inverse();
+    }
 }
